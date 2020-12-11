@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">BISADKotlin</string>
+    <!--Login Screen-->
+    <string name="username">USER EMAIL</string>
+    <string name="password">PASSWORD</string>
+    <string name="loading">Loading&#8230;</string>
+    <string name="msg_token_fmt">firebase token</string>
+</resources>
