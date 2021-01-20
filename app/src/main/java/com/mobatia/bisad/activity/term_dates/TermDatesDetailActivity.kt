@@ -1,36 +1,27 @@
 package com.mobatia.bisad.activity.term_dates
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.view.animation.RotateAnimation
-import android.webkit.*
+import android.webkit.WebChromeClient
+import android.webkit.WebSettings
+import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.mobatia.bisad.R
 import com.mobatia.bisad.activity.home.HomeActivity
-import com.mobatia.bisad.activity.message.model.MessageDetailApiModel
-import com.mobatia.bisad.activity.message.model.MessageDetailModel
 import com.mobatia.bisad.activity.term_dates.model.TermDatesDetailApiModel
 import com.mobatia.bisad.activity.term_dates.model.TermDatesDetailModel
-import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
 import com.mobatia.bisad.fragment.home.loader
 import com.mobatia.bisad.manager.PreferenceData
-import com.mobatia.bisad.rest.AccessTokenClass
 import com.mobatia.bisad.rest.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -50,6 +41,7 @@ class TermDatesDetailActivity : AppCompatActivity(){
     var message:String=""
     var url:String=""
     var date:String=""
+    var linkFetch:String=""
     private lateinit var relativeHeader: RelativeLayout
     private lateinit var logoClickImgView: ImageView
     private lateinit var btn_left: ImageView
@@ -78,7 +70,7 @@ class TermDatesDetailActivity : AppCompatActivity(){
         logoClickImgView = findViewById(R.id.logoClickImgView)
         progressDialog = findViewById(R.id.progressDialog)
         webView = findViewById(R.id.webView)
-        heading.setText(title)
+        heading.setText("Term Dates")
         btn_left.setOnClickListener(View.OnClickListener {
             finish()
         })
@@ -108,8 +100,9 @@ class TermDatesDetailActivity : AppCompatActivity(){
                     idApi=id
                     titleApi=title
                     message=response.body()!!.responseArray.termdates.description
-                    url=response.body()!!.responseArray.termdates.link
+                    url=response.body()!!.responseArray.termdates.image
                     date=response.body()!!.responseArray.termdates.created_at
+                    linkFetch=response.body()!!.responseArray.termdates.link
                     val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                     val outputFormat: DateFormat = SimpleDateFormat("hh:mm a")
                     val outputFormatdate: DateFormat = SimpleDateFormat("dd-MMM-yyyy")
@@ -144,6 +137,16 @@ class TermDatesDetailActivity : AppCompatActivity(){
                             "color: #000000;" +
                             "text-align: ####TEXT_ALIGN####;" +
                             "}" +
+                            ".externalLink {" +
+                            "font-family: SourceSansPro-Light;" +
+                            "text-align:left;" +
+                            "font-size:15px;"  +
+                            "color: #000000;"+
+                            "text-align: ####TEXT_ALIGN####;"+
+                            "}" +
+                            ".a {"+
+                            " color: #46C1D0;"+
+                            "}"+
                             "</style>\n" + "</head>" +
                             "<body>" +
                             "<p class='title'>"+message
@@ -152,6 +155,11 @@ class TermDatesDetailActivity : AppCompatActivity(){
                     if (!url.equals(""))
                     {
                         pushNotificationDetail=pushNotificationDetail+"<center><img src='" + url + "'width='100%', height='auto'>"
+                    }
+                    if (!linkFetch.equals(""))
+                    {
+                        pushNotificationDetail =
+                            "$pushNotificationDetail<p class='externalLink'><a href='" + linkFetch+ "'>" + "Click here." + "</a></p>"
                     }
                     pushNotificationDetail=pushNotificationDetail+"</body>\n</html>"
                     var htmlData=pushNotificationDetail

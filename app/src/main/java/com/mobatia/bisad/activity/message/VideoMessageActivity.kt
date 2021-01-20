@@ -39,7 +39,6 @@ private lateinit var btn_left: ImageView
 private lateinit var heading: TextView
 private lateinit var textcontent: WebView
 private lateinit var webView: WebView
-private lateinit var progressDialog: RelativeLayout
 private lateinit var proWebView: ProgressBar
 class VideoMessageActivity : AppCompatActivity(){
     lateinit var mContext: Context
@@ -72,7 +71,6 @@ class VideoMessageActivity : AppCompatActivity(){
         heading = findViewById(R.id.heading)
         btn_left = findViewById(R.id.btn_left)
         logoClickImgView = findViewById(R.id.logoClickImgView)
-        progressDialog = findViewById(R.id.progressDialog)
         textcontent = findViewById(R.id.txtContent)
         webView = findViewById(R.id.webView)
         proWebView = findViewById(R.id.proWebView)
@@ -86,9 +84,9 @@ class VideoMessageActivity : AppCompatActivity(){
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
         })
-        val aniRotate: Animation =
-            AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
-        progressDialog.startAnimation(aniRotate)
+//        val aniRotate: Animation =
+//            AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
+//        progressDialog.startAnimation(aniRotate)
     }
     fun callMessageDetailAPI()
     {
@@ -97,11 +95,11 @@ class VideoMessageActivity : AppCompatActivity(){
         val call: Call<MessageDetailModel> = ApiClient.getClient.notifictaionDetail(studentbody,"Bearer "+token)
         call.enqueue(object : Callback<MessageDetailModel> {
             override fun onFailure(call: Call<MessageDetailModel>, t: Throwable) {
-                progressDialog.visibility = View.GONE
+//                progressDialog.visibility = View.GONE
                 Log.e("Error", t.localizedMessage)
             }
             override fun onResponse(call: Call<MessageDetailModel>, response: Response<MessageDetailModel>) {
-                progressDialog.visibility = View.GONE
+//                progressDialog.visibility = View.GONE
                 if (response.body()!!.status==100)
                 {
                     idApi=id
@@ -203,14 +201,14 @@ class VideoMessageActivity : AppCompatActivity(){
 
         webView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, newProgress: Int) {
-                progressDialog.visibility = View.VISIBLE
-                println("testing2")
-                if (newProgress == 100)
-                {
-                    println("testing1")
-                    progressDialog.visibility = View.GONE
-
-                }
+//                proWebView.visibility = View.VISIBLE
+//                println("testing2")
+//                if (newProgress == 100)
+//                {
+//                    println("testing1")
+//                    proWebView.visibility = View.GONE
+//
+//                }
             }
         }
     }
@@ -235,7 +233,7 @@ class VideoMessageActivity : AppCompatActivity(){
         override fun onPageFinished(view: WebView, url: String) {
             // TODO Auto-generated method stub
             super.onPageFinished(view, url)
-            proWebView.setVisibility(View.GONE)
+//            proWebView.setVisibility(View.GONE)
             textcontent.setVisibility(View.VISIBLE)
         }
     }

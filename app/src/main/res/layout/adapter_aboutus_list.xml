@@ -11,12 +11,11 @@
       android:id="@+id/linear"
       android:orientation="vertical">
 
-      <com.mobatia.bisad.manager.CustomFontSansProTextBlack
+      <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:id="@+id/contactName"
           android:textColor="@color/black"
-          android:textStyle="bold"
           android:gravity="left|center"
           />
       <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor

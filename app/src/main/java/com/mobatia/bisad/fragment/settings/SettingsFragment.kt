@@ -576,6 +576,14 @@ class SettingsFragment : Fragment(){
         var text_currentnewpassword = dialog.findViewById(R.id.text_currentnewpassword) as EditText
         var text_confirmpassword = dialog.findViewById(R.id.text_confirmpassword) as EditText
         var btn_changepassword = dialog.findViewById(R.id.btn_changepassword) as Button
+        var btn_cancel = dialog.findViewById(R.id.btn_changepassword) as Button
+        btn_cancel.isClickable=true
+        btn_cancel?.setOnClickListener()
+        {
+
+           dialog.dismiss()
+        }
+
         btn_changepassword?.setOnClickListener()
         {
             val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -586,17 +594,17 @@ class SettingsFragment : Fragment(){
             imo.hideSoftInputFromWindow(text_confirmpassword.getWindowToken(), 0)
             if (text_currentpassword.text.toString().trim().equals(""))
             {
-                InternetCheckClass. showErrorAlert(mContext,"Please enter Current Password","Alert")
+                InternetCheckClass. showErrorAlert(context,"Please enter Current Password","Alert")
             }
             else{
                 if (text_currentnewpassword.text.toString().trim().equals(""))
                 {
-                    InternetCheckClass. showErrorAlert(mContext,"Please enter New Password","Alert")
+                    InternetCheckClass. showErrorAlert(context,"Please enter New Password","Alert")
                 }
                 else{
                     if (text_confirmpassword.text.toString().trim().equals(""))
                     {
-                        InternetCheckClass. showErrorAlert(mContext,"Please enter Confirm Password","Alert")
+                        InternetCheckClass. showErrorAlert(context,"Please enter Confirm Password","Alert")
                     }
                     else{
                                callChangePasswordApi(text_currentpassword.text.toString().trim(),text_currentnewpassword.text.toString().trim(),text_confirmpassword.text.toString(),dialog)
@@ -605,6 +613,8 @@ class SettingsFragment : Fragment(){
             }
             //dialog.dismiss()
         }
+
+
         dialog.show()
     }
     private fun callChangePasswordApi(currentPassword:String,newPassword:String,confirmPassword:String,dialog:Dialog)
