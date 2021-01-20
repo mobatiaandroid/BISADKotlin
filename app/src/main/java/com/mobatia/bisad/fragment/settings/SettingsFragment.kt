@@ -576,7 +576,7 @@ class SettingsFragment : Fragment(){
         var text_currentnewpassword = dialog.findViewById(R.id.text_currentnewpassword) as EditText
         var text_confirmpassword = dialog.findViewById(R.id.text_confirmpassword) as EditText
         var btn_changepassword = dialog.findViewById(R.id.btn_changepassword) as Button
-        var btn_cancel = dialog.findViewById(R.id.btn_changepassword) as Button
+        var btn_cancel = dialog.findViewById(R.id.btn_cancel) as Button
         btn_cancel.isClickable=true
         btn_cancel?.setOnClickListener()
         {

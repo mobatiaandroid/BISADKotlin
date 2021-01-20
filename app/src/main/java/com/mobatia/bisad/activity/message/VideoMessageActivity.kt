@@ -201,14 +201,14 @@ class VideoMessageActivity : AppCompatActivity(){
 
         webView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, newProgress: Int) {
-//                proWebView.visibility = View.VISIBLE
-//                println("testing2")
-//                if (newProgress == 100)
-//                {
-//                    println("testing1")
-//                    proWebView.visibility = View.GONE
-//
-//                }
+                proWebView.visibility = View.VISIBLE
+                println("testing2")
+                if (newProgress == 100)
+                {
+                    println("testing1")
+                    proWebView.visibility = View.GONE
+
+                }
             }
         }
     }
@@ -224,7 +224,7 @@ class VideoMessageActivity : AppCompatActivity(){
         override fun onPageFinished(view: WebView, url: String) {
             // TODO Auto-generated method stub
             super.onPageFinished(view, url)
-//            proWebView.setVisibility(View.GONE)
+            proWebView.setVisibility(View.GONE)
             textcontent.visibility = View.VISIBLE
         }
     }
