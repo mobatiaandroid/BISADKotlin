@@ -1390,11 +1390,12 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
 
     fun fragmentIntent(mFragment: Fragment?) {
         if (mFragment != null) {
-            System.out.println("title:" + appController.mTitles)
+            println("title:" + appController.mTitles)
             val fragmentManager = activity!!.getSupportFragmentManager()
             fragmentManager.beginTransaction()
                 .add(R.id.fragment_holder, mFragment, appController.mTitles)
                 .addToBackStack(appController.mTitles).commitAllowingStateLoss() //commit
+                //.commit()
         }
     }
 
