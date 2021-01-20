@@ -82,8 +82,8 @@
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/studentName"
             app:layout_constraintEnd_toEndOf="@+id/imageView11"
@@ -98,6 +98,15 @@
             app:layout_constraintEnd_toEndOf="@+id/imageView4"
             app:layout_constraintStart_toStartOf="@+id/studentName"
             app:layout_constraintTop_toBottomOf="@+id/studentName" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/studentName"
+            app:layout_constraintTop_toTopOf="@+id/imageView4"
+            app:srcCompat="@drawable/downarrow" />
     </androidx.constraintlayout.widget.ConstraintLayout>
           <androidx.recyclerview.widget.RecyclerView
               android:id="@+id/studentInfoRecycler"

@@ -169,11 +169,13 @@ class FirstScreenNewData:Fragment() {
             ownDetailViewRelative.setBackgroundResource(R.drawable.rect_background_grey)
             confirmBtn.visibility=View.GONE
         }
-        else{
+        else
+        {
             ownDetailViewRelative.setBackgroundResource(R.drawable.rect_data_collection_red)
             confirmBtn.visibility=View.VISIBLE
         }
-        ownDetailViewRelative.setOnClickListener(View.OnClickListener {
+        ownDetailViewRelative.setOnClickListener(View.OnClickListener
+        {
 
             showOwnContactDetail(mContext,sharedprefs.getOwnContactDetailArrayList(mContext)!!)
 

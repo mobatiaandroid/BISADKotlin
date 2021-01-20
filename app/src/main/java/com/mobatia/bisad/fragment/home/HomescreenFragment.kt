@@ -375,6 +375,8 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     .getButtonthreeGuestBg(mContext)
             )
         }
+
+
         if (sharedprefs
                 .getbuttonfourtextimage(mContext)!!.toInt() != 0
         ) {
@@ -412,6 +414,8 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     .getButtonfourGuestBg(mContext)
             )
         }
+
+
         if (sharedprefs
                 .getbuttonfivetextimage(mContext)!!.toInt() != 0
         ) {
@@ -449,9 +453,9 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     .getButtonfiveGuestBg(mContext)
             )
         }
-        if (sharedprefs
-                .getbuttonsixtextimage(mContext)!!.toInt() != 0
-        ) {
+        if(sharedprefs.getbuttonsixtextimage(mContext)!!.toInt() != 0)
+
+        {
             relImgsix.setImageDrawable(
                 mListImgArrays.getDrawable(
                     sharedprefs
@@ -1072,6 +1076,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
         relImgnine = view!!.findViewById(R.id.relImgNine) as ImageView
 
         loader = view!!.findViewById(R.id.progressbar)
+        loader.visibility=View.GONE
         mSectionText = arrayOfNulls(9)
         // mListImgArrays = appController.mListImgArrays!!
 
@@ -1312,7 +1317,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
 
     fun getbannerimages()
     {
-        loader.visibility = View.VISIBLE
+       // loader.visibility = View.VISIBLE
         val bannerModel=BannerModel("1.0.0",2)
         val token = sharedprefs.getaccesstoken(mContext)
         val call: Call<ResponseBody> = ApiClient.getClient.bannerimages(bannerModel,"Bearer "+token)

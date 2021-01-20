@@ -425,7 +425,7 @@ class SettingsFragment : Fragment(){
         var categoryList= ArrayList<String>()
         categoryList.add("All")
         categoryList.add("Student - Contact Details")
-        categoryList.add("Student - Passport & Emirates")
+        categoryList.add("Student - Passport & Emirates ID")
 
         val mTriggerModelArrayList=ArrayList<TriggerDataModel>()
         for (i in 0..categoryList.size-1)
