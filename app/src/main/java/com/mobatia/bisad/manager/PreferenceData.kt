@@ -69,7 +69,7 @@ class PreferenceData {
             PREFSNAME,
             Context.MODE_PRIVATE
         )
-        return prefs.getString("button_onetabid", "")
+        return prefs.getString("button_onetabid", "0")
     }
 
     fun setbuttontwotabid(context: Context, id: String?) {
