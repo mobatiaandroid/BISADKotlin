@@ -15,7 +15,7 @@ object ApiClient {
     val getClient: ApiInterface
         get() {
 
-            val gson = GsonBuilder()
+            val gson = GhonBuilder()
                 .setLenient()
                 .create()
             val interceptor = HttpLoggingInterceptor()
