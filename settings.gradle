@@ -1,2 +1,4 @@
+include ':giraffeplayer'
+include ':ijkplayer-java'
 include ':app'
 rootProject.name = "BISADKotlin"
