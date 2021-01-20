@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:id="@+id/closeImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/close"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+    <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+        android:id="@+id/passportDetailHeadTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/passport_visa_details"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_below="@+id/closeImg"
+        android:layout_margin="10dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:id="@+id/studentLinear"
+        android:layout_below="@+id/passportDetailHeadTxt">
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/imagicon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/boy"
+            app:siBorderColor="#A0DAE5"
+            app:siBorderWidth="1dp" />
+        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+            android:id="@+id/studentName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="studentName"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:gravity="center"/>
+    </LinearLayout>
+    <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+        android:id="@+id/selectStudentTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="@string/passport_select_student"
+        android:layout_below="@id/passportDetailHeadTxt"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"/>
+    <LinearLayout
+        android:id="@+id/studentSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/event_spinnerbg"
+        android:gravity="center"
+        android:layout_below="@+id/selectStudentTxt"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:visibility="gone">
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/boy"
+            app:siBorderColor="#A0DAE5"
+            app:siBorderWidth="1dp" />
+
+        <com.mobatia.bisad.manager.CustomFontSansProTextBlack
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="80"
+            android:gravity="left|center"
+            android:paddingLeft="10dp"
+            android:text="Select a child"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right|center"
+            android:layout_weight="12"
+            android:src="@drawable/arrowdownnew"
+            android:visibility="visible" />
+
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/studentLinear"
+        android:layout_above="@+id/submitBtn"
+        android:fadeScrollbars="false"
+        android:scrollbarThumbVertical="@drawable/scroll_color">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+                    android:id="@+id/passportHead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Passport"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/black"/>
+                <com.mobatia.bisad.manager.CustomFontSansProTextBlack
+                    android:id="@+id/nationalityHint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nationality"
+                    android:gravity="right"
+                    android:layout_below="@+id/passportHead"
+                    android:layout_marginRight="15dp"
+                    android:textColor="@color/black"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:id="@+id/paasportNationalityLinear"
+                    android:layout_below="@+id/nationalityHint"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/rect_background_grey">
+                    <!--                   <com.toptoche.searchablespinnerlibrary.SearchableSpinner-->
+                    <!--                       android:id="@+id/spinner"-->
+                    <!--                       android:layout_width="match_parent"-->
+                    <!--                       android:layout_height="match_parent"-->
+                    <!--                       android:layout_gravity="center"-->
+                    <!--                       android:visibility="visible"-->
+                    <!--                       android:padding="5dp" />-->
+
+                    <LinearLayout
+                        android:id="@+id/passportLinear"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="100"
+                        >
+                        <com.mobatia.bisad.manager.CustomFontSansProTextBlack
+                            android:id="@+id/passportNationalityTxt"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="90"
+                            android:layout_marginLeft="5dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/black"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/down_arrow"
+                            android:layout_weight="10"/>
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <com.mobatia.bisad.manager.CustomFontSansProTextBlack
+                    android:id="@+id/numberHint"
+                    android:layout_width="match_parent"
+                    android:gravity="right"
+                    android:layout_height="wrap_content"
+                    android:text="Number"
+                    android:layout_below="@+id/paasportNationalityLinear"
+                    android:layout_marginRight="15dp"
+                    android:textColor="@color/black"/>
+                <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                    android:id="@+id/passportNumberTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/numberHint"
+                    android:background="@drawable/rect_background_grey"
+                    android:padding="5dp"
+                    android:textSize="16sp"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+                    android:hint="@string/passport_number_red"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    />
+                <com.mobatia.bisad.manager.CustomFontSansProTextBlack
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Expiry Date"
+                    android:gravity="right"
+                    android:id="@+id/expiryDateHint"
+                    android:layout_below="@+id/passportNumberTxt"
+                    android:layout_marginRight="15dp"
+                    android:textColor="@color/black"/>
+                <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                    android:id="@+id/passportExpiryTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/rect_background_grey"
+                    android:padding="5dp"
+                    android:textSize="16sp"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:layout_below="@+id/expiryDateHint"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/passport_expiry_new"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    />
+                <LinearLayout
+                    android:id="@+id/passportImageLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:weightSum="80"
+                    android:layout_below="@+id/passportExpiryTxt"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/ViewSelectedPassport"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="20"
+                        android:layout_gravity="center"/>
+
+                    <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+                        android:id="@+id/PassImageName"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="20"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:textColor="@color/red"
+                        android:visibility="visible" />
+
+                    <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+                        android:id="@+id/uploadPassportTxt"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="20"
+                        android:clickable="true"
+                        android:background="@drawable/rect_confirm_blue_button"
+                        android:gravity="center"
+                        android:text="@string/visa_passport_upload"
+                        android:textColor="@color/white" />
+
+                    <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+                        android:layout_width="0dp"
+                        android:layout_weight="20"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="10sp"
+                        android:gravity="center"
+                        android:layout_marginRight="15dp"
+                        android:text="@string/attach_passport"/>
+                </LinearLayout>
+
+                <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+                    android:id="@+id/visaHead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Emirates ID"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/black"
+                    android:layout_below="@+id/passportImageLinear"/>
+
+                <com.mobatia.bisad.manager.CustomFontSansProTextBlack
+                    android:id="@+id/visaNumberHint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Number"
+                    android:layout_below="@+id/visaHead"
+                    android:gravity="right"
+                    android:layout_marginRight="15dp"
+                    android:textColor="@color/black"/>
+                <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                    android:id="@+id/visaPermitNumberTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/rect_background_grey"
+                    android:padding="5dp"
+                    android:textSize="16sp"
+                    android:layout_below="@+id/visaNumberHint"
+                    android:hint="Emirates ID Number*"
+                    android:gravity="center_vertical"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/visaImageLinear"
+                    android:layout_below="@+id/visaPermitNumberTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="vertical"
+                    android:weightSum="100"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="15dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="100"
+                        android:weightSum="80"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:id="@+id/ViewSelectedVisa"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="20"
+                            android:layout_gravity="center"/>
+
+                        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+                            android:id="@+id/VisaImageName"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="20"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:textColor="@color/red"
+                            android:visibility="visible" />
+
+                        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+                            android:id="@+id/uploadVisa"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="20"
+                            android:background="@drawable/rect_confirm_blue_button"
+                            android:gravity="center"
+                            android:text="@string/visa_passport_upload"
+                            android:layout_marginStart="10dp"
+                            android:textColor="@color/white" />
+                        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+                            android:id="@+id/uploadVisaTxt"
+                            android:layout_width="0dp"
+                            android:layout_weight="20"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="10sp"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:layout_marginRight="15dp"
+                            android:text="@string/attach_visa"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_below="@+id/visaImageLinear"
+                    android:visibility="invisible"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+    <com.mobatia.bisad.manager.CustomButtonFontSansButton
+        android:id="@+id/submitBtn"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:layout_centerInParent="true"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        android:background="@drawable/rect_data_collection_blue"
+        android:layout_alignParentBottom="true"
+        android:text="Submit"/>
+</RelativeLayout>

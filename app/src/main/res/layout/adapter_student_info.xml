@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.mobatia.bisad.manager.CustomFontSansProTextBlackSemiBold
+                android:id="@+id/nameTxt"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:singleLine="true"
+                android:text="Name"
+                android:textSize="15sp"
+                android:paddingRight="18dp"
+                android:paddingLeft="18dp"/>
+
+            <com.mobatia.bisad.manager.CustomFontSansProTextWhite
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:paddingTop="10dp"
+                android:singleLine="true"
+                android:paddingBottom="10dp"
+                android:paddingRight="25dp"
+                android:id="@+id/valueTxt"
+                android:paddingLeft="25dp"
+                android:background="@drawable/curve_student_info"/>
+
+        </LinearLayout>
+
+
+
+</RelativeLayout>

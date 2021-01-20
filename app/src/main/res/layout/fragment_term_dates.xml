@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.mobatia.bisad.manager.CustomFontDJ5TextWhite
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:background="@color/split_bg"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        android:gravity="center"
+        android:text="Term Dates"
+        android:layout_height="40dp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mTermDatesRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titleTextView"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:scrollbars="vertical" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center">
+        <include
+            android:id="@+id/progressDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/custom_progress_layout"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+</RelativeLayout>

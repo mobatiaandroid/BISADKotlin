@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadeScrollbars="false"
+        android:scrollbarThumbVertical="@drawable/scroll_color">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_alignParentEnd="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/close" />
+
+            </RelativeLayout>
+
+            <com.mobatia.bisad.manager.CustomFontSansProTextNoColorSemiBold
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/contact_details"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/black"
+                android:layout_marginStart="20dp"
+                android:text="@string/additional_contact_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/textView2"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/black"
+                android:layout_marginStart="20dp"
+                android:text="@string/local_emergency_contact_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/textView3"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:id="@+id/BBA"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text_email"
+                        android:orientation="horizontal"
+                        android:background="@color/white"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                            android:id="@+id/ContactDetails_Spinnertype"
+                            android:layout_width="110dp"
+                            android:layout_height="40dp"
+                            android:paddingLeft="10dp"
+                            android:textSize="16sp"
+                            android:text="Mr"
+                            android:layout_marginStart="10dp"
+                            android:drawableRight="@drawable/ccp_down_arrow"
+                            android:background="@drawable/rect_background_grey" />
+
+                        <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                            android:id="@+id/contactDetails_fname"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_toRightOf="@+id/ContactDetails_Spinnertype"
+                            android:background="@drawable/edit_text_login"
+                            android:gravity="left|center"
+                            android:hint="@string/AST_FIRST_NAME"
+                            android:imeOptions="actionDone"
+                            android:inputType="textPersonName"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="5dp"
+                            android:singleLine="true"
+                            android:textColor="@color/black" />
+                    </RelativeLayout>
+
+                    <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                        android:id="@+id/ContactDetails_Lastname"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/edit_text_login"
+                        android:gravity="left|center"
+                        android:hint="@string/own_details_confirm_last_name"
+                        android:imeOptions="actionDone"
+                        android:inputType="textEmailAddress"
+                        android:paddingLeft="10dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/BBA" />
+
+                    <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                        android:id="@+id/ContactDetails_Email"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/edit_text_login"
+                        android:gravity="left|center"
+                        android:hint="@string/email"
+                        android:imeOptions="actionDone"
+                        android:inputType="textEmailAddress"
+                        android:paddingLeft="10dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ContactDetails_Lastname" />
+
+
+
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:id="@+id/relationshipRelative"
+                        android:layout_below="@+id/emailTxt"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/rect_background_grey">
+                        <LinearLayout
+                            android:id="@+id/relationShipLinear"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:weightSum="100"
+                            >
+                            <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+                                android:id="@+id/relationshipTxt"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="90"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/black"/>
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/down_arrow"
+                                android:layout_weight="10"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+
+
+                    <RelativeLayout
+                        android:id="@+id/phoneNo"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text_email"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/relationshipSpinner">
+
+                        <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                            android:id="@+id/spinnerCode"
+                            android:layout_width="75dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/edit_text_login"
+                            android:gravity="center" />
+
+
+                        <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                            android:id="@+id/ContactDetails_Phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_toRightOf="@+id/spinnerCode"
+                            android:background="@drawable/edit_text_login"
+                            android:gravity="left|center"
+                            android:hint="@string/data_collection_own_contact_no_hint"
+                            android:imeOptions="actionDone"
+                            android:inputType="number"
+                            android:paddingLeft="10dp"
+                            android:singleLine="true"
+                            android:textColor="@color/black" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/remove_kin"
+                    android:layout_width="20dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="25dp"
+                    android:src="@drawable/btn_green_remove"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/communicationPreferenceLinear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:visibility="invisible"
+                android:layout_marginRight="10dp">
+                <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+                    android:id="@+id/communicationPreferenceTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/own_details_confirm_communication_preference"/>
+                <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+                    android:id="@+id/communicationPreferenceInfoTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:text="@string/own_details_confirm_communication_preference_info"/>
+                <LinearLayout
+                    android:id="@+id/correspondanceLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/communicationCheck1"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/full_filled_circle"/>
+                    <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+                        android:id="@+id/communicationCheck1Txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="16sp"
+                        android:text="@string/own_details_confirm_communication_preference_corresspondance"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/contactLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/communicationCheck2"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/full_filled_circle"/>
+                    <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+                        android:id="@+id/communicationCheck2Txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="16sp"
+                        android:text="@string/own_details_confirm_communication_preference_report"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/ContactDetails_Submit"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/rect_confirm_blue_button"
+                    android:text="@string/own_details_confirm"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:clickable="true"
+                    android:textSize="19sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/contact_details_plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/add_green"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/ContactDetails_Submit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phoneNo" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

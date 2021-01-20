@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:id="@+id/ownDetailViewRelative"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rect_data_collection_red">
+
+        <Button
+            android:id="@+id/confirmBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Confirm"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:background="@drawable/rect_confirm_background"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/confirmBtn"
+            android:gravity="center"
+            android:layout_margin="10dp">
+            <TextView
+                android:id="@+id/nameOwnDetailTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textColor="@color/black"
+                android:maxLines="1"/>
+            <TextView
+                android:id="@+id/contactTypeOwnDetailTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Contact Type"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:layout_below="@+id/nameOwnDetailTxt"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

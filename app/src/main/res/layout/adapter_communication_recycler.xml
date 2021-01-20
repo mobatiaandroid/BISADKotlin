@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="50dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:weightSum="100"
+        android:orientation="horizontal">
+        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+
+            android:layout_width="0dp"
+            android:layout_weight="95"
+            android:layout_height="48dp"
+            android:id="@+id/itemName"
+            android:text="jdjjdd"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"/>
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_weight="5"
+            android:layout_gravity="center"
+            android:src="@drawable/arrow"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/split_bg"
+        android:layout_below="@+id/linear"/>
+</RelativeLayout>

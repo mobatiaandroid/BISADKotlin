@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/closeImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/close"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+    <TextView
+        android:id="@+id/insuranceInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Student List"
+        android:textColor="@color/black"
+        android:layout_below="@+id/closeImg"
+        android:layout_margin="10dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/studentInfoRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:overScrollMode="never"
+        android:layout_below="@+id/insuranceInfo"/>
+</RelativeLayout>

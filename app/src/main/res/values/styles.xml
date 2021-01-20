@@ -51,4 +51,40 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:background">@color/transparent</item>
     </style>
+    <style name="ListStyleBlackTextTransparentSelector" parent="@android:style/Widget.ListView">
+        <item name="android:textColor">@color/split_bg</item>
+        <item name="android:divider">@drawable/list_divider</item>
+        <item name="android:overScrollMode">never</item>
+        <item name="android:scrollbars">none</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:listSelector">@color/transparent</item>
+        <item name="android:cacheColorHint">@color/transparent</item>
+    </style>
+    <style name="textstyleblack" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+
+    <style name="textstyleblacklogoutuser" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/logout_user</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+    <style name="textstyleblacklogout" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/logout_user</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+
+    <style name="textstyletimetablesingle" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/logout_user</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
 </resources>

@@ -1,0 +1,125 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+
+    <RelativeLayout
+        android:id="@+id/r"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
+
+        <ImageView
+            android:id="@+id/a"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/dialoguetopcurve"
+            android:gravity="center"
+            android:scaleType="fitCenter" />
+
+        <ImageView
+            android:id="@+id/b"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:scaleType="fitCenter" />
+
+        <ImageView
+            android:id="@+id/iconImageView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/round"
+            android:src="@drawable/questionmark_icon"
+            android:gravity="center"
+            android:scaleType="fitCenter" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/r"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/dialoguebottomcurve">
+
+
+        <com.mobatia.bisad.manager.CustomFontSansProTextNoColorSemiBold
+
+            android:id="@+id/alertHead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:gravity="center_horizontal"
+            android:text="Alert"
+            android:textColor="#ff000000"
+            android:textSize="18sp" />
+
+        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+            android:id="@+id/point1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/alertHead"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:text="1. The school requires a minimum of 1 Emergency Contact per family, this contact should not be the Mother or Father"
+            android:textColor="#ff000000" />
+        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+            android:id="@+id/point2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/point1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:text="2. All contacts must be unique i.e. they have their own Email address and mobile number."
+            android:textColor="#ff000000" />
+        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+            android:id="@+id/point3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/point2"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:visibility="gone"
+            android:text="3. All contacts must be unique i.e. they have their own Email address and mobile number"
+            android:textColor="#ff000000" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/point3"
+            android:gravity="center_horizontal"
+            android:weightSum="100">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="50">
+                <Button
+                    android:id="@+id/btn_Ok"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/buttonsubmit_new"
+                    android:text="OK"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textColor="#ffffffff" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

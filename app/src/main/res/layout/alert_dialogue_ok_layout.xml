@@ -61,7 +61,7 @@
             android:textColor="#ff000000"
             android:textSize="18sp" />
 
-        <com.mobatia.bisad.manager.CustomFontSansProTextBlack
+        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
 
             android:id="@+id/text_dialog"
             android:layout_width="wrap_content"
@@ -69,7 +69,6 @@
             android:layout_below="@+id/alertHead"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="30dp"
-
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             android:layout_marginTop="5dp"

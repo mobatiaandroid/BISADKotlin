@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeMain"
+    android:layout_width="fill_parent"
+    android:layout_height="50dp"
+ >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/realMain">
+        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+            android:id="@+id/title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/arrowImg"
+            android:maxLines="2"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+
+        <ImageView
+            android:id="@+id/arrowImg"
+            android:layout_width="20dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/arrow" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/split_bg"
+        android:layout_below="@+id/realMain"/>
+</RelativeLayout>

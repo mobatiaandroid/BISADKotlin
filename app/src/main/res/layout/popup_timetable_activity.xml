@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/Linear"
+    android:paddingRight="10dp"
+    android:orientation="vertical" >
+
+    <!-- <ImageView
+         android:id="@+id/arrow_up"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginBottom="-1dip"
+         android:src="@drawable/bubblearrowup" />-->
+
+
+    <RelativeLayout
+        android:id="@+id/mainRecycleRel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bubble">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_timetable"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:overScrollMode="never"
+            android:background="@null"
+            android:scrollbars="vertical" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/recycler_view_timetable"
+            android:src="@drawable/logotransp"/>
+
+
+    </RelativeLayout>
+
+    <!--   <ImageView
+           android:id="@+id/arrow_down"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="-1dip"
+           android:src="@drawable/bubblearrowdown" />-->
+
+</LinearLayout>
+

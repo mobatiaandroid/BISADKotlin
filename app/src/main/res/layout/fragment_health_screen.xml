@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:id="@+id/closeImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/close"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+    <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+        android:id="@+id/insuranceDetailHeadTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/insurance_details"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/closeImg"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:id="@+id/studentLinear"
+        android:layout_below="@+id/insuranceDetailHeadTxt">
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/imagicon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/boy"
+            app:siBorderColor="#A0DAE5"
+            app:siBorderWidth="1dp" />
+        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+            android:id="@+id/studentName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="studentName"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+        android:id="@+id/selectStudentTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="@string/passport_select_student"
+        android:layout_below="@id/insuranceDetailHeadTxt"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"/>
+    <LinearLayout
+        android:id="@+id/studentSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/event_spinnerbg"
+        android:gravity="center"
+        android:layout_below="@+id/selectStudentTxt"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:visibility="gone">
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/boy"
+            app:siBorderColor="#A0DAE5"
+            app:siBorderWidth="1dp" />
+
+        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="80"
+            android:gravity="left|center"
+            android:paddingLeft="10dp"
+            android:text="Select a child"
+            android:textSize="16sp" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right|center"
+            android:layout_weight="12"
+            android:src="@drawable/arrowdownnew"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+        android:id="@+id/emptyTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/studentLinear"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:layout_margin="10dp"/>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/emptyTxt"
+        android:fadeScrollbars="false"
+        android:scrollbarThumbVertical="@drawable/scroll_color"
+        android:layout_marginBottom="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+                    android:id="@+id/medicalNoteHeadTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/medical_note"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"/>
+                <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/medical_note_sub"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
+
+            <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+                android:id="@+id/MedicalNoteTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rect_background_grey"
+                android:padding="5dp"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+                android:id="@+id/redirectLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:textColor="@color/split_bg"
+                android:text="Health form Link"/>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

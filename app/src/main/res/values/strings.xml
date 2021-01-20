@@ -1,8 +1,182 @@
 <resources>
-    <string name="app_name">BISADKotlin</string>
+    <string name="app_name">BIS_AD</string>
     <!--Login Screen-->
     <string name="username">USER EMAIL</string>
     <string name="password">PASSWORD</string>
     <string name="loading">Loading&#8230;</string>
     <string name="msg_token_fmt">firebase token</string>
+
+    <!--API ERRORS-->
+    <string name="status_101">Some error occured</string>
+    <string name="status_102">Internal server error</string>
+    <string name="status_110">Invalid username/password</string>
+    <string name="status_113">Verification code not match</string>
+    <string name="status_114">User not found in our database</string>
+    <string name="status_116">Token expired</string>
+    <string name="status_123">Invalid file access</string>
+    <string name="status_125">Student not found in our database</string>
+    <string name="status_131">URL/Method Not found</string>
+    <string name="status_132">No records found</string>
+    <string name="status_133">Restricted access</string>
+    <string name="status_104">field required</string>
+    <string name="status_105">exists</string>
+    <string name="status_106">not a valid email</string>
+    <string name="status_107">not a valid number</string>
+    <string name="status_108">password and confirm password not same</string>
+    <string name="status_109">Old passord doesn\'t match!</string>
+    <string name="status_111">No student are linking with that users</string>
+    <string name="status_115">Invalid file type</string>
+    <string name="status_117">not a valid date</string>
+    <string name="status_120">Please enter a valid email address.</string>
+    <string name="status_121">The e-mail has already registered.</string>
+    <string name="status_122">Not a valid JSON</string>
+    <string name="status_126">File size too large( maxsize:2Mb )</string>
+
+
+    <!--HomeScreen Items-->
+
+    <string-array name="navigation_items_guest">
+
+        <item>Home</item>
+        <item>Student Information</item>
+        <item>Calendar</item>
+        <item>Messages</item>
+        <item>Communication</item>
+        <item>Report Absence</item>
+        <item>Teacher Contact</item>
+        <item>Social Media</item>
+        <item>Reports</item>
+        <item>Attendance</item>
+        <item>Time Table</item>
+        <item>Term Dates</item>
+        <item>Curriculum</item>
+        <item>Contact Us</item>
+        <item>Apps</item>
+
+    </string-array>
+
+    <string-array name="navigation_icons_guest">
+        <item>@drawable/home</item>
+        <item>@drawable/sidebar_student_information</item>
+        <item>@drawable/calendar</item>
+        <item>@drawable/notif</item>
+        <item>@drawable/communication</item>
+        <item>@drawable/absence</item>
+        <item>@drawable/parentevening</item>
+        <item>@drawable/social</item>
+        <item>@drawable/report_side</item>
+        <item>@drawable/attendance_side</item>
+        <item>@drawable/time_table_side</item>
+        <item>@drawable/permission_slip</item>
+        <item>@drawable/ccas</item>
+        <item>@drawable/contacts</item>
+        <item>@drawable/app</item>
+
+
+    </string-array>
+
+    <string-array name="navigation_items_registered">
+
+        <item>Home</item>
+        <item>Student Information</item>
+        <item>Calendar</item>
+        <item>Messages</item>
+        <item>Communication</item>
+        <item>Report Absence</item>
+        <item>Teacher Contact</item>
+        <item>Social Media</item>
+        <item>Reports</item>
+        <item>Attendance</item>
+        <item>Time Table</item>
+        <item>Term Dates</item>
+        <item>Curriculum</item>
+        <item>Contact Us</item>
+        <item>Apps</item>
+
+    </string-array>
+    <string-array name="navigation_icons_registered">
+
+        <item>@drawable/home</item>
+        <item>@drawable/sidebar_student_information</item>
+        <item>@drawable/calendar</item>
+        <item>@drawable/notif</item>
+        <item>@drawable/communication</item>
+        <item>@drawable/absence</item>
+        <item>@drawable/parentevening</item>
+        <item>@drawable/social</item>
+        <item>@drawable/report_side</item>
+        <item>@drawable/attendance_side</item>
+        <item>@drawable/time_table_side</item>
+        <item>@drawable/permission_slip</item>
+        <item>@drawable/ccas</item>
+        <item>@drawable/contacts</item>
+        <item>@drawable/app</item>
+    </string-array>
+    <string name="appregisteredHint">App Registered Absences</string>
+    <string name="regNewAbsence">Register New Absence</string>
+    <string name="requestHint">If you need to cancel a registered absence please contact reception (phone or email).</string>
+    <string name="null_value"></string>
+    <string name="submit">SUBMIT</string>
+    <string name="no_family_data_content">There are currently no other contacts associated with students(s).Please add at least one family contact for the family as required.</string>
+    <string name="own_details_confirm_first_name">First name</string>
+    <string name="own_details_confirm_last_name">Last name</string>
+    <string name="own_details_confirm_email_id">Email-ID</string>
+    <string name="own_details_confirm_relation">Relation</string>
+    <string name="own_details_confirm_home_address">Home Address</string>
+    <string name="own_details_confirm_address_line_1">Address Line 1</string>
+    <string name="own_details_confirm_address_line_2">Address Line 2</string>
+    <string name="own_details_confirm_address_line_3">Address Line 3</string>
+    <string name="own_details_confirm_town">Town</string>
+    <string name="own_details_confirm_state">State</string>
+    <string name="own_details_confirm_country">Country</string>
+    <string name="own_details_confirm_post_code">Post Code</string>
+    <string name="own_details_confirm_communication_preference">Communication Preferences</string>
+    <string name="own_details_confirm_communication_preference_info">Please contact <font fgcolor="blue">mobileapp@bisad.ae</font> if the school preferences are incorrect.</string>
+    <string name="own_details_confirm_communication_preference_corresspondance">Contact receives school correspondance</string>
+    <string name="own_details_confirm_communication_preference_report">Contact receives school reports and has access to student details via the BISAD parent app</string>
+    <string name="own_details_confirm">Confirm</string>
+    <string name="AST_ADD_1">Address Line 1<font fgcolor="red">*</font></string>
+    <string name="AST_ADD_2">Address Line 2<font fgcolor="red">*</font></string>
+    <string name="AST_TOWN">Town<font fgcolor="red">*</font></string>
+    <string name="AST_STATE">State<font fgcolor="red">*</font></string>
+    <string name="AST_COUNTRY">Country<font fgcolor="red">*</font></string>
+    <string name="AST_POST">Post Code<font fgcolor="red">*</font></string>
+    <string name="AST_PHONE">Phone Number<font fgcolor="red">*</font></string>
+    <string name="AST_FIRST_NAME">First Name<font fgcolor="red">*</font></string>
+    <string name="AST_EMAIL">Email<font fgcolor="red">*</font></string>
+    <string name="AST_EMAIL_NO">Email</string>
+    <string name="AST_RELATIONSHIP">Relationship<font fgcolor="red">*</font></string>
+    <string name="AST_CONTACT_NUMBER">Contact Number<font fgcolor="red">*</font></string>
+    <string name="AST_LAST_NAME">Last Name<font fgcolor="red">*</font></string>
+    <string name="no_need"><font fgcolor="black">*</font>Not required for malaysians</string>
+    <string name="contact_details">Contact Details</string>
+    <string name="additional_contact_description">Additional contacts must have unique details. Eg A Next of Kin contact email address cannot be the same as the mother’s email address.</string>
+    <string name="local_emergency_contact_detail">Emergency contact - Must have a Malaysian country code</string>
+    <string name="data_collection_own_contact_no_hint">Phone Number<font fgcolor="grey">*</font></string>
+    <string name="data_collection_own_contact_email_hint">Email</string>
+    <string name="data_collection_details">Please provide the details below</string>
+    <string name="data_collection">In the event of an emergency and the primary caregivers not being available we may need to contact your child\'s next of Kin.</string>
+    <string name="title_activity_kin_details">KinDetails</string>
+    <string name="email">Email-ID<font fgcolor="grey">*</font></string>
+    <string name="medical_note">Medical Notes</string>
+    <string name="medical_note_sub">(including allergies)</string>
+
+    <string name="passport_visa_details">Passport/Emirates Details</string>
+    <string name="passport_select_student">Select Student</string>
+    <string name="passport_nationallity">Passport Nationality</string>
+    <string name="passport_number">Passport Number</string>
+    <string name="passport_expiry">Passport Expiry</string>
+    <string name="passport_student_is_malaysia">Student is Malaysian and does not need visa</string>
+    <string name="visa_number">Visa/Permit Number</string>
+    <string name="visa_expiry">Visa/Permit Expiry Date</string>
+    <string name="visa_passport_upload">Upload</string>
+    <string name="attach_visa">Attach Emirates</string>
+    <string name="attach_passport">Attach Passport</string>
+    <string name="insurance_details">Health Details</string>
+    <string name="medical_insurance">Medical Insurance</string>
+    <string name="no_medical_insurance">Do not have medical insurance</string>
+    <string name="display">It is important the school has the latest contact information for your family, please take the time to confirm/update your details. Please ensure you have access to the following documents before continuing:\n \u2022 Passport copy\n \u2022 Emirates ID copy</string>
+    <string name="passport_number_red">Passport Number<font fgcolor="red">*</font></string>
+    <string name="passport_expiry_new">Passport Expiry<font fgcolor="red">*</font></string>
+
 </resources>

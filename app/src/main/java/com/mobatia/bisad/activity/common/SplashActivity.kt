@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mobatia.bisad.MainActivity
 import com.mobatia.bisad.R
+import com.mobatia.bisad.activity.home.HomeActivity
 import com.mobatia.bisad.manager.PreferenceData
 import com.mobatia.bisad.rest.AccessTokenClass
 
@@ -20,18 +21,20 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         mContext=this
         sharedprefs = PreferenceData()
-        var accessTokenValue=AccessTokenClass.getAccessToken(mContext)
-        Log.e("AccessToken",accessTokenValue)
+
 
         Handler().postDelayed({
-            if (sharedprefs.getUserID(mContext).equals(""))
+            if (sharedprefs.getUserCode(mContext).equals(""))
             {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
             else
             {
-                startActivity(Intent(this, MainActivity::class.java))
+                var accessTokenValue=AccessTokenClass.getAccessToken(mContext)
+                Log.e("AccessToken",accessTokenValue)
+                sharedprefs.setSuspendTrigger(mContext,"0")
+                startActivity(Intent(this, HomeActivity::class.java))
                 finish()
             }
         }, SPLASH_TIME_OUT)

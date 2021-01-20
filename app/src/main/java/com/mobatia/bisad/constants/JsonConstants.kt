@@ -16,4 +16,9 @@ class JsonConstants {
     var devicetype: String = "devicetype"
 
     var STATUS :String = "status"
+    var USER_CODE :String = "user_code"
+    var TOKEN :String = "token"
+    var ERROR :String = "errors"
+    var EMAIL :String = "email"
+    var PASSWORD :String = "password"
 }

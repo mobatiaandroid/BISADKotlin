@@ -2,6 +2,7 @@ package com.mobatia.bisad.constants
 
 import android.app.Dialog
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
@@ -9,7 +10,6 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.view.Window
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import com.mobatia.bisad.R
@@ -56,43 +56,99 @@ class InternetCheckClass {
         {
             if (statusCode==101)
             {
-             showErrorAlert(context,"message","message head")
+             showErrorAlert(context,"Some error occured","Alert")
             }
             else if (statusCode==102)
 
             {
-
+                showErrorAlert(context,"Internal server error","Alert")
             }
             else if (statusCode==110)
             {
 
+                showErrorAlert(context,"Invalid username/password","Alert")
             }
             else if (statusCode==113)
             {
-
+                showErrorAlert(context,"Verification code not match","Alert")
             }
             else if (statusCode==114)
             {
-
+                showErrorAlert(context,"User not found in our database","Alert")
             }
             else if (statusCode==116)
             {
-
+                showErrorAlert(context,"Token expired","Alert")
             }
             else if (statusCode==123)
             {
-
+                showErrorAlert(context,Resources.getSystem().getString(R.string.status_123),"Alert")
             }
             else if(statusCode==131)
             {
-
+                showErrorAlert(context,Resources.getSystem().getString(R.string.status_131),"Alert")
             }
             else if (statusCode==132)
             {
-
+                showErrorAlert(context,"No records found","Alert")
             }
             else if (statusCode==133)
             {
+                showErrorAlert(context,Resources.getSystem().getString(R.string.status_133),"Alert")
+            }
+            if (statusCode==104)
+            {
+                showErrorAlert(context,Resources.getSystem().getString(R.string.status_104),"Alert")
+
+            }
+            else if (statusCode==105)
+            {
+                showErrorAlert(context,"Already exists","Alert")
+
+            }
+            else if (statusCode==106)
+            {
+                showErrorAlert(context,Resources.getSystem().getString(R.string.status_106),"Alert")
+
+            } else if (statusCode==107)
+            {
+                showErrorAlert(context,Resources.getSystem().getString(R.string.status_107),"Alert")
+
+            } else if (statusCode==108)
+            {
+                showErrorAlert(context,Resources.getSystem().getString(R.string.status_108),"Alert")
+
+            } else if (statusCode==109)
+            {
+                showErrorAlert(context,Resources.getSystem().getString(R.string.status_109),"Alert")
+
+            } else if (statusCode==111)
+            {
+                showErrorAlert(context,Resources.getSystem().getString(R.string.status_111),"Alert")
+
+            } else if (statusCode==115)
+            {
+                showErrorAlert(context,Resources.getSystem().getString(R.string.status_115),"Alert")
+
+            } else if (statusCode==117)
+            {
+                showErrorAlert(context,Resources.getSystem().getString(R.string.status_117),"Alert")
+
+            } else if (statusCode==120)
+            {
+                showErrorAlert(context,Resources.getSystem().getString(R.string.status_120),"Alert")
+
+            } else if (statusCode==121)
+            {
+                showErrorAlert(context,Resources.getSystem().getString(R.string.status_121),"Alert")
+
+            } else if (statusCode==122)
+            {
+                showErrorAlert(context,Resources.getSystem().getString(R.string.status_122),"Alert")
+
+            } else if (statusCode==126)
+            {
+                showErrorAlert(context,Resources.getSystem().getString(R.string.status_126),"Alert")
 
             }
         }
@@ -114,9 +170,22 @@ class InternetCheckClass {
             {
                 dialog.dismiss()
             }
-
+          dialog.show()
         }
     }
+
+    var COMMUNICATIONS = "Communications"
+    var PARENT_ESSENTIALS = "Parent Essentials"
+    var EARLY_YEARS = "Early Years"
+    var PRIMARY = "Primary"
+    var SECONDARY = "Secondary"
+    var IB_PROGRAMME = "IB Programme"
+    var PERFORMING_ARTS = "Performing Arts"
+    var CCAS = "CCAs"
+    var NAE_PROGRAMMES = "NAE Programmes"
+    var ABOUT_US = "About Us"
+    var CONTACT_US = "Contact Us"
+
 }
 
 

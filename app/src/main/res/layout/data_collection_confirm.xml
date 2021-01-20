@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/backImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/close" />
+    <ScrollView
+        android:id="@+id/scrollOwnDetail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/backImg"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:fadeScrollbars="false"
+        android:scrollbarThumbVertical="@drawable/scroll_color"
+        android:layout_marginRight="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+                android:id="@+id/ownContactDetailTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Parent Contact Details"
+                android:textSize="16sp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="100">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="40"
+                    android:background="@drawable/rect_background_grey"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp">
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/DropEdt"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:paddingLeft="10dp"
+                        android:textSize="16sp"
+                        android:drawableRight="@drawable/ccp_down_arrow"
+                        android:background="@android:color/transparent"/>
+
+                </LinearLayout>
+
+                <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                    android:id="@+id/firstNameTxt"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="60"
+                    android:textSize="16sp"
+                    android:hint="@string/own_details_confirm_first_name"
+                    android:imeOptions="actionDone"
+                    android:paddingStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="center_vertical"
+                    android:inputType="text"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rect_background_grey"/>
+            </LinearLayout>
+            <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                android:id="@+id/lastNameTxt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="16sp"
+                android:inputType="text"
+                android:hint="@string/own_details_confirm_last_name"
+                android:imeOptions="actionDone"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/rect_background_grey"/>
+            <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                android:id="@+id/emailTxt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:hint="@string/own_details_confirm_email_id"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:textSize="16sp"
+                android:background="@drawable/rect_background_grey"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/relationshipRelative"
+                android:layout_below="@+id/emailTxt"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rect_background_grey">
+            <LinearLayout
+                android:id="@+id/relationShipLinear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="100"
+                >
+                <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+                    android:id="@+id/relationshipTxt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="90"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/down_arrow"
+                    android:layout_weight="10"/>
+            </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/phoneNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_email"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ContactDetails_Email">
+
+                <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                    android:id="@+id/dataCollect_Code"
+                    android:layout_width="75dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/edit_text_login"
+                    android:gravity="center" />
+
+                <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                    android:id="@+id/dataCollect_Phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toRightOf="@+id/dataCollect_Code"
+                    android:background="@drawable/edit_text_login"
+                    android:gravity="left|center"
+                    android:hint="@string/AST_PHONE"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:paddingLeft="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+
+            <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:text="@string/own_details_confirm_home_address" />
+
+            <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                android:id="@+id/addressLine1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:inputType="text"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/rect_background_grey"
+                android:hint="@string/AST_ADD_1"
+                android:imeOptions="actionDone"
+                android:paddingLeft="5dp" />
+
+            <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                android:id="@+id/addressLine2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:imeOptions="actionDone"
+                android:layout_marginRight="10dp"
+                android:textSize="16sp"
+                android:inputType="text"
+                android:gravity="center_vertical"
+                android:background="@drawable/rect_background_grey"
+                android:hint="@string/AST_ADD_2"
+                android:paddingLeft="5dp" />
+
+            <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                android:id="@+id/addressLine3"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="16sp"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                android:gravity="center_vertical"
+                android:background="@drawable/rect_background_grey"
+                android:hint="@string/own_details_confirm_address_line_3"
+                android:paddingLeft="5dp" />
+
+            <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                android:id="@+id/townTxt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rect_background_grey"
+                android:gravity="center_vertical"
+                android:hint="@string/AST_TOWN"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:paddingLeft="5dp"
+                android:textSize="16sp" />
+
+            <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                android:id="@+id/stateTxt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="16sp"
+                android:inputType="text"
+                android:gravity="center_vertical"
+                android:background="@drawable/rect_background_grey"
+                android:hint="@string/AST_STATE"
+                android:paddingLeft="5dp" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/paasportNationalityLinear"
+                android:layout_below="@+id/nationalityHint"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:background="@drawable/rect_background_grey">
+                <!--                   <com.toptoche.searchablespinnerlibrary.SearchableSpinner-->
+                <!--                       android:id="@+id/spinner"-->
+                <!--                       android:layout_width="match_parent"-->
+                <!--                       android:layout_height="match_parent"-->
+                <!--                       android:layout_gravity="center"-->
+                <!--                       android:visibility="visible"-->
+                <!--                       android:padding="5dp" />-->
+
+                <LinearLayout
+                    android:id="@+id/passportLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="100"
+                    >
+                    <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+                        android:id="@+id/countryTxt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="90"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/down_arrow"
+                        android:layout_weight="10"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+            <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
+                android:id="@+id/pinTxt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:inputType="number"
+                android:textSize="16sp"
+                android:imeOptions="actionDone"
+                android:gravity="center_vertical"
+                android:hint="@string/AST_POST"
+                android:visibility="gone"
+                android:background="@drawable/rect_background_grey"
+                android:paddingLeft="5dp" />
+            <LinearLayout
+                android:id="@+id/communicationPreferenceLinear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+                <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+                    android:id="@+id/communicationPreferenceTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/own_details_confirm_communication_preference"/>
+                <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+                    android:id="@+id/communicationPreferenceInfoTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:text="@string/own_details_confirm_communication_preference_info"/>
+                <LinearLayout
+                    android:id="@+id/correspondanceLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/communicationCheck1"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/full_filled_circle"/>
+                    <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+                        android:id="@+id/communicationCheck1Txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="16sp"
+                        android:text="@string/own_details_confirm_communication_preference_corresspondance"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/contactLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/communicationCheck2"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/full_filled_circle"/>
+                    <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+                        android:id="@+id/communicationCheck2Txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="16sp"
+                        android:text="@string/own_details_confirm_communication_preference_report"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/confirmBtn"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:text="@string/own_details_confirm"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/white"
+                android:background="@drawable/rect_confirm_blue_button"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
