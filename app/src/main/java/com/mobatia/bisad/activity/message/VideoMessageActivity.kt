@@ -75,7 +75,7 @@ class VideoMessageActivity : AppCompatActivity(){
         webView = findViewById(R.id.webView)
         proWebView = findViewById(R.id.proWebView)
         textcontent.visibility=View.INVISIBLE
-        heading.setText("Messages")
+        heading.text = "Messages"
         btn_left.setOnClickListener(View.OnClickListener {
             finish()
         })
@@ -221,20 +221,11 @@ class VideoMessageActivity : AppCompatActivity(){
             return true
         }
 
-        override fun onPageStarted(
-            view: WebView,
-            url: String,
-            favicon: Bitmap
-        ) {
-            // TODO Auto-generated method stub
-            super.onPageStarted(view, url, favicon)
-        }
-
         override fun onPageFinished(view: WebView, url: String) {
             // TODO Auto-generated method stub
             super.onPageFinished(view, url)
 //            proWebView.setVisibility(View.GONE)
-            textcontent.setVisibility(View.VISIBLE)
+            textcontent.visibility = View.VISIBLE
         }
     }
 }
