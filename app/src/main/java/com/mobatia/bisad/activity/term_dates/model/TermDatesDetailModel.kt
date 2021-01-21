@@ -6,5 +6,5 @@ import com.mobatia.bisad.fragment.termdates.model.TermDateResponseArray
 data class TermDatesDetailModel (
 
     @SerializedName("status") val status: Int,
-    @SerializedName("responseArray") val responseArray: TermDateDetailsResponseArray
+    @SerializedName("responseArray") val responseArray: TermDatesDetailArrayList
 )

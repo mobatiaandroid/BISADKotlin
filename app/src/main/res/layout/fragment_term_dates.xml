@@ -16,16 +16,15 @@
         android:gravity="center"
         android:text="Term Dates"
         android:layout_height="40dp" />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mTermDatesRecycler"
+    <WebView
+        android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="false"
         android:layout_below="@+id/titleTextView"
-        android:layout_marginTop="5dp"
-        android:background="@color/white"
-        android:clipToPadding="false"
+        android:focusableInTouchMode="false"
         android:overScrollMode="never"
-        android:scrollbars="vertical" />
+        android:scrollbars="none" />
 
 
     <LinearLayout

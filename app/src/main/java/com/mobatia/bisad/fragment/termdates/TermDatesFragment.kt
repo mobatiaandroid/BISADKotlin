@@ -14,6 +14,9 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.webkit.WebChromeClient
+import android.webkit.WebSettings
+import android.webkit.WebView
 import android.widget.*
 import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
@@ -27,6 +30,7 @@ import com.mobatia.bisad.R
 import com.mobatia.bisad.activity.absence.AbsenceDetailActivity
 import com.mobatia.bisad.activity.apps.AppsDetailActivity
 import com.mobatia.bisad.activity.term_dates.TermDatesDetailActivity
+import com.mobatia.bisad.activity.term_dates.model.TermDatesDetailModel
 import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
 import com.mobatia.bisad.fragment.home.mContext
@@ -56,16 +60,10 @@ import retrofit2.Response
 
 class TermDatesFragment : Fragment(){
     lateinit var jsonConstans: JsonConstants
-    private lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var sharedprefs: PreferenceData
-    lateinit var mTermDatesRecycler: RecyclerView
     lateinit var progressDialog: RelativeLayout
     lateinit var mContext: Context
-    lateinit var termDatesArrrayList : ArrayList<TermDatesListDetailModel>
-     var start:Int=0
-    var limit:Int=15
-    var isLoading:Boolean=false
-    var stopLoading:Boolean=false
+     lateinit var webView: WebView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -79,53 +77,15 @@ class TermDatesFragment : Fragment(){
         sharedprefs = PreferenceData()
         mContext = requireContext()
         initializeUI()
-        start=0
-        limit=20
-        callTermDatesListAPI(start,limit)
+        callTermDatesListAPI()
+        getSettings()
 
     }
 
     private fun initializeUI() {
-        termDatesArrrayList=ArrayList()
-        mTermDatesRecycler = view!!.findViewById(R.id.mTermDatesRecycler) as RecyclerView
-        linearLayoutManager = LinearLayoutManager(mContext)
-        mTermDatesRecycler.layoutManager = linearLayoutManager
-        mTermDatesRecycler.itemAnimator = DefaultItemAnimator()
-        mTermDatesRecycler.addOnItemClickListener(object: OnItemClickListener {
-            override fun onItemClicked(position: Int, view: View) {
-                val intent = Intent(activity, TermDatesDetailActivity::class.java)
-                intent.putExtra("id",termDatesArrrayList.get(position).id)
-                intent.putExtra("title",termDatesArrrayList.get(position).title)
-                activity?.startActivity(intent)
-            }
-        })
 
-
-        mTermDatesRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(@NonNull recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-            }
-
-            override fun onScrolled(
-                @NonNull recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val linearLayoutManager =
-                    recyclerView.layoutManager as LinearLayoutManager?
-                if (!isLoading) {
-                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == termDatesArrrayList.size - 1) {
-                        //bottom of list!
-                        if (!stopLoading)
-                        {
-                            start=start+limit
-                            callTermDatesListAPI(start,limit)
-                            isLoading = true
-                        }
-
-                    }
-                }
-            }
-        })
         progressDialog = view!!.findViewById(R.id.progressDialog) as RelativeLayout
+        webView =  view!!.findViewById(R.id.webView)
         val aniRotate: Animation =
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
         progressDialog.startAnimation(aniRotate)
@@ -133,54 +93,77 @@ class TermDatesFragment : Fragment(){
 
 
 
-    fun callTermDatesListAPI(startValue:Int,limitValue:Int)
+    fun callTermDatesListAPI()
     {
-        var termList=ArrayList<TermDatesListDetailModel>()
         progressDialog.visibility = View.VISIBLE
         val token = sharedprefs.getaccesstoken(mContext)
-        val termsDatesBody= TermDatesApiModel(startValue,limitValue)
-        val call: Call<TermDatesListModel> = ApiClient.getClient.termDatesList(termsDatesBody,"Bearer "+token)
-        call.enqueue(object : Callback<TermDatesListModel>{
-            override fun onFailure(call: Call<TermDatesListModel>, t: Throwable) {
+        val call: Call<TermDatesDetailModel> = ApiClient.getClient.termdates("Bearer "+token)
+        call.enqueue(object : Callback<TermDatesDetailModel>{
+            override fun onFailure(call: Call<TermDatesDetailModel>, t: Throwable) {
                 progressDialog.visibility = View.GONE
                 Log.e("Error", t.localizedMessage)
             }
-            override fun onResponse(call: Call<TermDatesListModel>, response: Response<TermDatesListModel>) {
+            override fun onResponse(call: Call<TermDatesDetailModel>, response: Response<TermDatesDetailModel>) {
                 progressDialog.visibility = View.GONE
                 if (response.body()!!.status==100)
                 {
-                    termList.addAll(response.body()!!.responseArray!!.termDatesList)
-                    termDatesArrrayList.addAll(termList)
-                    if (termList.size==20)
-                    {
-                        stopLoading=false
-                    }
-                    else{
-                        stopLoading=true
-                    }
-                  if (termDatesArrrayList.size>0)
-                  {
-                      mTermDatesRecycler.visibility=View.VISIBLE
-                      val termDatesAdapter = TermDatesRecyclerAdapter(termDatesArrrayList)
-                      mTermDatesRecycler.setAdapter(termDatesAdapter)
-                      if(termDatesArrrayList.size>20)
-                      {
-                          mTermDatesRecycler.scrollToPosition(startValue)
-                      }
 
-                      isLoading=false
-                  }
-                    else
-                  {
-                      mTermDatesRecycler.visibility=View.GONE
-                      showSuccessAlert(mContext,"No data found.","Alert")
-                  }
+                  var title:String = response.body()!!.responseArray.title
+                  var description = response.body()!!.responseArray.description
+                    var pushNotificationDetail="<!DOCTYPE html>\n"+
+                            "<html>\n" +
+                            "<head>\n" +
+                            "<style>\n" +
+                            "\n" +
+                            "@font-face {\n" +
+                            "font-family: SourceSansPro-Semibold;" +
+                            "src: url(SourceSansPro-Semibold.ttf);" +
+
+                            "font-family: SourceSansPro-Regular;" +
+                            "src: url(SourceSansPro-Regular.ttf);" +
+                            "}" +
+                            ".title {" +
+                            "font-family: SourceSansPro-Regular;" +
+                            "font-size:16px;" +
+                            "text-align:left;" +
+                            "color:	#46C1D0;" +
+                            "text-align: ####TEXT_ALIGN####;" +
+                            "}" +
+                            ".description {" +
+                            "font-family: SourceSansPro-Semibold;" +
+                            "text-align:justify;" +
+                            "font-size:14px;" +
+                            "color: #000000;" +
+                            "text-align: ####TEXT_ALIGN####;" +
+                            "}" +
+                            ".externalLink {" +
+                            "font-family: SourceSansPro-Light;" +
+                            "text-align:left;" +
+                            "font-size:15px;"  +
+                            "color: #000000;"+
+                            "text-align: ####TEXT_ALIGN####;"+
+                            "}" +
+                            ".a {"+
+                            " color: #46C1D0;"+
+                            "}"+
+                            "</style>\n" + "</head>" +
+                            "<body>" +
+                            "<p class='title'>"+title
+
+                    pushNotificationDetail=pushNotificationDetail+ "<p class='description'>" +description+ "</p>"
+                    pushNotificationDetail=pushNotificationDetail+"</body>\n</html>"
+                    var htmlData=pushNotificationDetail
+                    Log.e("HTML DATA",htmlData)
+                    //  webView.loadData(htmlData,"text/html; charset=utf-8","utf-8")
+                    webView.loadDataWithBaseURL("file:///android_asset/fonts/",htmlData,"text/html; charset=utf-8", "utf-8", "about:blank")
+
+
 
                 }
                 else if(response.body()!!.status==116)
                 {
                     AccessTokenClass.getAccessToken(mContext)
-                    callTermDatesListAPI(startValue,limitValue)
+                    callTermDatesListAPI()
                 }
                 else
                 {
@@ -210,6 +193,36 @@ class TermDatesFragment : Fragment(){
 
         }
         dialog.show()
+    }
+
+    fun getSettings()
+    {
+        webView.settings.javaScriptEnabled = true
+        webView.settings.setSupportZoom(false)
+        webView.settings.setAppCacheEnabled(false)
+        webView.settings.javaScriptCanOpenWindowsAutomatically = true
+        webView.settings.domStorageEnabled = true
+        webView.settings.databaseEnabled = true
+        webView.settings.defaultTextEncodingName = "utf-8"
+        webView.settings.loadsImagesAutomatically = true
+        webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
+        webView.settings.allowFileAccess = true
+        webView.setBackgroundColor(Color.TRANSPARENT)
+        webView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null)
+
+
+        webView.webChromeClient = object : WebChromeClient() {
+            override fun onProgressChanged(view: WebView, newProgress: Int) {
+                progressDialog.visibility = View.VISIBLE
+                println("testing2")
+                if (newProgress == 100)
+                {
+                    println("testing1")
+                    progressDialog.visibility = View.GONE
+
+                }
+            }
+        }
     }
 }
 

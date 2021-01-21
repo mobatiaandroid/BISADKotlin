@@ -11,6 +11,7 @@ import com.mobatia.bisad.activity.message.model.MessageDetailModel
 import com.mobatia.bisad.activity.settings.termsofservice.model.TermsOfServiceModel
 import com.mobatia.bisad.activity.term_dates.model.TermDatesDetailApiModel
 import com.mobatia.bisad.activity.term_dates.model.TermDatesDetailModel
+import com.mobatia.bisad.fragment.apps.model.AppsApiModel
 import com.mobatia.bisad.fragment.apps.model.AppsListModel
 import com.mobatia.bisad.fragment.attendance.model.AttendanceApiModel
 import com.mobatia.bisad.fragment.attendance.model.AttendanceListModel
@@ -178,11 +179,9 @@ interface ApiInterface {
     /*************TERM_DATES LIST****************/
     @POST("api/v1/termdates")
     @Headers("Content-Type: application/json")
-    fun termDatesList(
-        @Body  termDates: TermDatesApiModel,
+    fun termdates(
         @Header("Authorization") token:String
-    ): Call<TermDatesListModel>
-
+    ): Call<TermDatesDetailModel>
 
     @POST("api/v1/terms_of_service")
     @Headers("Content-Type: application/x-www-form-urlencode","Accept: application/json")
@@ -207,10 +206,10 @@ interface ApiInterface {
 
     /*************APPS LIST****************/
     @POST("api/v1/apps")
-    @FormUrlEncoded
+    @Headers("Content-Type: application/json")
     fun appsList(
-        @Field("start") start: Int,
-        @Field("limit") limit: Int
+        @Body  appsList: AppsApiModel,
+        @Header("Authorization") token:String
     ): Call<AppsListModel>
 
     /*************TERM_DATES DETAIL****************/

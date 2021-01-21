@@ -42,6 +42,7 @@ class TermDatesDetailActivity : AppCompatActivity(){
     var date:String=""
     var linkFetch:String=""
     private lateinit var relativeHeader: RelativeLayout
+    private lateinit var backRelative: RelativeLayout
     private lateinit var logoClickImgView: ImageView
     private lateinit var btn_left: ImageView
     private lateinit var heading: TextView
@@ -64,6 +65,7 @@ class TermDatesDetailActivity : AppCompatActivity(){
     }
     fun initUI() {
         relativeHeader = findViewById(R.id.relativeHeader)
+        backRelative = findViewById(R.id.backRelative)
         heading = findViewById(R.id.heading)
         btn_left = findViewById(R.id.btn_left)
         logoClickImgView = findViewById(R.id.logoClickImgView)
@@ -71,6 +73,9 @@ class TermDatesDetailActivity : AppCompatActivity(){
         webView = findViewById(R.id.webView)
         heading.setText("Term Dates")
         btn_left.setOnClickListener(View.OnClickListener {
+            finish()
+        })
+        backRelative.setOnClickListener(View.OnClickListener {
             finish()
         })
         logoClickImgView.setOnClickListener(View.OnClickListener {
@@ -96,10 +101,10 @@ class TermDatesDetailActivity : AppCompatActivity(){
                 {
                     idApi=id
                     titleApi=title
-                    message=response.body()!!.responseArray.termdates.description
-                    url=response.body()!!.responseArray.termdates.image
-                    date=response.body()!!.responseArray.termdates.created_at
-                    linkFetch=response.body()!!.responseArray.termdates.link
+//                    message=response.body()!!.responseArray.termdates.description
+//                    url=response.body()!!.responseArray.termdates.image
+//                    date=response.body()!!.responseArray.termdates.created_at
+//                    linkFetch=response.body()!!.responseArray.termdates.link
                     val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                     val outputFormat: DateFormat = SimpleDateFormat("hh:mm a")
                     val outputFormatdate: DateFormat = SimpleDateFormat("dd-MMM-yyyy")

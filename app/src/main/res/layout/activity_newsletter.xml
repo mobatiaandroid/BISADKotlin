@@ -92,7 +92,7 @@
         <include
             android:id="@+id/progressDialog"
             layout="@layout/custom_progress_layout"
-            android:layout_width="28dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:visibility="visible" />
 

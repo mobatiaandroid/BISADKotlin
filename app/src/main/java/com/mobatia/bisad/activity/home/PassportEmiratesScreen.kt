@@ -228,6 +228,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         spinnerDialog.bindOnSpinerListener(object : OnSpinerItemClick {
             override fun onClick(item: String, position: Int) {
                 passportNationalityTxt.text = item
+                isChanged=true
                 var passportID=passportDetailArrayList.get(foundPosition).id
                 var model=PassportApiModel()
                  model.id=passportDetailArrayList.get(foundPosition).id
@@ -277,12 +278,12 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
                 var passportDummy=ArrayList<PassportApiModel>()
                 sharedprefs.setPassportDetailArrayList(mContext,passportDummy)
                 sharedprefs.setPassportDetailArrayList(mContext,passportDetailArrayList)
-                isChanged=true
             }
         })
 
         passportLinear.setOnClickListener(View.OnClickListener {
             spinnerDialog.showSpinerDialog()
+            isChanged=true
 
         })
 
@@ -361,7 +362,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
                 var passportDummy=ArrayList<PassportApiModel>()
                 sharedprefs.setPassportDetailArrayList(mContext,passportDummy)
                 sharedprefs.setPassportDetailArrayList(mContext,passportDetailArrayList)
-                isChanged=true
             }
         })
 
@@ -1161,6 +1161,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
 
     fun updateLabel()
     {
+        isChanged=true
         val myFormat = "dd MMMM yyyy" //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         passportExpiryTxt.setText(sdf.format(myCalendar.time))
@@ -1211,7 +1212,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         var passportDummy=ArrayList<PassportApiModel>()
         sharedprefs.setPassportDetailArrayList(mContext,passportDummy)
         sharedprefs.setPassportDetailArrayList(mContext,passportDetailArrayList)
-        isChanged=true
     }
 }
 

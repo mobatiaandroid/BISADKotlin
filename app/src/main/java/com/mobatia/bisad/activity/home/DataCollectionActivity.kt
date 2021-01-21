@@ -23,6 +23,7 @@ import com.google.gson.Gson
 import com.mobatia.bisad.R
 import com.mobatia.bisad.activity.absence.model.RequestAbsenceApiModel
 import com.mobatia.bisad.activity.home.model.DataCollectionSubmissionModel
+import com.mobatia.bisad.activity.home.model.HealthInsuranceDetailAPIModel
 import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
 import com.mobatia.bisad.fragment.home.model.StudentListDataCollection
@@ -231,7 +232,7 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
                             else{
 
                                 var triggerType = 3
-                                var overallStatus =1
+                                var overallStatus =2
                                 callSubmitAPI(triggerType, overallStatus)
 
                             }
@@ -324,6 +325,7 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
                     {
                         var triggerType = 1
                         var overallStatus =2
+                        Log.e("SUBMITS WORKS","OVERALL")
                         callSubmitAPI(triggerType, overallStatus)
                     }
                 }
@@ -600,9 +602,10 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
                 sharedprefs.getStudentArrayList(context)!!.clear()
                 var dummyStudent=ArrayList<StudentListDataCollection>()
                 sharedprefs.setStudentArrayList(context,dummyStudent)
+                finish()
 
             }
-            else if(triggertype==3 && overallStatus==1)
+            else if(triggertype==3 && overallStatus==2)
             {
                 sharedprefs.setDataCollection(context,1)
                 sharedprefs.setTriggerType(context,3)
@@ -649,19 +652,50 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
         var newGson=Gson()
         var FIRSTDATA:String=newGson.toJson(FirstArray)
         Log.e("FIRSTDATA",FIRSTDATA)
-
         var healthArray=ArrayList<HealthInsuranceDetailModel>()
+        var healthArrayNEw=ArrayList<HealthInsuranceDetailAPIModel>()
         healthArray=sharedprefs.getHealthDetailArrayList(context)!!
-        var HEALTHARRAY=ArrayList<HealthInsuranceDetailModel>()
-        HEALTHARRAY=healthArray
+        for (i in 0..healthArray.size-1)
+        {
+            var model=HealthInsuranceDetailAPIModel()
+            model.id=healthArray.get(i).id
+            model.student_unique_id=healthArray.get(i).student_unique_id
+            model.student_id=healthArray.get(i).student_id
+            model.student_name=healthArray.get(i).student_name
+            model.health_detail=healthArray.get(i).health_detail
+            model.health_form_link=healthArray.get(i).health_form_link
+
+            model.status=5
+            model.request=0
+            model.created_at=healthArray.get(i).created_at
+            model.updated_at=healthArray.get(i).updated_at
+            healthArrayNEw.add(model)
+
+        }
+
+        var HEALTHARRAY=ArrayList<HealthInsuranceDetailAPIModel>()
+        HEALTHARRAY=healthArrayNEw
         var newHGson=Gson()
         var HEALTHDATA:String=newHGson.toJson(HEALTHARRAY)
         Log.e("HEALTHDATA",HEALTHDATA)
 
-        var passportArray=ArrayList<PassportApiModel>()
-        passportArray=sharedprefs.getPassportDetailArrayList(context)!!
+        var passportArrayCheck=ArrayList<PassportApiModel>()
+        passportArrayCheck=sharedprefs.getPassportDetailArrayList(context)!!
+        for (i in 0..passportArrayCheck.size-1)
+        {
+            if (passportArrayCheck.get(i).id==0)
+            {
+                passportArrayCheck.get(i).status=0
+                passportArrayCheck.get(i).request=1
+
+            }
+            else{
+                passportArrayCheck.get(i).status=1
+                passportArrayCheck.get(i).request=0
+            }
+        }
         var PASSPORTARRAY=ArrayList<PassportApiModel>()
-        PASSPORTARRAY=passportArray
+        PASSPORTARRAY=passportArrayCheck
         var newPGson=Gson()
         var PASSPORTDATA:String=newPGson.toJson(PASSPORTARRAY)
         Log.e("PASSPORTDATA",PASSPORTDATA)
@@ -669,24 +703,34 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
 
         if (sharedprefs.getTriggerType(context)==1)
         {
-            if (triggertype==3 && overallStatus==1)
+            Log.e("DATA","TRIGGER 1")
+            if (triggertype==3 && overallStatus==2)
             {
+                Log.e("DATA","TRIGGER 13")
                 JSONSTRING="{"+OWNDATA+","+"\"kin_details\""+":"+FIRSTDATA+" }"
             }
             else
             {
+                Log.e("DATA","TRIGGER 11")
+                //1
                 JSONSTRING="{"+OWNDATA+","+"\"kin_details\""+":"+FIRSTDATA+","+"\"health_details\""+":"+HEALTHDATA+","+"\"passport_details\""+":"+PASSPORTDATA+" }"
             }
         }
         else
         {
+            Log.e("DATA","TRIGGER 2 &3")
             if (sharedprefs.getTriggerType(context)==2)
             {
+                Log.e("DATA","TRIGGER 2")
                 JSONSTRING="{"+OWNDATA+","+"\"kin_details\""+":"+FIRSTDATA+" }"
             }
             else{
-                if (sharedprefs.getTriggerType(context)==3)
+                Log.e("DATA","TRIGGER !2"+sharedprefs.getTriggerType(context))
+
+                if (sharedprefs.getTriggerType(context)==4)
                 {
+
+                    Log.e("DATA","TRIGGER 3")
                     JSONSTRING="{"+"\"health_details\""+":"+HEALTHDATA+","+"\"passport_details\""+":"+PASSPORTDATA+" }"
                 }
             }

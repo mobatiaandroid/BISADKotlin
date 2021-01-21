@@ -34,6 +34,7 @@ class AbsenceDetailActivity : AppCompatActivity(){
      var fromDate:String?=""
      var toDate:String?=""
     private lateinit var relativeHeader: RelativeLayout
+    private lateinit var backRelative: RelativeLayout
     private lateinit var logoClickImgView: ImageView
     private lateinit var btn_left: ImageView
     private lateinit var heading: TextView
@@ -61,11 +62,15 @@ class AbsenceDetailActivity : AppCompatActivity(){
         leaveDateToValue = findViewById<TextView>(R.id.leaveDateToValue)
         reasonValue = findViewById<TextView>(R.id.reasonValue)
         relativeHeader = findViewById(R.id.relativeHeader)
+        backRelative = findViewById(R.id.backRelative)
         heading = findViewById(R.id.heading)
         btn_left = findViewById(R.id.btn_left)
         logoClickImgView = findViewById(R.id.logoClickImgView)
         heading.setText("Absence")
         btn_left.setOnClickListener(View.OnClickListener {
+            finish()
+        })
+        backRelative.setOnClickListener(View.OnClickListener {
             finish()
         })
         logoClickImgView.setOnClickListener(View.OnClickListener {

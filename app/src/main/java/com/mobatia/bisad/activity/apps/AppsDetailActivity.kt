@@ -25,6 +25,7 @@ class AppsDetailActivity : AppCompatActivity() {
     private lateinit var webView: WebView
     private lateinit var progressDialog: RelativeLayout
     private lateinit var relativeHeader: RelativeLayout
+    private lateinit var backRelative: RelativeLayout
     private lateinit var logoClickImgView: ImageView
     private lateinit var btn_left: ImageView
     private lateinit var heading: TextView
@@ -41,7 +42,7 @@ class AppsDetailActivity : AppCompatActivity() {
 
     }
     private fun getWebViewSettings() {
-        //progressDialog.visibility
+        progressDialog.visibility
         val settings = webView.settings
         settings.domStorageEnabled = true
     }
@@ -53,10 +54,14 @@ class AppsDetailActivity : AppCompatActivity() {
         logoClickImgView = findViewById(R.id.logoClickImgView)
         progressDialog = findViewById(R.id.progressDialog)
         relativeHeader = findViewById(R.id.relativeHeader)
+        backRelative = findViewById(R.id.backRelative)
         heading = findViewById(R.id.heading)
 
         heading.setText(headingValue)
         btn_left.setOnClickListener(View.OnClickListener {
+            finish()
+        })
+        backRelative.setOnClickListener(View.OnClickListener {
             finish()
         })
         logoClickImgView.setOnClickListener(View.OnClickListener {

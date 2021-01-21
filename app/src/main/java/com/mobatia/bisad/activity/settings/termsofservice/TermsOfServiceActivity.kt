@@ -47,6 +47,7 @@ class TermsOfServiceActivity : AppCompatActivity(){
     var url:String=""
     var date:String=""
     private lateinit var relativeHeader: RelativeLayout
+    private lateinit var backRelative: RelativeLayout
     private lateinit var logoClickImgView: ImageView
     private lateinit var btn_left: ImageView
     private lateinit var heading: TextView
@@ -69,11 +70,15 @@ class TermsOfServiceActivity : AppCompatActivity(){
         relativeHeader = findViewById(R.id.relativeHeader)
         heading = findViewById(R.id.heading)
         btn_left = findViewById(R.id.btn_left)
+        backRelative = findViewById(R.id.backRelative)
         logoClickImgView = findViewById(R.id.logoClickImgView)
         progressDialog = findViewById(R.id.progressDialog)
         webView = findViewById(R.id.webView)
         heading.setText("Terms of Services")
         btn_left.setOnClickListener(View.OnClickListener {
+            finish()
+        })
+        backRelative.setOnClickListener(View.OnClickListener {
             finish()
         })
         logoClickImgView.setOnClickListener(View.OnClickListener {

@@ -41,6 +41,7 @@ class ImageMessageActivity : AppCompatActivity(){
     var url:String=""
     var date:String=""
     private lateinit var relativeHeader: RelativeLayout
+    private lateinit var backRelative: RelativeLayout
     private lateinit var logoClickImgView: ImageView
     private lateinit var btn_left: ImageView
     private lateinit var heading: TextView
@@ -67,8 +68,12 @@ class ImageMessageActivity : AppCompatActivity(){
         logoClickImgView = findViewById(R.id.logoClickImgView)
         progressDialog = findViewById(R.id.progressDialog)
         webView = findViewById(R.id.webView)
+        backRelative = findViewById(R.id.backRelative)
         heading.setText("Messages")
         btn_left.setOnClickListener(View.OnClickListener {
+            finish()
+        })
+        backRelative.setOnClickListener(View.OnClickListener {
             finish()
         })
         logoClickImgView.setOnClickListener(View.OnClickListener {

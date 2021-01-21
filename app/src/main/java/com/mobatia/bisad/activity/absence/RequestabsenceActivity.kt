@@ -79,6 +79,7 @@ class RequestabsenceActivity : AppCompatActivity(){
     private lateinit var btn_left: ImageView
     private lateinit var heading: TextView
     lateinit var progressDialog: RelativeLayout
+    lateinit var backRelative: RelativeLayout
     override fun onCreate(savedInstanceState: Bundle?)
     { super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_request_absence)
@@ -104,12 +105,16 @@ class RequestabsenceActivity : AppCompatActivity(){
         submitLayout = findViewById(R.id.submitLayout) as LinearLayout
         submitBtn = findViewById(R.id.submitBtn) as Button
         relativeHeader = findViewById(R.id.relativeHeader)
+        backRelative = findViewById(R.id.backRelative)
         heading = findViewById(R.id.heading)
         btn_left = findViewById(R.id.btn_left)
         logoClickImgView = findViewById(R.id.logoClickImgView)
         progressDialog = findViewById(R.id.progressDialog) as RelativeLayout
         heading.setText("Absence")
         btn_left.setOnClickListener(View.OnClickListener {
+            finish()
+        })
+        backRelative.setOnClickListener(View.OnClickListener {
             finish()
         })
         logoClickImgView.setOnClickListener(View.OnClickListener {

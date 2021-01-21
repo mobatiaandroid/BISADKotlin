@@ -34,6 +34,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 private lateinit var relativeHeader: RelativeLayout
+private lateinit var backRelative: RelativeLayout
 private lateinit var logoClickImgView: ImageView
 private lateinit var btn_left: ImageView
 private lateinit var heading: TextView
@@ -74,9 +75,13 @@ class VideoMessageActivity : AppCompatActivity(){
         textcontent = findViewById(R.id.txtContent)
         webView = findViewById(R.id.webView)
         proWebView = findViewById(R.id.proWebView)
+        backRelative = findViewById(R.id.backRelative)
         textcontent.visibility=View.INVISIBLE
         heading.text = "Messages"
         btn_left.setOnClickListener(View.OnClickListener {
+            finish()
+        })
+        backRelative.setOnClickListener(View.OnClickListener {
             finish()
         })
         logoClickImgView.setOnClickListener(View.OnClickListener {

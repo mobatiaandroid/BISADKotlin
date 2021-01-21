@@ -1,6 +1,10 @@
 package com.mobatia.bisad.fragment.communication
 
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -9,10 +13,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
+import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +31,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.mobatia.bisad.R
 import com.mobatia.bisad.activity.absence.AbsenceDetailActivity
 import com.mobatia.bisad.activity.communication.newsletter.NewsLetterActivity
+import com.mobatia.bisad.activity.communication.newsletter.NewsLetterDetailActivity
+import com.mobatia.bisad.activity.communication.newsletter.adapter.NewsLetterRecyclerAdapter
+import com.mobatia.bisad.activity.communication.newsletter.model.NewLetterListDetailModel
+import com.mobatia.bisad.activity.communication.newsletter.model.NewsLetterDetailModel
+import com.mobatia.bisad.activity.communication.newsletter.model.NewsLetterListAPiModel
+import com.mobatia.bisad.activity.communication.newsletter.model.NewsLetterListModel
 import com.mobatia.bisad.activity.home.PageView
 import com.mobatia.bisad.activity.settings.termsofservice.TermsOfServiceActivity
 import com.mobatia.bisad.activity.settings.tutorial.TutorialActivity
@@ -50,18 +64,21 @@ import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
 
-lateinit var bannerImage: ViewPager
 
 class CommunicationFragment : Fragment(){
+    lateinit var mContext:Context
     lateinit var jsonConstans: JsonConstants
     lateinit var sharedprefs: PreferenceData
-    lateinit var bannerImageViewPager: ImageView
-    var bannerarray = ArrayList<String>()
-    var currentPage: Int = 0
-    var mCommunicationArrayList = ArrayList<String>()
+    lateinit var newsLetterArrayList :ArrayList<NewLetterListDetailModel>
+    lateinit var newsLetterShowArrayList :ArrayList<NewLetterListDetailModel>
     lateinit var progressDialog: RelativeLayout
     private lateinit var linearLayoutManager: LinearLayoutManager
-    lateinit var socialMediaRecycler: RecyclerView
+    lateinit var newsLetterRecycler: RecyclerView
+    var start:Int=0
+    var limit:Int=20
+    var stopLoading:Boolean=false
+    var isLoading:Boolean=false
+    var apiCall:Int=0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,148 +91,150 @@ class CommunicationFragment : Fragment(){
         jsonConstans = JsonConstants()
         sharedprefs = PreferenceData()
         mContext = requireContext()
-        mCommunicationArrayList.add("NewsLetters")
         initializeUI()
-        getbannerimages()
+        start=0
+        limit=20
+        callNewLetterListAPI(start,limit)
     }
 
     private fun initializeUI()
     {
-        bannerImage = view!!.findViewById<ViewPager>(R.id.bannerImagePager)
+        newsLetterArrayList= ArrayList()
         linearLayoutManager = LinearLayoutManager(mContext)
-        socialMediaRecycler = view!!.findViewById(R.id.socialMediaRecycler) as RecyclerView
-        socialMediaRecycler.layoutManager = linearLayoutManager
-        socialMediaRecycler.itemAnimator = DefaultItemAnimator()
+        newsLetterRecycler = view!!.findViewById(R.id.newsLetterRecycler) as RecyclerView
+        newsLetterRecycler.layoutManager = linearLayoutManager
+        newsLetterRecycler.itemAnimator = DefaultItemAnimator()
         progressDialog = view!!.findViewById(R.id.progressDialog) as RelativeLayout
         val aniRotate: Animation =
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
         progressDialog.startAnimation(aniRotate)
-        updatedata()
-        val settingsAdapter = CommunicationRecyclerAdapter(mCommunicationArrayList)
-        socialMediaRecycler.setAdapter(settingsAdapter)
-        bannerImage?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-
+        newsLetterRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(@NonNull recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
             }
 
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-            }
-            override fun onPageSelected(position: Int) {
-                currentPage = position
-            }
-
-        })
-        socialMediaRecycler.addOnItemClickListener(object: OnItemClickListener {
-            override fun onItemClicked(position: Int, view: View) {
-
-                if (position==0)
-                {
-                    val intent =Intent(activity, NewsLetterActivity::class.java)
-                    activity?.startActivity(intent)
-                }
-
-            }
-        })
-
-    }
-
-    fun getbannerimages()
-    {
-        val token = com.mobatia.bisad.fragment.home.sharedprefs.getaccesstoken(mContext)
-        val call: Call<ResponseBody> = ApiClient.getClient.communication("Bearer "+token)
-        call.enqueue(object : Callback<ResponseBody> {
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-              progressDialog.visibility=View.GONE
-                Log.e("Error", t.localizedMessage)
-            }
-
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                progressDialog.visibility=View.GONE
-
-                val bannerresponse = response.body()
-                if (bannerresponse != null) {
-                    try {
-
-                        val jsonObject = JSONObject(bannerresponse.string())
-                        if(jsonObject.has(jsonConstans.STATUS))
+            override fun onScrolled(
+                @NonNull recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val linearLayoutManager =
+                    recyclerView.layoutManager as LinearLayoutManager?
+                if (!isLoading) {
+                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == newsLetterArrayList.size - 1) {
+                        //bottom of list!
+                        if (!stopLoading)
                         {
-                            val status : Int=jsonObject.optInt(jsonConstans.STATUS)
-                            if (status==100)
-                            {
-                                val responseObj =jsonObject.getJSONObject("responseArray")
-                                val dataArray = responseObj.getJSONArray("banner_images")
-                                if (dataArray.length() > 0) {
-                                    for (i in 0..dataArray.length()) {
-                                        bannerarray.add(dataArray.optString(i))
-
-                                    }
-                                    bannerImage.adapter = activity?.let { PageView(it, bannerarray) }
-                                }
-                                else {
-                                    bannerImage.setBackgroundResource(R.drawable.aboutbanner)
-                                }
-                            }
-
-                            else{
-                                if (status==116)
-                                {
-                                    //call Token Expired
-                                    AccessTokenClass.getAccessToken(mContext)
-                                    getbannerimages()
-
-                                }
-                                else
-                                {
-                                    if (status==103)
-                                    {
-                                        //validation check error
-
-                                    }
-                                    else
-                                    {
-                                        //check status code checks
-                                        InternetCheckClass.checkApiStatusError(status,mContext)
-                                    }
-                                }
-
-                            }
+                            start=start+limit
+                            callNewLetterListAPI(start,limit)
+                            isLoading = true
                         }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+
                     }
                 }
             }
+        })
+        newsLetterRecycler.addOnItemClickListener(object: OnItemClickListener {
+            override fun onItemClicked(position: Int, view: View) {
+
+                val intent =Intent(mContext, NewsLetterDetailActivity::class.java)
+                intent.putExtra("id",newsLetterArrayList.get(position).id)
+                intent.putExtra("title",newsLetterArrayList.get(position).title)
+                startActivity(intent)
+            }
+        })
+
+    }
+
+    fun callNewLetterListAPI(startValue:Int,limitValue:Int)
+    {
+        progressDialog.visibility = View.VISIBLE
+        newsLetterShowArrayList= ArrayList()
+        val token = sharedprefs.getaccesstoken(mContext)
+        val studentbody= NewsLetterListAPiModel(startValue,limitValue)
+        val call: Call<NewsLetterListModel> = ApiClient.getClient.newsletters(studentbody,"Bearer "+token)
+        call.enqueue(object : Callback<NewsLetterListModel> {
+            override fun onFailure(call: Call<NewsLetterListModel>, t: Throwable) {
+                progressDialog.visibility = View.GONE
+                Log.e("Error", t.localizedMessage)
+            }
+            override fun onResponse(call: Call<NewsLetterListModel>, response: Response<NewsLetterListModel>) {
+                progressDialog.visibility = View.GONE
+                if (response.body()!!.status==100)
+                {
+                    progressDialog.visibility = View.GONE
+                    newsLetterShowArrayList.addAll(response.body()!!.responseArray.campaignsList)
+                    newsLetterArrayList.addAll(newsLetterShowArrayList)
+                    if (newsLetterShowArrayList.size==20)
+                    {
+                        stopLoading=false
+                    }
+                    else{
+                        stopLoading=true
+                    }
+                    if (newsLetterArrayList.size>0)
+                    {
+                        newsLetterRecycler.visibility=View.VISIBLE
+                        val newsLetterAdapter = NewsLetterRecyclerAdapter(newsLetterArrayList)
+                        newsLetterRecycler.setAdapter(newsLetterAdapter)
+                        isLoading=false
+                        if(newsLetterArrayList.size>20)
+                        {
+                            if(newsLetterArrayList.size>20)
+                            {
+                                newsLetterRecycler.scrollToPosition(startValue)
+                            }
+                        }
+                    }
+                    else
+                    {
+                        newsLetterRecycler.visibility=View.GONE
+                        showSuccessAlert(mContext,"No data found.","Alert")
+
+                    }
+                }
+                else if (response.body()!!.status == 116) {
+                    apiCall=apiCall+1
+                    if (apiCall<3)
+                    {
+                        AccessTokenClass.getAccessToken(mContext)
+                        callNewLetterListAPI(startValue,limitValue)
+                    }
+                    else{
+                        showSuccessAlert(mContext,"Something went wrong","Alert")
+                    }
+
+                }
+                else
+                {
+                    InternetCheckClass.checkApiStatusError(response.body()!!.status, mContext
+                    )
+                }
+
+
+            }
 
         })
     }
-    fun updatedata() {
-        val handler = Handler()
 
-        val update = Runnable {
-          if (currentPage == bannerarray.size) {
-                currentPage = 0
-                pager.setCurrentItem(
-                    currentPage,
-                    true
-                )
-            } else {
+    fun showSuccessAlert(context: Context,message : String,msgHead : String)
+    {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.alert_dialogue_ok_layout)
+        var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
+        var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+        var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
+        var btn_Ok = dialog.findViewById(R.id.btn_Ok) as Button
+        text_dialog.text = message
+        alertHead.text = msgHead
+        iconImageView.setImageResource(R.drawable.exclamationicon)
+        btn_Ok?.setOnClickListener()
+        {
+            dialog.dismiss()
 
-                pager
-                    .setCurrentItem(currentPage++, true)
-            }
         }
-        val swipetimer = Timer()
-
-        swipetimer.schedule(object : TimerTask() {
-            override fun run() {
-                handler.post(update)
-            }
-        }, 100, 6000)
-
+        dialog.show()
     }
 }
 

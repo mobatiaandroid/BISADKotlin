@@ -7,7 +7,7 @@ class NaisClassNameConstants {
     var MESSAGES = "Messages"
     var COMMUNICATION = "News Letters"
     var REPORT_ABSENCE = "Report Absence"
-    var TEACHER_CONTACT = "Teacher Conatct"
+    var TEACHER_CONTACT = "Teacher Contact"
     var SOCIAL_MEDIA = "Social Media"
     var TIME_TABLE = "Timetable"
     var TERM_DATES = "Term Dates"

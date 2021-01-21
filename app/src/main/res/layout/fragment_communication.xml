@@ -13,7 +13,7 @@
         android:gravity="center"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
-        android:text="Communication"
+        android:text="NewsLetters"
         android:textColor="@color/white"
         android:textSize="17dp" />
     <LinearLayout
@@ -29,31 +29,9 @@
             android:visibility="visible" />
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/titleTextView"
-        android:orientation="vertical"
-        android:weightSum="100">
-        <RelativeLayout
-            android:id="@+id/bannerImageRelative"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="40">
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/bannerImagePager"
-                android:layout_width="match_parent"
-                android:background="@drawable/banner2"
-                android:layout_height="match_parent" />
-        </RelativeLayout>
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/socialMediaRecycler"
+            android:id="@+id/newsLetterRecycler"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="60"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_below="@+id/bannerImageRelative"/>
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/titleTextView"/>
 </RelativeLayout>

@@ -5,5 +5,5 @@ import com.mobatia.bisad.fragment.messages.model.MessageResponseArrayModel
 
 data class AppsListModel (
     @SerializedName("status") val status: Int,
-    @SerializedName("responseArray") val responseArray: AppsResponseArrayModel
+    @SerializedName("responseArray") val appsList: List<AppsListDetailModel>
 )

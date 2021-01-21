@@ -82,11 +82,11 @@ class InternetCheckClass {
             }
             else if (statusCode==123)
             {
-                showErrorAlert(context,Resources.getSystem().getString(R.string.status_123),"Alert")
+                showErrorAlert(context,"Invalid file access","Alert")
             }
             else if(statusCode==131)
             {
-                showErrorAlert(context,Resources.getSystem().getString(R.string.status_131),"Alert")
+                showErrorAlert(context,"URL/Method Not found","Alert")
             }
             else if (statusCode==132)
             {
@@ -94,11 +94,11 @@ class InternetCheckClass {
             }
             else if (statusCode==133)
             {
-                showErrorAlert(context,Resources.getSystem().getString(R.string.status_133),"Alert")
+                showErrorAlert(context,"Restricted access","Alert")
             }
             if (statusCode==104)
             {
-                showErrorAlert(context,Resources.getSystem().getString(R.string.status_104),"Alert")
+                showErrorAlert(context,"field required","Alert")
 
             }
             else if (statusCode==105)

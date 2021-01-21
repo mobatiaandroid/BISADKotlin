@@ -27,6 +27,7 @@ class SocialMediaDetailActivity : AppCompatActivity() {
     lateinit var mContext: Context
     private lateinit var webView: WebView
     private lateinit var relativeHeader: RelativeLayout
+    private lateinit var backRelative: RelativeLayout
     private lateinit var logoClickImgView: ImageView
     private lateinit var btn_left: ImageView
     private lateinit var heading: TextView
@@ -51,12 +52,16 @@ class SocialMediaDetailActivity : AppCompatActivity() {
        // headermanager=HeaderManagerNoColorSpace(SocialMediaDetailActivity.this, "FACEBOOK");
         webView = findViewById(R.id.webView)
         relativeHeader = findViewById(R.id.relativeHeader)
+        backRelative = findViewById(R.id.backRelative)
         heading = findViewById(R.id.heading)
         btn_left = findViewById(R.id.btn_left)
         logoClickImgView = findViewById(R.id.logoClickImgView)
         progressDialog = findViewById(R.id.progressDialog) as RelativeLayout
         heading.setText(title)
         btn_left.setOnClickListener(View.OnClickListener {
+            finish()
+        })
+        backRelative.setOnClickListener(View.OnClickListener {
             finish()
         })
         logoClickImgView.setOnClickListener(View.OnClickListener {

@@ -31,15 +31,20 @@
             android:layout_alignParentTop="true"
             android:layout_height="wrap_content" >
 
+           <RelativeLayout
+               android:id="@+id/backRelative"
+             android:layout_width="45dp"
+             android:layout_height="45dp">
+               <ImageView
+                   android:id="@+id/btn_left"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentLeft="true"
+                   android:layout_centerVertical="true"
+                   android:background="@drawable/back"
+                   android:visibility="visible" />
+           </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/btn_left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/back"
-                android:visibility="visible" />
 
             <ImageView
                 android:id="@+id/btn_right"
