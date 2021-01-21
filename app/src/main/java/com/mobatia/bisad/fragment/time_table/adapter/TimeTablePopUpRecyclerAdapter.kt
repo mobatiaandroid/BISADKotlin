@@ -1,6 +1,7 @@
 package com.mobatia.bisad.fragment.time_table.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,21 +28,23 @@ class TimeTablePopUpRecyclerAdapter (private var mContetx: Context, private var 
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val summary = timeTableList[position]
+        Log.e("START TIME",timeTableList.get(position).starttime)
         if (timeTableList.get(position).day.equals(""))
         {
 
-            holder.nameTextView.visibility=View.GONE
+            holder.dateTimeTextView.visibility=View.GONE
         }
         else{
             if (timeTableList.get(position).starttime.equals(""))
             {
-                holder.nameTextView.setText(timeTableList.get(position).day)
+                holder.dateTimeTextView.setText(timeTableList.get(position).day)
             }
             else{
-                holder.nameTextView.setText(timeTableList.get(position).day+" | "+timeTableList.get(position).starttime+" - "+timeTableList.get(position).endtime)
+                holder.dateTimeTextView.setText(timeTableList.get(position).day+" | "+timeTableList.get(position).starttime+" - "+timeTableList.get(position).endtime)
             }
             holder.nameTextView.visibility=View.VISIBLE
-            holder.nameTextView.setText(timeTableList.get(position).day)
+            holder.dateTimeTextView.visibility=View.VISIBLE
+          // holder.dateTimeTextView.setText(timeTableList.get(position).day)
         }
         if (position==0)
         {
@@ -52,7 +55,8 @@ class TimeTablePopUpRecyclerAdapter (private var mContetx: Context, private var 
             holder.periodTextView.setText("")
         }
 
-       holder.subjectNameTextView.setText(timeTableList.get(position).subject_name)
+       holder.nameTextView.setText(timeTableList.get(position).subject_name)
+       holder.subjectNameTextView.setText(timeTableList.get(position).staff)
         if (timeTableList.size>1)
         {
             if (position!= (timeTableList.size - 1))

@@ -33,61 +33,11 @@
         android:text="Calendar"
         android:layout_height="40dp" />
 
-    <LinearLayout
-        android:id="@+id/studentSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_below="@id/titleTextView"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/event_spinnerbg"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="100">
-        <com.github.siyamed.shapeimageview.CircularImageView
-            android:id="@+id/studImg"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:padding="5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/boy"
-            app:siBorderColor="#A0DAE5"
-            app:siBorderWidth="1dp" />
-
-        <com.mobatia.bisad.manager.CustomFontSansProTextBlack
-            android:id="@+id/studentName"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="80"
-            android:gravity="left|center"
-            android:paddingLeft="10dp"
-            android:text="Select a child"
-            android:textSize="16sp" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="8"></View>
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_gravity="right|center"
-            android:layout_weight="12"
-            android:src="@drawable/arrowdownnew"
-            android:visibility="visible" />
-
-    </LinearLayout>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendarRecycler"
         style="@style/ListStyleBlackTextTransparentSelector"
-        android:layout_below="@+id/studentSpinner"
+        android:layout_below="@+id/titleTextView"
         android:layout_width="match_parent"
         android:scrollbars="vertical"
         android:layout_marginTop="5dp"

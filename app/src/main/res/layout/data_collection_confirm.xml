@@ -59,6 +59,7 @@
                         android:layout_height="40dp"
                         android:paddingLeft="10dp"
                         android:textSize="16sp"
+                        android:textColor="@color/black"
                         android:drawableRight="@drawable/ccp_down_arrow"
                         android:background="@android:color/transparent"/>
 
@@ -367,6 +368,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:text="@string/own_details_confirm_communication_preference_corresspondance"/>
                 </LinearLayout>
@@ -386,6 +388,7 @@
                         android:id="@+id/communicationCheck2Txt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/black"
                         android:layout_marginLeft="10dp"
                         android:textSize="16sp"
                         android:text="@string/own_details_confirm_communication_preference_report"/>

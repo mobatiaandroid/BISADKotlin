@@ -594,7 +594,7 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
                 var dummyKinShow=ArrayList<KinDetailApiModel>()
                 sharedprefs.setKinDetailArrayList(context,dummyKinShow)
                 sharedprefs.getHealthDetailArrayList(context)!!.clear()
-                var dummyHealth=ArrayList<HealthInsuranceDetailModel>()
+                var dummyHealth=ArrayList<HealthInsuranceDetailAPIModel>()
                 sharedprefs.setHealthDetailArrayList(context,dummyHealth)
                 sharedprefs.getPassportDetailArrayList(context)!!.clear()
                 var dummyPassport=ArrayList<PassportApiModel>()
@@ -652,29 +652,10 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
         var newGson=Gson()
         var FIRSTDATA:String=newGson.toJson(FirstArray)
         Log.e("FIRSTDATA",FIRSTDATA)
-        var healthArray=ArrayList<HealthInsuranceDetailModel>()
-        var healthArrayNEw=ArrayList<HealthInsuranceDetailAPIModel>()
+        var healthArray=ArrayList<HealthInsuranceDetailAPIModel>()
         healthArray=sharedprefs.getHealthDetailArrayList(context)!!
-        for (i in 0..healthArray.size-1)
-        {
-            var model=HealthInsuranceDetailAPIModel()
-            model.id=healthArray.get(i).id
-            model.student_unique_id=healthArray.get(i).student_unique_id
-            model.student_id=healthArray.get(i).student_id
-            model.student_name=healthArray.get(i).student_name
-            model.health_detail=healthArray.get(i).health_detail
-            model.health_form_link=healthArray.get(i).health_form_link
-
-            model.status=5
-            model.request=0
-            model.created_at=healthArray.get(i).created_at
-            model.updated_at=healthArray.get(i).updated_at
-            healthArrayNEw.add(model)
-
-        }
-
         var HEALTHARRAY=ArrayList<HealthInsuranceDetailAPIModel>()
-        HEALTHARRAY=healthArrayNEw
+        HEALTHARRAY=healthArray
         var newHGson=Gson()
         var HEALTHDATA:String=newHGson.toJson(HEALTHARRAY)
         Log.e("HEALTHDATA",HEALTHDATA)

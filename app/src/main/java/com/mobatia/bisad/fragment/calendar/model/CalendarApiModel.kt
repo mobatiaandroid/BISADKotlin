@@ -4,4 +4,4 @@ import com.google.gson.annotations.SerializedName
 
 data class CalendarApiModel (
 
-    @SerializedName("student_id") val student_id: String)
+    @SerializedName("id") val id: String)

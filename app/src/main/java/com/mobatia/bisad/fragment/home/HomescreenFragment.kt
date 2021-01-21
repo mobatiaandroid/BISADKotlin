@@ -23,6 +23,7 @@ import com.mobatia.bisad.R
 import com.mobatia.bisad.activity.home.DataCollectionActivity
 import com.mobatia.bisad.activity.home.HomeActivity
 import com.mobatia.bisad.activity.home.PageView
+import com.mobatia.bisad.activity.home.model.HealthInsuranceDetailAPIModel
 import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
 import com.mobatia.bisad.constants.NaisClassNameConstants
@@ -104,6 +105,7 @@ lateinit var healthDetailArrayList: ArrayList<HealthInsuranceDetailModel>
 lateinit var ownContactDetailSaveArrayList: ArrayList<OwnContactModel>
 lateinit var kinDetailSaveArrayList: ArrayList<KinDetailApiModel>
 lateinit var passportSaveArrayList: ArrayList<PassportApiModel>
+lateinit var healthSaveArrayList: ArrayList<HealthInsuranceDetailAPIModel>
 lateinit var mListImgArrays: TypedArray
 lateinit var TouchedView: View
 
@@ -1208,8 +1210,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                 }
                 naisTabConstants.TAB_APPS ->
                 {
-                    mFragment = AppsFragment()
-                    fragmentIntent(mFragment)
+                    showSuccessAlert(mContext,"This feature is only available for registered users.","Alert")
                 }
             }
         }
@@ -1317,6 +1318,10 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
 
                 }
                 naisTabConstants.TAB_APPS -> {
+                    sharedprefs.setStudentID(mContext, "")
+                    sharedprefs.setStudentName(mContext, "")
+                    sharedprefs.setStudentPhoto(mContext, "")
+                    sharedprefs.setStudentClass(mContext, "")
                     mFragment = AppsFragment()
                     fragmentIntent(mFragment)
                 }
@@ -1733,6 +1738,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
         healthDetailArrayList= ArrayList()
         ownContactDetailSaveArrayList= ArrayList()
         passportSaveArrayList= ArrayList()
+        healthSaveArrayList= ArrayList()
         kinDetailSaveArrayList= ArrayList()
         val token = sharedprefs.getaccesstoken(mContext)
         val call: Call<DataCollectionModel> = ApiClient.getClient.dataCollectionDetail("Bearer "+token)
@@ -1834,6 +1840,29 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
 
                     }
 
+                    if(healthDetailArrayList.size>0)
+                    {
+                        for (i in 0..healthDetailArrayList.size-1)
+                        {
+                           var hModel=HealthInsuranceDetailAPIModel()
+                            hModel.id= healthDetailArrayList.get(i).id
+                            hModel.student_unique_id= healthDetailArrayList.get(i).student_unique_id
+                            hModel.student_id= healthDetailArrayList.get(i).student_id
+                            hModel.student_name= healthDetailArrayList.get(i).student_name
+                            hModel.health_detail= healthDetailArrayList.get(i).health_detail
+                            hModel.health_form_link= healthDetailArrayList.get(i).health_form_link
+                            hModel.status= healthDetailArrayList.get(i).status
+                            hModel.request= healthDetailArrayList.get(i).request
+                            hModel.created_at= healthDetailArrayList.get(i).created_at
+                            hModel.updated_at= healthDetailArrayList.get(i).updated_at
+                            healthSaveArrayList.add(hModel)
+
+                        }
+                        if (sharedprefs.getHealthDetailArrayList(mContext)==null || sharedprefs.getHealthDetailArrayList(mContext)!!.size==0)
+                        {
+                            sharedprefs.setHealthDetailArrayList(mContext, healthSaveArrayList)
+                        }
+                    }
                     if (kinDetailArrayList.size>0)
                     {
                        for(i in 0..kinDetailArrayList.size-1)
@@ -1879,7 +1908,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                         }
                     }
 
-                    sharedprefs.setHealthDetailArrayList(mContext,healthDetailArrayList)
                        //Intent
                     Log.e("DATA COLLECTION","ENTERS5")
                     if(!sharedprefs.getSuspendTrigger(mContext).equals("1"))

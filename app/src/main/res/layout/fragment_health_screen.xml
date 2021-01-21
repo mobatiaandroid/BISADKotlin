@@ -160,20 +160,22 @@
                     android:layout_marginTop="10dp"/>
             </LinearLayout>
 
-            <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+            <com.mobatia.bisad.manager.CustomFontSansProEditTextNoColor
                 android:id="@+id/MedicalNoteTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rect_background_grey"
                 android:padding="5dp"
-                android:textSize="14sp"
+                android:textSize="16sp"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                android:hint="Medical Note"
                 android:gravity="center_vertical"
                 android:textColor="@color/black"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
                 />
+
 
             <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
                 android:id="@+id/redirectLink"

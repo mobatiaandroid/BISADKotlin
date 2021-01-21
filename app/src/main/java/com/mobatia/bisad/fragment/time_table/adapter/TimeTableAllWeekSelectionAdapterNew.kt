@@ -177,17 +177,20 @@ class TimeTableAllWeekSelectionAdapterNew(
             holder.countFRel.visibility = View.GONE
             holder.countFTextView.visibility = View.GONE
         }
-        holder.tutor1.setOnClickListener(View.OnClickListener {
-
-            if (holder.tutor1.text.equals("")) {
-
+        holder.tutor1.setOnClickListener {
+            //Quick and Easy intent selector in tooltip styles
+            if (holder.tutor1.text.toString().equals("", ignoreCase = true)) {
             } else {
                 isClick = true
-                val itemView: View = LayoutInflater.from(mContext)
+//                System.out.println(
+//                    "mon:::" + mPeriodModel.get(position).getTimeTableListM().size()
+//                )
+                val itemView = LayoutInflater.from(mContext)
                     .inflate(R.layout.popup_timetable_activity, null, false)
                 val recycler_view_timetable: RecyclerView =
                     itemView.findViewById(R.id.recycler_view_timetable)
                 recycler_view_timetable.setHasFixedSize(true)
+                //mainRecycleRel.setVisibility(View.GONE);
                 val llmAtime = LinearLayoutManager(mContext)
                 llmAtime.orientation = LinearLayoutManager.VERTICAL
                 recycler_view_timetable.layoutManager = llmAtime
@@ -198,12 +201,15 @@ class TimeTableAllWeekSelectionAdapterNew(
                     )
                 mTimeTablePopUpRecyclerAdapter.notifyDataSetChanged()
                 recycler_view_timetable.adapter = mTimeTablePopUpRecyclerAdapter
+                //  chromeHelpPopup.show(holder.tutor1);
                 var t: ToolTip? = null
                 t = if (position == 0) {
                     ToolTip.Builder(mContext)
                         .anchor(holder.tutor1) // The view to which the ToolTip should be anchored
                         .gravity(Gravity.BOTTOM) // The location of the view in relation to the anchor (LEFT, RIGHT, TOP, BOTTOM)
-                        .color(mContext.resources.getColor(R.color.ttpop)) // The color of the pointer arrow
+                        .color(
+                            mContext.resources.getColor(R.color.ttpop)
+                        ) // The color of the pointer arrow
                         .pointerSize(10) // The size of the pointer
                         .contentView(itemView) // The actual contents of the ToolTip
                         .build()
@@ -213,14 +219,59 @@ class TimeTableAllWeekSelectionAdapterNew(
                         .gravity(Gravity.TOP) // The location of the view in relation to the anchor (LEFT, RIGHT, TOP, BOTTOM)
                         .color(
                             mContext.resources.getColor(R.color.ttpop)
-                        )
+                        ) // The color of the pointer arrow
                         .pointerSize(10) // The size of the pointer
                         .contentView(itemView) // The actual contents of the ToolTip
                         .build()
                 }
                 tipContainer.addTooltip(t)
             }
-        })
+        }
+//        holder.tutor1.setOnClickListener(View.OnClickListener {
+//
+//            if (holder.tutor1.text.equals("")) {
+//
+//            }
+//            else {
+//                isClick = true
+//                val itemView: View = LayoutInflater.from(mContext)
+//                    .inflate(R.layout.popup_timetable_activity, null, false)
+//                val recycler_view_timetable: RecyclerView =
+//                    itemView.findViewById(R.id.recycler_view_timetable)
+//                recycler_view_timetable.setHasFixedSize(true)
+//                val llmAtime = LinearLayoutManager(mContext)
+//                llmAtime.orientation = LinearLayoutManager.VERTICAL
+//                recycler_view_timetable.layoutManager = llmAtime
+//                val mTimeTablePopUpRecyclerAdapter =
+//                    TimeTablePopUpRecyclerAdapter(
+//                        mContext,
+//                        mPeriodModel.get(position).timeTableListS
+//                    )
+//                mTimeTablePopUpRecyclerAdapter.notifyDataSetChanged()
+//                recycler_view_timetable.adapter = mTimeTablePopUpRecyclerAdapter
+//                var t: ToolTip? = null
+//                t = if (position == 0) {
+//                    ToolTip.Builder(mContext)
+//                        .anchor(holder.tutor1) // The view to which the ToolTip should be anchored
+//                        .gravity(Gravity.BOTTOM) // The location of the view in relation to the anchor (LEFT, RIGHT, TOP, BOTTOM)
+//                        .color(mContext.resources.getColor(R.color.ttpop)) // The color of the pointer arrow
+//                        .pointerSize(10) // The size of the pointer
+//                        .contentView(itemView) // The actual contents of the ToolTip
+//                        .build()
+//                } else {
+//                    ToolTip.Builder(mContext)
+//                        .anchor(holder.tutor1) // The view to which the ToolTip should be anchored
+//                        .gravity(Gravity.TOP) // The location of the view in relation to the anchor (LEFT, RIGHT, TOP, BOTTOM)
+//                        .color(
+//                            mContext.resources.getColor(R.color.ttpop)
+//                        )
+//                        .pointerSize(10) // The size of the pointer
+//                        .contentView(itemView) // The actual contents of the ToolTip
+//                        .build()
+//                }
+//                tipContainer.addTooltip(t)
+//            }
+//        })
         holder.tutor2.setOnClickListener(View.OnClickListener {
             if (holder.tutor2.text.equals("")) {
 

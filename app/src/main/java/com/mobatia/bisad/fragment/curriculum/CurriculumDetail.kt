@@ -1,6 +1,7 @@
 package com.mobatia.bisad.fragment.curriculum
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle

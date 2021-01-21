@@ -5,6 +5,7 @@ import android.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.mobatia.bisad.R
+import com.mobatia.bisad.activity.home.model.HealthInsuranceDetailAPIModel
 import com.mobatia.bisad.fragment.home.model.CountryiesDetailModel
 import com.mobatia.bisad.fragment.home.model.RelationShipDetailModel
 import com.mobatia.bisad.fragment.home.model.StudentListDataCollection
@@ -980,7 +981,7 @@ class PreferenceData {
         return gson.fromJson(json, type)
     }
     /*SET OWN DETAIL ARRAYLIST*/
-    fun setHealthDetailArrayList(context: Context,ownContactDetailArrayList: ArrayList<HealthInsuranceDetailModel>) {
+    fun setHealthDetailArrayList(context: Context,ownContactDetailArrayList: ArrayList<HealthInsuranceDetailAPIModel>) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = prefs.edit()
         val gson = Gson()
@@ -990,11 +991,11 @@ class PreferenceData {
     }
 
 
-    fun getHealthDetailArrayList(context: Context): ArrayList<HealthInsuranceDetailModel>? {
+    fun getHealthDetailArrayList(context: Context): ArrayList<HealthInsuranceDetailAPIModel>? {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         val gson = Gson()
         val json = prefs.getString("health_detail", null)
-        val type: Type = object : TypeToken<ArrayList<HealthInsuranceDetailModel>?>() {}.type
+        val type: Type = object : TypeToken<ArrayList<HealthInsuranceDetailAPIModel>?>() {}.type
         return gson.fromJson(json, type)
     }
 

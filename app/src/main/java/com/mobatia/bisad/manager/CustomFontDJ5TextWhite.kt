@@ -3,6 +3,7 @@ package com.mobatia.bisad.manager
 import android.content.Context
 import android.graphics.Typeface
 import android.util.AttributeSet
+import android.widget.TextView
 import com.mobatia.bisad.R
 
 class CustomFontDJ5TextWhite  : androidx.appcompat.widget.AppCompatTextView{

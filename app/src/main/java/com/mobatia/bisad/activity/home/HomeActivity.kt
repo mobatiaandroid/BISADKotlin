@@ -215,8 +215,11 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                 }
                 else  if(position==14)
                 {
-                    mFragment = AppsFragment()
-                    replaceFragmentsSelected(position)
+                    showSuccessAlert(
+                        context,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )
                 }
             }
             else
@@ -328,6 +331,10 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                 }
                 else  if(position==14)
                 {
+                    sharedprefs.setStudentID(context, "")
+                    sharedprefs.setStudentName(context, "")
+                    sharedprefs.setStudentPhoto(context, "")
+                    sharedprefs.setStudentClass(context, "")
                     mFragment = AppsFragment()
                     replaceFragmentsSelected(position)
                 }

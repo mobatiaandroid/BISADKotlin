@@ -2,6 +2,7 @@ package com.mobatia.bisad.activity.common
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Dialog
 import android.content.ComponentName
 import android.content.Context

@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mobatia.bisad.R
 import com.mobatia.bisad.activity.common.LoginActivity
 import com.mobatia.bisad.activity.home.model.DataCollectionSubmissionModel
+import com.mobatia.bisad.activity.home.model.HealthInsuranceDetailAPIModel
 import com.mobatia.bisad.activity.settings.termsofservice.TermsOfServiceActivity
 import com.mobatia.bisad.activity.settings.tutorial.TutorialActivity
 import com.mobatia.bisad.constants.InternetCheckClass
@@ -527,7 +528,7 @@ class SettingsFragment : Fragment(){
                                 sharedprefs.setKinDetailPassArrayList(mContext,dummyKinPass)
                                 var dummyKinShow=ArrayList<KinDetailApiModel>()
                                 sharedprefs.setKinDetailArrayList(mContext,dummyKinShow)
-                                var dummyHealth=ArrayList<HealthInsuranceDetailModel>()
+                                var dummyHealth=ArrayList<HealthInsuranceDetailAPIModel>()
                                 sharedprefs.setHealthDetailArrayList(mContext,dummyHealth)
                                 var dummyPassport=ArrayList<PassportApiModel>()
                                 sharedprefs.setPassportDetailArrayList(mContext,dummyPassport)

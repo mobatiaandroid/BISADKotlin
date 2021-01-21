@@ -1,4 +1,4 @@
-package com.mobatia.bisad.fragment.calendar.adapter
+package com.mobatia.bisad.activity.calendar.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,14 +7,14 @@ import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.mobatia.bisad.R
+import com.mobatia.bisad.fragment.calendar.adapter.CalendarListRecyclerAdapter
+import com.mobatia.bisad.fragment.calendar.model.CalendarListDetailModel
 import com.mobatia.bisad.fragment.calendar.model.CalendarListResponse
 import com.mobatia.bisad.fragment.calendar.model.VEVENT
-import com.mobatia.bisad.manager.OnBottomReachedListener
 
-
- class CalendarListRecyclerAdapter (private var calendarArrayList: List<CalendarListResponse>) :
-    RecyclerView.Adapter<CalendarListRecyclerAdapter.MyViewHolder>() {
-     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class CalendarDetailAdapter (private var calendarArrayList: List<VEVENT>) :
+    RecyclerView.Adapter<CalendarDetailAdapter.MyViewHolder>() {
+    inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var title: TextView = view.findViewById(R.id.title)
     }
     @NonNull
@@ -28,7 +28,7 @@ import com.mobatia.bisad.manager.OnBottomReachedListener
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val summary = calendarArrayList[position]
 
-        holder.title.text = summary.title
+        holder.title.text = summary.SUMMARY
 
     }
     override fun getItemCount(): Int {

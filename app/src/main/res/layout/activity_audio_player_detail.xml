@@ -21,11 +21,20 @@
         android:layout_centerInParent="true"
         android:visibility="visible"
         android:background="@drawable/audio"/>
-    <include
-        android:id="@+id/progressDialog"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        layout="@layout/custom_progress_layout"
-        android:visibility="visible" />
+        android:gravity="center"
+        android:layout_below="@+id/submitLayout"
+        android:layout_centerInParent="true">
+
+        <include
+            android:id="@+id/progressDialog"
+            layout="@layout/custom_progress_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
 </RelativeLayout>

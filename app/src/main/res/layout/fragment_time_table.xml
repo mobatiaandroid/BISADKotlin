@@ -34,7 +34,7 @@
             android:gravity="center"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
-            android:text="Student Timetable"
+            android:text="Timetable"
             android:textColor="@color/white"
             android:textSize="17dp" />
 
