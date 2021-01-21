@@ -102,12 +102,15 @@
                 android:layout_marginBottom="10dp">
                 <com.github.siyamed.shapeimageview.CircularImageView
                     android:id="@+id/studImg"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:scaleType="centerCrop"
-                    android:layout_marginLeft="2dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
                     android:padding="5dp"
-                    android:background="@drawable/round" />
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/boy"
+                    app:siBorderColor="#A0DAE5"
+                    app:siBorderWidth="1dp" />
                 <com.mobatia.bisad.manager.CustomFontSansProTextBlack
                     android:id="@+id/studentName"
                     android:layout_width="0dp"

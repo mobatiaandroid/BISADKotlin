@@ -51,6 +51,8 @@ class StudentInformationFragment : Fragment(){
     lateinit var studentImg: String
     lateinit var sharedprefs: PreferenceData
     lateinit var progressDialog: RelativeLayout
+    lateinit var imageView6: ImageView
+    lateinit var imageView4: ImageView
     lateinit var mContext:Context
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,6 +81,8 @@ class StudentInformationFragment : Fragment(){
         studentInfoRecycler = view!!.findViewById(R.id.studentInfoRecycler) as RecyclerView
         studentNameTxt = view!!.findViewById(R.id.studentName) as TextView
         studImg = view!!.findViewById(R.id.studImg) as ImageView
+        imageView6 = view!!.findViewById(R.id.imageView6) as ImageView
+        imageView4 = view!!.findViewById(R.id.imageView4) as ImageView
         studentInfoRecycler.layoutManager = linearLayoutManager
         studentInfoRecycler.itemAnimator = DefaultItemAnimator()
         progressDialog = view!!.findViewById(R.id.progressDialog) as RelativeLayout
@@ -87,6 +91,20 @@ class StudentInformationFragment : Fragment(){
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
         progressDialog.startAnimation(aniRotate)
         studentNameTxt.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                //your implementation goes here
+                showStudentList(mContext,studentListArrayList)
+
+            }
+        })
+        imageView6.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                //your implementation goes here
+                showStudentList(mContext,studentListArrayList)
+
+            }
+        })
+        imageView4.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 //your implementation goes here
                 showStudentList(mContext,studentListArrayList)

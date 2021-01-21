@@ -82,13 +82,12 @@
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/studentName"
             app:layout_constraintEnd_toEndOf="@+id/imageView11"
-            app:layout_constraintTop_toTopOf="@+id/studentName"
-            app:srcCompat="@drawable/downarrow" />
+            app:layout_constraintTop_toTopOf="@+id/studentName" />
 
         <ImageView
             android:id="@+id/imageView5"
