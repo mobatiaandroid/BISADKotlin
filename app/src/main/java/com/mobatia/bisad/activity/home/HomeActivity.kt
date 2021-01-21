@@ -397,7 +397,8 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
             }
             Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             mFragment=HomescreenFragment()
-            replaceFragmentsSelected(0)
+            supportFragmentManager.popBackStack()
+            //replaceFragmentsSelected(0)
         })
 
         settings_icon.setOnClickListener {
