@@ -5,15 +5,19 @@ import `in`.galaxyofandroid.spinerdialog.SpinnerDialog
 import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.StrictMode
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
@@ -22,6 +26,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -61,6 +66,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
     lateinit var visaPermitNumberTxt: EditText
     lateinit var passportExpiryTxt: EditText
     lateinit var passportLinear: LinearLayout
+    lateinit var closeImg : ImageView
     private val PICK_IMAGE_REQUEST = 1
     private val CLICK_IMAGE_REQUEST = 2
     var fromDate: String=""
@@ -103,11 +109,14 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_passport_detail, container, false)
+
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val builder: StrictMode.VmPolicy.Builder = StrictMode.VmPolicy.Builder()
+        StrictMode.setVmPolicy(builder.build())
         jsonConstans = JsonConstants()
         sharedprefs = PreferenceData()
         mContext = requireContext()
@@ -128,6 +137,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         imagicon = view!!.findViewById(R.id.imagicon)
         studentNameTxt = view!!.findViewById(R.id.studentName)
         passportLinear = view!!.findViewById(R.id.passportLinear)
+        closeImg = view!!.findViewById(R.id.closeImg)
         passportNumberTxt = view!!.findViewById(R.id.passportNumberTxt)
         passportExpiryTxt = view!!.findViewById(R.id.passportExpiryTxt)
         passportNationalityTxt = view!!.findViewById(R.id.passportNationalityTxt)
@@ -285,6 +295,31 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
             spinnerDialog.showSpinerDialog()
 
         })
+
+        closeImg.setOnClickListener {
+            closeImg.setOnClickListener(View.OnClickListener {
+                val dialog = Dialog(mContext)
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                dialog.setCancelable(false)
+                dialog.setContentView(R.layout.alert_dialogue_ok_layout)
+                var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
+                var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+                var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
+                var btn_Ok = dialog.findViewById(R.id.btn_Ok) as Button
+                text_dialog.text = "Please update this information next time"
+                alertHead.text = "Alert"
+                btn_Ok.setText("Continue")
+                iconImageView.setImageResource(R.drawable.exclamationicon)
+                btn_Ok?.setOnClickListener()
+                {
+                    sharedprefs.setSuspendTrigger(mContext,"1")
+                    dialog.dismiss()
+                    activity?.finish()
+                }
+                dialog.show()
+            })
+        }
 
 
         passportNumberTxt.imeOptions = EditorInfo.IME_ACTION_DONE
@@ -592,14 +627,19 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
             val selected = array[which]
             try {
                 when (selected) {
-                    "Open Camera" -> {
-                        var name:String= System.currentTimeMillis().toString()
-                        var imageFileName= "$name.jpg"
+                    "Open Camera" ->
+                    {
+                        val imageFileName =
+                            System.currentTimeMillis().toString() + ".jpg"
                         var storageDir:File = Environment.getExternalStoragePublicDirectory(
                             Environment.DIRECTORY_PICTURES)
                         pictureImagePath=storageDir.absolutePath + "/" + imageFileName
                         Log.e("PICTUREPATH : ",pictureImagePath)
-                        var cameraIntent=Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        val file = File(pictureImagePath)
+                        val outputFileUri = Uri.fromFile(file)
+                        val cameraIntent =
+                            Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
                         startActivityForResult(cameraIntent, CLICK_IMAGE_REQUEST)
                     }
                     "Choose from Gallery" -> {
@@ -627,22 +667,31 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         builder.setItems(array) { _, which ->
             val selected = array[which]
             try {
-                if (selected.equals("Open Camera")) {
-                    var name:String= System.currentTimeMillis().toString()
-                    var imageFileName=  name+ ".jpg"
-                    var storageDir:File = Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_PICTURES)
-                    pictureImagePath=storageDir.absolutePath + "/" + imageFileName
-                    var cameraIntent=Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                    startActivityForResult(cameraIntent, VISA_CAMERA_REQUEST)
-                } else if (selected.equals("Choose from Gallery")) {
-                    var intent=Intent(Intent.ACTION_GET_CONTENT)
-                    intent.type = "image/*"
-                    startActivityForResult(intent, VISA_GALLERY_REQUEST)
+                when {
+                    selected == "Open Camera" -> {
+                        val imageFileName =
+                            System.currentTimeMillis().toString() + ".jpg"
+                        var storageDir:File = Environment.getExternalStoragePublicDirectory(
+                            Environment.DIRECTORY_PICTURES)
+                        pictureImagePath=storageDir.absolutePath + "/" + imageFileName
+                        Log.e("PICTUREPATH : ",pictureImagePath)
+                        val file = File(pictureImagePath)
+                        val outputFileUri = Uri.fromFile(file)
+                        val cameraIntent =
+                            Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
+                        startActivityForResult(cameraIntent, VISA_CAMERA_REQUEST)
+                    }
+                    selected.equals("Choose from Gallery") -> {
+                        var intent=Intent(Intent.ACTION_GET_CONTENT)
+                        intent.type = "image/*"
+                        startActivityForResult(intent, VISA_GALLERY_REQUEST)
 
-                    Log.e("WORKS","GALLERY")
-                } else{
+                        Log.e("WORKS","GALLERY")
+                    }
+                    else -> {
 
+                    }
                 }
             }catch (e:IllegalArgumentException){
                 // Catch the color string parse exception
@@ -686,9 +735,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         }
         if (requestCode == CLICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
             PassportCamera = File(pictureImagePath)
-            Log.e("PassportCamera", PassportCamera.toString())
-            Log.e("PHOTOCONDITION","WORKING1")
-            if (!PassportCamera.exists()) {
+            if (PassportCamera.exists()) {
                 try {
                     if (data != null) {
                         PassportCamera = FileUtil.from(mContext, data.data)
@@ -705,12 +752,11 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
                         )
                         .build()
                         .compressToFile(PassportCamera)
-                    Log.e("PHOTO","WORKING2")
                     CompressPassportCamera()
                     PassImageName.text = CompressPassportCamera.name
                     passport_image_name_path = CompressPassportCamera.name
 
-//                  Toast.makeText(mContext, "Compressed image save in " + compressedImage.getPath(), Toast.LENGTH_LONG).show();
+                  Toast.makeText(mContext, "Compressed image save in " + CompressPassportCamera.path, Toast.LENGTH_LONG).show()
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -738,7 +784,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
                     CompressVISAcamera()
                     VisaImageName.text = CompressVisaCamera1.name
                     visa_image_name_path = CompressVisaCamera1.name
-                    //                    Toast.makeText(mContext, "Compressed image save in " + compressedImage.getPath(), Toast.LENGTH_LONG).show();
+                                       Toast.makeText(mContext, "Compressed image save in " + CompressVisaCamera1.path, Toast.LENGTH_LONG).show()
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }

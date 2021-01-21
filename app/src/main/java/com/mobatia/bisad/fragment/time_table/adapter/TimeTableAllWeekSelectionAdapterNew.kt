@@ -18,6 +18,7 @@ import com.mobatia.bisad.fragment.time_table.model.usagemodel.PeriodModel
 import com.ryanharter.android.tooltips.ToolTip
 import com.ryanharter.android.tooltips.ToolTipLayout
 
+
 var isClick: Boolean = false
 
 class TimeTableAllWeekSelectionAdapterNew(
@@ -65,15 +66,19 @@ class TimeTableAllWeekSelectionAdapterNew(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        holder.periodTxt.setText(mFeildList.get(position).sortname)
+        holder.periodTxt.text = mFeildList[position].sortname
+        Log.e("PERIODTEXT:",mFeildList[position].sortname)
+
         holder.timeTxt.visibility = View.GONE
-        if (mPeriodModel.get(position).timeTableDayModel.size > 0) {
+        if (mPeriodModel[position].timeTableDayModel.size > 0) {
             holder.timeLinear.visibility = View.GONE
             holder.tutorLinear.visibility = View.VISIBLE
             holder.llread.visibility = View.VISIBLE
             holder.starLinearR.visibility = View.VISIBLE
             holder.relSub.visibility = View.VISIBLE
-            if (mPeriodModel.get(position).timeTableListS.size > 1) {
+
+
+            if (mPeriodModel[position].timeTableListS.size > 1) {
                 holder.tutor1.setText(mPeriodModel.get(position).timeTableListS.get(0).subject_name)
             } else {
                 holder.tutor1.setText(mPeriodModel.get(position).sunday)
@@ -259,7 +264,8 @@ class TimeTableAllWeekSelectionAdapterNew(
                 tipContainer.addTooltip(t)
             }
         })
-        holder.tutor3.setOnClickListener(View.OnClickListener {
+        holder.tutor3.setOnClickListener {
+
             if (holder.tutor3.text == "") {
                 Log.e("TIMETABLE", "CLICKED1")
             } else {
@@ -267,30 +273,43 @@ class TimeTableAllWeekSelectionAdapterNew(
 
                 isClick = true
                 Log.e("TIMETABLE", "CLICKED3")
-               // val vi = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)
+    //                val dialog = Dialog(mContext)
+    //                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    //                dialog.setCancelable(false)
+    //                dialog.setContentView(R.layout.popup_timetable_activity)
+    //                dialog.show()
+    //                dialog.setCanceledOnTouchOutside(true)
+             //   Toast.makeText(mContext,"this is toast message",Toast.LENGTH_SHORT).show()
 
-                    val itemView: View = LayoutInflater.from(mContext).inflate(R.layout.popup_timetable_activity, null, false)
+
+               val inflater: LayoutInflater = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                val view = inflater.inflate(R.layout.popup_timetable_activity,null,false)
+
+
                 Log.e("TIMETABLE", "CLICKED4")
-                val recycler_view_timetable: RecyclerView = itemView.findViewById(R.id.recycler_view_timetable)
+                val recycler_view_timetable: RecyclerView = view.findViewById(R.id.recycler_view_timetable)
+                val test: LinearLayout = view.findViewById(R.id.Linear)
+
+               // test.removeView(it)
+
                 recycler_view_timetable.setHasFixedSize(true)
                 val llmAtime = LinearLayoutManager(mContext)
+
                 llmAtime.orientation = LinearLayoutManager.VERTICAL
                 recycler_view_timetable.layoutManager = llmAtime
-                val mTimeTablePopUpRecyclerAdapter =
-                    TimeTablePopUpRecyclerAdapter(
-                        mContext,
-                        mPeriodModel[position].timeTableListTu
-                    )
+                val mTimeTablePopUpRecyclerAdapter = TimeTablePopUpRecyclerAdapter(mContext,
+                        mPeriodModel[position].timeTableListTu)
                 mTimeTablePopUpRecyclerAdapter.notifyDataSetChanged()
                 recycler_view_timetable.adapter = mTimeTablePopUpRecyclerAdapter
                 var t: ToolTip? = null
+                Log.e("POSITIONNITHIN", position.toString())
                 t = if (position == 0) {
                     ToolTip.Builder(mContext)
                         .anchor(holder.tutor3) // The view to which the ToolTip should be anchored
                         .gravity(Gravity.BOTTOM) // The location of the view in relation to the anchor (LEFT, RIGHT, TOP, BOTTOM)
                         .color(mContext.resources.getColor(R.color.ttpop)) // The color of the pointer arrow
                         .pointerSize(10) // The size of the pointer
-                        .contentView(itemView) // The actual contents of the ToolTip
+                        .contentView(view) // The actual contents of the ToolTip
                         .build()
                 } else {
                     ToolTip.Builder(mContext)
@@ -300,12 +319,14 @@ class TimeTableAllWeekSelectionAdapterNew(
                             mContext.resources.getColor(R.color.ttpop)
                         )
                         .pointerSize(10) // The size of the pointer
-                        .contentView(itemView) // The actual contents of the ToolTip
+                        .contentView(view) // The actual contents of the ToolTip
                         .build()
                 }
                 tipContainer.addTooltip(t)
+               // test.addView(it,0)
             }
-        })
+
+        }
         holder.tutor4.setOnClickListener(View.OnClickListener {
             if (holder.tutor4.text.equals("")) {
 

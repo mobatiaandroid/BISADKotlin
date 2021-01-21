@@ -17,16 +17,12 @@ import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import androidx.viewpager.widget.ViewPager.PageTransformer
 import com.mobatia.bisad.R
 import com.mobatia.bisad.activity.home.DataCollectionActivity
 import com.mobatia.bisad.activity.home.HomeActivity
 import com.mobatia.bisad.activity.home.PageView
-import com.mobatia.bisad.activity.settings.termsofservice.TermsOfServiceActivity
 import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
 import com.mobatia.bisad.constants.NaisClassNameConstants
@@ -53,7 +49,6 @@ import com.mobatia.bisad.manager.AppController
 import com.mobatia.bisad.manager.PreferenceData
 import com.mobatia.bisad.rest.AccessTokenClass
 import com.mobatia.bisad.rest.ApiClient
-import com.tuyenmonkey.mkloader.MKLoader
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
@@ -61,6 +56,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.abs
 
 
 lateinit var relone: RelativeLayout
@@ -141,11 +137,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
     lateinit var jsonConstans: JsonConstants
 
     var bannerarray = ArrayList<String>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -293,7 +284,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     .getbuttononetextimage(mContext)!!.toInt()].toUpperCase()
             }
             relTxtone.text = relTwoStr
-            relTxtone.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+            relTxtone.setTextColor(ContextCompat.getColor(mContext, R.color.white))
             relone.setBackgroundColor(
                 sharedprefs
                     .getButtonOneGuestBg(mContext)
@@ -331,7 +322,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     .getbuttontwotextimage(mContext)!!.toInt()].toUpperCase()
             }
             relTxttwo.text = relTwoStr
-            relTxttwo.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+            relTxttwo.setTextColor(ContextCompat.getColor(mContext, R.color.white))
             reltwo.setBackgroundColor(
                 sharedprefs
                     .getButtontwoGuestBg(mContext)
@@ -368,7 +359,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     .getbuttonthreetextimage(mContext)!!.toInt()].toUpperCase()
             }
             relTxtthree.text = relTwoStr
-            relTxtthree.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+            relTxtthree.setTextColor(ContextCompat.getColor(mContext, R.color.white))
             relthree.setBackgroundColor(
                 sharedprefs
                     .getButtonthreeGuestBg(mContext)
@@ -407,7 +398,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     .getbuttonfourtextimage(mContext)!!.toInt()].toUpperCase()
             }
             relTxtfour.text = relTwoStr
-            relTxtfour.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+            relTxtfour.setTextColor(ContextCompat.getColor(mContext, R.color.white))
             relfour.setBackgroundColor(
                 sharedprefs
                     .getButtonfourGuestBg(mContext)
@@ -446,7 +437,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     .getbuttonfivetextimage(mContext)!!.toInt()].toUpperCase()
             }
             relTxtfive.text = relTwoStr
-            relTxtfive.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+            relTxtfive.setTextColor(ContextCompat.getColor(mContext, R.color.white))
             relfive.setBackgroundColor(
                 sharedprefs
                     .getButtonfiveGuestBg(mContext)
@@ -483,7 +474,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     .getbuttonsixtextimage(mContext)!!.toInt()].toUpperCase()
             }
             relTxtsix.text = relTwoStr
-            relTxtsix.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+            relTxtsix.setTextColor(ContextCompat.getColor(mContext, R.color.white))
             relsix.setBackgroundColor(
                 sharedprefs
                     .getButtonsixGuestBg(mContext)
@@ -511,7 +502,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     .getbuttonseventextimage(mContext)!!.toInt()].toUpperCase()
             }
             relTxtseven.text = relTwoStr
-            relTxtseven.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+            relTxtseven.setTextColor(ContextCompat.getColor(mContext, R.color.white))
             relseven.setBackgroundColor(
                 sharedprefs
                     .getButtonsevenGuestBg(mContext)
@@ -539,7 +530,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     .getbuttoneighttextimage(mContext)!!.toInt()].toUpperCase()
             }
             relTxteight.text = relTwoStr
-            relTxteight.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+            relTxteight.setTextColor(ContextCompat.getColor(mContext, R.color.white))
             releight.setBackgroundColor(
                 sharedprefs
                     .getButtoneightGuestBg(mContext)
@@ -567,7 +558,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     .getbuttonninetextimage(mContext)!!.toInt()].toUpperCase(Locale.ROOT)
             }
             reltxtnine.text = relTwoStr
-            reltxtnine.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+            reltxtnine.setTextColor(ContextCompat.getColor(mContext, R.color.white))
             relnine.setBackgroundColor(
                 sharedprefs
                     .getButtonnineGuestBg(mContext)
@@ -1039,6 +1030,34 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
     private fun initializeUI() {
          pager = view!!.findViewById<ViewPager>(R.id.bannerImagePager)
 
+
+//        pager.setPageTransformer(false
+//        ) { page, _ ->
+//            val pageWidth: Int =
+//                pager.measuredWidth - pager.paddingLeft - pager.paddingRight
+//            val pageHeight: Int = pager.height
+//            val paddingLeft: Int = pager.paddingLeft
+//            val transformPos =
+//                (page.left - (pager.scrollX + paddingLeft)) as Int / pageWidth
+//            val normalizedposition =
+//                abs(abs(transformPos) - 1)
+//            page.alpha = normalizedposition + 0.5f
+//            val max = -pageHeight / 10
+//            when {
+//                transformPos < -1 -> { // [-Infinity,-1)
+//                    // This page is way off-screen to the left.
+//                    page.translationY = 0F
+//                }
+//                transformPos <= 1 -> { // [-1,1]
+//                    page.translationY = max * (1 - abs(transformPos))
+//                }
+//                else -> { // (1,+Infinity]
+//                    // This page is way off-screen to the right.
+//                    page.translationY = 0F
+//                }
+//            }
+//        }
+
         relone = view!!.findViewById(R.id.relOne) as RelativeLayout
         reltwo = view!!.findViewById(R.id.relTwo) as RelativeLayout
         relthree = view!!.findViewById(R.id.relThree) as RelativeLayout
@@ -1081,7 +1100,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
 //            Log.e("PAGER", "INITILIZEDERROR")
 //
 //        }
-        pager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
 
             }
@@ -1379,7 +1398,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
     fun fragmentIntent(mFragment: Fragment?) {
         if (mFragment != null) {
             println("title:" + appController.mTitles)
-            val fragmentManager = activity!!.getSupportFragmentManager()
+            val fragmentManager = activity!!.supportFragmentManager
             fragmentManager.beginTransaction()
                 .add(R.id.fragment_holder, mFragment, appController.mTitles)
                 .addToBackStack(appController.mTitles).commitAllowingStateLoss() //commit
@@ -1402,7 +1421,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
         text_dialog.text = message
         alertHead.text = msgHead
         iconImageView.setImageResource(R.drawable.exclamationicon)
-        btn_Ok?.setOnClickListener()
+        btn_Ok.setOnClickListener()
         {
             dialog.dismiss()
 
@@ -1518,7 +1537,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
 
                 if (response.body()!!.status==100)
                 {
-                    studentListArrayList.addAll(response.body()!!.responseArray!!.studentList)
+                    studentListArrayList.addAll(response.body()!!.responseArray.studentList)
                     for (i in 0..studentListArrayList.size-1)
                     {
                         var model=StudentListDataCollection()
@@ -1624,7 +1643,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
             override fun onResponse(call: Call<CountryListModel>, response: Response<CountryListModel>) {
                 if (response.body()!!.status==100)
                 {
-                    countryistArrayList.addAll(response.body()!!.responseArray!!.countriesList)
+                    countryistArrayList.addAll(response.body()!!.responseArray.countriesList)
                     sharedprefs.setCountryArrayList(mContext, countryistArrayList)
                    // Log.e("Country List Size", sharedprefs.getCountryArrayList(mContext).size.toString() )
 
@@ -1671,7 +1690,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
             override fun onResponse(call: Call<RelationShipListModel>, response: Response<RelationShipListModel>) {
                 if (response.body()!!.status==100)
                 {
-                    relationshipArrayList.addAll(response.body()!!.responseArray!!.contactTypesList)
+                    relationshipArrayList.addAll(response.body()!!.responseArray.contactTypesList)
                     sharedprefs.setRelationShipArrayList(mContext, relationshipArrayList)
                    // Log.e("Country List Size", sharedprefs.getCountryArrayList(mContext).size.toString() )
 

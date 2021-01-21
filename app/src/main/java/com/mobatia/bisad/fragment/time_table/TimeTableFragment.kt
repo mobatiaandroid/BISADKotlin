@@ -190,6 +190,7 @@ class TimeTableFragment : Fragment(){
             {
                 weekPosition = 5
             }
+
             else->{
                 weekPosition = 0
             }
@@ -231,12 +232,14 @@ class TimeTableFragment : Fragment(){
                         timeTableSingleRecycler.visibility = View.VISIBLE
                         if (weekPosition==1)
                         {
+                            Log.e("WEEKDATA","1")
                             var mRecyclerViewMainAdapter=
                                 TimeTableSingleWeekSelectionAdapter(mContext,mSundayArrayList)
                             timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
                         }
                         else if (weekPosition==2)
                         {
+                            Log.e("WEEKDATA","2")
                             var mRecyclerViewMainAdapter=TimeTableSingleWeekSelectionAdapter(mContext,mMondayArrayList)
                             timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
 

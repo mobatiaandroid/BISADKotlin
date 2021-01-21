@@ -15,7 +15,7 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/bannerImagePager"
             android:layout_width="match_parent"
-            android:background="@drawable/banner2"
+            android:background="@drawable/default_banner"
             android:layout_height="match_parent" />
     </RelativeLayout>
 

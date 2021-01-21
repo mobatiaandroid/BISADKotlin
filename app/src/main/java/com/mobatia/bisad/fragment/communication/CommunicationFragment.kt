@@ -208,13 +208,13 @@ class CommunicationFragment : Fragment(){
                     .setCurrentItem(currentPage++, true)
             }
         }
-        val swipetimer = Timer()
-
-        swipetimer.schedule(object : TimerTask() {
-            override fun run() {
-                handler.post(update)
-            }
-        }, 100, 6000)
+//        val swipetimer = Timer()
+//
+//        swipetimer.schedule(object : TimerTask() {
+//            override fun run() {
+//                handler.post(update)
+//            }
+//        }, 100, 6000)
 
     }
 }

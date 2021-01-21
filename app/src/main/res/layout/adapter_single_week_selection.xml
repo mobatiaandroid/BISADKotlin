@@ -41,6 +41,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="5dp"
                 android:textSize="18dp"
+                android:textAllCaps="true"
                 android:layout_toLeftOf="@+id/llread"
                 android:text="07:45"
                 android:singleLine="false"
