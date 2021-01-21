@@ -665,6 +665,7 @@ class FirstScreenNewData:Fragment() {
                 model.title=DropEdt.text.toString().trim()
                 model.name=firstNameTxt.text.toString().trim()
                 model.last_name=lastNameTxt.text.toString().trim()
+                Log.e("RELATIONSHIP",relationshipTxt.text.toString().trim())
                 model.relationship=relationshipTxt.text.toString().trim()
                 model.email=emailTxt.text.toString().trim()
                 model.phone=dataCollect_Code.text.toString().trim()+dataCollect_Phone.text.toString().trim()
@@ -693,8 +694,11 @@ class FirstScreenNewData:Fragment() {
                 sharedprefs.setOwnContactDetailArrayList(context,mDataArrayList)
                 ownDetailViewRelative.setBackgroundResource(R.drawable.rect_data_collection_red)
                 confirmBtn.visibility=View.VISIBLE
-                dialog.dismiss()
+                nameOwnDetailTxt.setText(firstNameTxt.text.toString().trim())
+                contactTypeOwnDetailTxt.setText(relationshipTxt.text.toString().trim())
                 familyKinRecyclerAdapter.notifyDataSetChanged()
+                dialog.dismiss()
+
             }
             else{
                 Log.e("Changed","not works")
@@ -787,6 +791,8 @@ class FirstScreenNewData:Fragment() {
                                                 sharedprefs.setOwnContactDetailArrayList(context,mDataArrayList)
                                                 sharedprefs.getOwnContactDetailArrayList(context)!!.get(0).isConfirmed=true
                                                 ownDetailViewRelative.setBackgroundResource(R.drawable.rect_background_grey)
+                                                nameOwnDetailTxt.setText(firstNameTxt.text.toString().trim())
+                                                contactTypeOwnDetailTxt.setText(relationshipTxt.text.toString().trim())
                                                 confirmBtn.visibility=View.GONE
                                                 dialog.dismiss()
 
@@ -1053,7 +1059,7 @@ class FirstScreenNewData:Fragment() {
         }
         else
         {
-            relationshipTxt.setText(kinDetailArrayList.get(0).relationship)
+            relationshipTxt.setText(kinDetailArrayList.get(positionClicked).relationship)
         }
         if (kinDetailArrayList.get(positionClicked).name.equals(""))
         {
@@ -1632,7 +1638,11 @@ class FirstScreenNewData:Fragment() {
                      kinDetailPassArrayList.removeAt(kinPos)
                      kinDetailPassArrayList.add(kinPos,model)
                      sharedprefs.getKinDetailPassArrayList(mContext)!!.clear()
+                     var dummyKinPass=ArrayList<KinDetailApiModel>()
+                     sharedprefs.setKinDetailPassArrayList(mContext,dummyKinPass)
                      sharedprefs.getKinDetailArrayList(mContext)!!.clear()
+                     var dummyKinShow=ArrayList<KinDetailApiModel>()
+                     sharedprefs.setKinDetailArrayList(mContext,dummyKinShow)
                      sharedprefs.setKinDetailArrayList(mContext,kinDetailArrayList)
                      sharedprefs.setKinDetailPassArrayList(mContext,kinDetailPassArrayList)
                      familyKinRecyclerAdapter= FamilyContactRecyclerAdapter(sharedprefs.getKinDetailArrayList(mContext)!!)

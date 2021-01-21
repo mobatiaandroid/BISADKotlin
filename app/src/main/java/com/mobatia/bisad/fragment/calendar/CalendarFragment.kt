@@ -223,6 +223,7 @@ class CalendarFragment : Fragment() {
                 StartCalendar = calendarArrayList[position].DTSTART
                 EndCalendar = calendarArrayList[position].DTEND
                 summary.text = SummaryCalendar
+                description.visibility=View.GONE
                 description.text = DescriptionCalendar
                 start_text.setTextColor(context?.let {
                     ContextCompat.getColor(

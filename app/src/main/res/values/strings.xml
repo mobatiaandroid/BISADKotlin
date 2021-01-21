@@ -152,12 +152,12 @@
     <string name="contact_details">Contact Details</string>
     <string name="additional_contact_description">Additional contacts must have unique details. Eg A Next of Kin contact email address cannot be the same as the mother’s email address.</string>
     <string name="local_emergency_contact_detail">Emergency contact - Must have a Malaysian country code</string>
-    <string name="data_collection_own_contact_no_hint">Phone Number<font fgcolor="grey">*</font></string>
+    <string name="data_collection_own_contact_no_hint">Phone Number<font fgcolor="red">*</font></string>
     <string name="data_collection_own_contact_email_hint">Email</string>
     <string name="data_collection_details">Please provide the details below</string>
     <string name="data_collection">In the event of an emergency and the primary caregivers not being available we may need to contact your child\'s next of Kin.</string>
     <string name="title_activity_kin_details">KinDetails</string>
-    <string name="email">Email-ID<font fgcolor="grey">*</font></string>
+    <string name="email">Email-ID<font fgcolor="red">*</font></string>
     <string name="medical_note">Medical Notes</string>
     <string name="medical_note_sub">(including allergies)</string>
 

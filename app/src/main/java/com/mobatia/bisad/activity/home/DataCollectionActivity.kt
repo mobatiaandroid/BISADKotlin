@@ -2,6 +2,7 @@ package com.mobatia.bisad.activity.home
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
@@ -29,7 +30,6 @@ import com.mobatia.bisad.fragment.home.model.datacollection.HealthInsuranceDetai
 import com.mobatia.bisad.fragment.home.model.datacollection.KinDetailApiModel
 import com.mobatia.bisad.fragment.home.model.datacollection.OwnContactModel
 import com.mobatia.bisad.fragment.home.model.datacollection.PassportApiModel
-import com.mobatia.bisad.fragment.home.sharedprefs
 import com.mobatia.bisad.manager.PreferenceData
 import com.mobatia.bisad.rest.AccessTokenClass
 import com.mobatia.bisad.rest.ApiClient
@@ -559,7 +559,6 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
         {
             dialog.dismiss()
             pager.setCurrentItem(0, true)
-
         }
         dialog.show()
     }
@@ -582,8 +581,35 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
             dialog.dismiss()
             if (triggertype==1 && overallStatus==2)
             {
-                sharedprefs.setDataCollection(context,2)
+
+                sharedprefs.getOwnContactDetailArrayList(context)!!.clear()
+                var dummyOwn=ArrayList<OwnContactModel>()
+                sharedprefs.setOwnContactDetailArrayList(context,dummyOwn)
+                sharedprefs.getKinDetailPassArrayList(context)!!.clear()
+                var dummyKinPass=ArrayList<KinDetailApiModel>()
+                sharedprefs.setKinDetailPassArrayList(context,dummyKinPass)
+                sharedprefs.getKinDetailArrayList(context)!!.clear()
+                var dummyKinShow=ArrayList<KinDetailApiModel>()
+                sharedprefs.setKinDetailArrayList(context,dummyKinShow)
+                sharedprefs.getHealthDetailArrayList(context)!!.clear()
+                var dummyHealth=ArrayList<HealthInsuranceDetailModel>()
+                sharedprefs.setHealthDetailArrayList(context,dummyHealth)
+                sharedprefs.getPassportDetailArrayList(context)!!.clear()
+                var dummyPassport=ArrayList<PassportApiModel>()
+                sharedprefs.setPassportDetailArrayList(context,dummyPassport)
+                sharedprefs.getStudentArrayList(context)!!.clear()
+                var dummyStudent=ArrayList<StudentListDataCollection>()
+                sharedprefs.setStudentArrayList(context,dummyStudent)
+
+            }
+            else if(triggertype==3 && overallStatus==1)
+            {
+                sharedprefs.setDataCollection(context,1)
+                sharedprefs.setTriggerType(context,3)
                 finish()
+                val intent = Intent(context, DataCollectionActivity::class.java)
+                context.startActivity(intent)
+
             }
 
         }
@@ -697,29 +723,7 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
                             if (status == 100)
                             {
                                 showSuccessDataAlert(context,"Thank you for updating your details, please wait 5 working days for the changes to take effect","Alert",triggertype,overallStatus)
-                                if (triggertype==1 && overallStatus==2)
-                                {
 
-                                    sharedprefs.getOwnContactDetailArrayList(context)!!.clear()
-                                    var dummyOwn=ArrayList<OwnContactModel>()
-                                    sharedprefs.setOwnContactDetailArrayList(context,dummyOwn)
-                                    sharedprefs.getKinDetailPassArrayList(context)!!.clear()
-                                    var dummyKinPass=ArrayList<KinDetailApiModel>()
-                                    sharedprefs.setKinDetailPassArrayList(context,dummyKinPass)
-                                    sharedprefs.getKinDetailArrayList(context)!!.clear()
-                                    var dummyKinShow=ArrayList<KinDetailApiModel>()
-                                    sharedprefs.setKinDetailArrayList(context,dummyKinShow)
-                                    sharedprefs.getHealthDetailArrayList(context)!!.clear()
-                                    var dummyHealth=ArrayList<HealthInsuranceDetailModel>()
-                                    sharedprefs.setHealthDetailArrayList(context,dummyHealth)
-                                    sharedprefs.getPassportDetailArrayList(context)!!.clear()
-                                    var dummyPassport=ArrayList<PassportApiModel>()
-                                    sharedprefs.setPassportDetailArrayList(context,dummyPassport)
-                                    sharedprefs.getStudentArrayList(context)!!.clear()
-                                    var dummyStudent=ArrayList<StudentListDataCollection>()
-                                    sharedprefs.setStudentArrayList(context,dummyStudent)
-
-                                }
 
 
                             } else {
