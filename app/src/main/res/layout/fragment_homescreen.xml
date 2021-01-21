@@ -27,16 +27,6 @@
         android:gravity="center"
         tools:ignore="ObsoleteLayoutParam">
 
-        <com.tuyenmonkey.mkloader.MKLoader
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="2dp"
-            android:id="@+id/progressbar"
-            app:mk_type="LineSpinner"
-            app:mk_color="@color/white"
-            android:visibility="gone"
-            android:layout_centerInParent="true" />
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,15 +53,15 @@
                         android:layout_height="match_parent"
                         android:layout_margin="1dp">
 
-                        <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+                        <TextView
                             android:id="@+id/relTxtOne"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            style="@style/textstyleHomebutton"
                             android:layout_centerVertical="true"
-                            android:textSize="14sp"
                             android:layout_toLeftOf="@+id/relImgOne"
                             android:gravity="center"
-                            android:maxLines="1" />
+                            android:maxLines="2" />
 
                         <ImageView
                             android:id="@+id/relImgOne"
@@ -108,13 +98,13 @@
                         android:layout_margin="1dp"
                         >
 
-                        <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+                        <TextView
                             android:id="@+id/relTxtTwo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:maxLines="1"
-                            android:textSize="14sp"
+                            android:maxLines="2"
+                            style="@style/textstyleHomebutton"
                             android:layout_toLeftOf="@+id/relImgTwo"
                             android:gravity="center" />
 
@@ -160,16 +150,16 @@
                             android:layout_margin="1dp"
                             >
 
-                            <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+                            <TextView
                                 android:id="@+id/relTxtThree"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentBottom="true"
                                 android:layout_centerHorizontal="true"
                                 android:gravity="center"
-
+                                style="@style/textstyleHomebutton"
                                 android:layout_below="@+id/relImgThree"
-                                android:maxLines="1" />
+                                android:maxLines="2" />
 
                             <ImageView
                                 android:id="@+id/relImgThree"
@@ -204,16 +194,17 @@
                             android:layout_margin="1dp"
                             >
 
-                            <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+                            <TextView
                                 android:id="@+id/relTxtFour"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentBottom="true"
                                 android:layout_centerHorizontal="true"
                                 android:gravity="center"
+                                style="@style/textstyleHomebutton"
                                 android:textColor="@color/white"
                                 android:layout_below="@+id/relImgFour"
-                                android:maxLines="1" />
+                                android:maxLines="2" />
 
                             <ImageView
                                 android:id="@+id/relImgFour"
@@ -264,17 +255,17 @@
                             android:layout_margin="1dp"
                             >
 
-                            <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+                            <TextView
                                 android:id="@+id/relTxtFive"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/relImgFive"
                                 android:layout_alignParentBottom="true"
-
+                                style="@style/textstyleHomebutton"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginBottom="5dp"
                                 android:gravity="center"
-                                android:maxLines="1" />
+                                android:maxLines="2" />
 
                             <ImageView
                                 android:id="@+id/relImgFive"
@@ -309,17 +300,18 @@
                             android:layout_margin="2dp"
                             >
 
-                            <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+                            <TextView
                                 android:id="@+id/relTxtSix"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentBottom="true"
                                 android:layout_centerHorizontal="true"
                                 android:layout_below="@+id/relImgSix"
+                                style="@style/textstyleHomebutton"
                                 android:layout_marginLeft="2dp"
                                 android:layout_marginBottom="5dp"
                                 android:gravity="center"
-                                android:maxLines="1" />
+                                android:maxLines="2" />
 
                             <ImageView
                                 android:id="@+id/relImgSix"
@@ -360,7 +352,7 @@
                             android:layout_margin="1dp"
                             >
 
-                            <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+                            <TextView
                                 android:id="@+id/relTxtSeven"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -368,9 +360,10 @@
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginBottom="5dp"
                                 android:visibility="visible"
+                                style="@style/textstyleHomebutton"
                                 android:gravity="center"
                                 android:layout_below="@+id/relImgSeven"
-                                android:maxLines="1" />
+                                android:maxLines="2" />
 
                             <ImageView
                                 android:id="@+id/relImgSeven"
@@ -406,17 +399,17 @@
                             android:layout_margin="1dp"
                             >
 
-                            <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+                            <TextView
                                 android:id="@+id/relTxtEight"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentBottom="true"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginBottom="5dp"
-
+                                style="@style/textstyleHomebutton"
                                 android:layout_below="@+id/relImgEight"
                                 android:gravity="center"
-                                android:maxLines="1" />
+                                android:maxLines="2" />
 
                             <ImageView
                                 android:id="@+id/relImgEight"
@@ -453,14 +446,15 @@
                         android:layout_margin="1dp"
                         >
 
-                        <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+                        <TextView
                             android:id="@+id/relTxtNine"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toLeftOf="@+id/relImgNine"
                             android:gravity="center"
-                            android:maxLines="1" />
+                            style="@style/textstyleHomebutton"
+                            android:maxLines="2" />
 
                         <ImageView
                             android:id="@+id/relImgNine"

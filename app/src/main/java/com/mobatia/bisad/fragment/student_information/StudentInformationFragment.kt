@@ -24,7 +24,6 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.mobatia.bisad.R
 import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
-import com.mobatia.bisad.fragment.home.loader
 import com.mobatia.bisad.fragment.home.mContext
 import com.mobatia.bisad.fragment.home.model.BannerModel
 import com.mobatia.bisad.fragment.home.sharedprefs
@@ -177,7 +176,6 @@ class StudentInformationFragment : Fragment(){
     fun callStudentInfoApi()
     {
         var studentInfoArrayList = ArrayList<StudentInfoDetail>()
-        loader.visibility = View.VISIBLE
         val token = sharedprefs.getaccesstoken(mContext)
         val studentbody= StudentInfoApiModel(sharedprefs.getStudentID(mContext)!!)
         val call: Call<StudentInfoModel> = ApiClient.getClient.studentInfo(studentbody,"Bearer "+token)

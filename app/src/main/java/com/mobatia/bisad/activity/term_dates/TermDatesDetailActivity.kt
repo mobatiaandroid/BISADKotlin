@@ -20,7 +20,6 @@ import com.mobatia.bisad.activity.home.HomeActivity
 import com.mobatia.bisad.activity.term_dates.model.TermDatesDetailApiModel
 import com.mobatia.bisad.activity.term_dates.model.TermDatesDetailModel
 import com.mobatia.bisad.constants.JsonConstants
-import com.mobatia.bisad.fragment.home.loader
 import com.mobatia.bisad.manager.PreferenceData
 import com.mobatia.bisad.rest.ApiClient
 import retrofit2.Call
@@ -90,11 +89,9 @@ class TermDatesDetailActivity : AppCompatActivity(){
         val call: Call<TermDatesDetailModel> = ApiClient.getClient.termDatesDetails(termsDatesBody,"Bearer "+token)
         call.enqueue(object : Callback<TermDatesDetailModel> {
             override fun onFailure(call: Call<TermDatesDetailModel>, t: Throwable) {
-                loader.visibility = View.GONE
                 Log.e("Error", t.localizedMessage)
             }
             override fun onResponse(call: Call<TermDatesDetailModel>, response: Response<TermDatesDetailModel>) {
-                loader.visibility = View.GONE
                 if (response.body()!!.status==100)
                 {
                     idApi=id

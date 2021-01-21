@@ -30,7 +30,6 @@ import com.mobatia.bisad.activity.social_media.SocialMediaDetailActivity
 import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
 import com.mobatia.bisad.fragment.communication.adapter.CommunicationRecyclerAdapter
-import com.mobatia.bisad.fragment.home.loader
 import com.mobatia.bisad.fragment.home.mContext
 import com.mobatia.bisad.fragment.home.model.BannerModel
 import com.mobatia.bisad.fragment.home.pager

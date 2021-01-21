@@ -35,15 +35,15 @@ internal class StaffListAdapter (private var studentList: List<StaffInfoDetail>)
         {
             Glide.with(mContext) //1
                 .load(movie.staff_photo)
-                .placeholder(R.drawable.student)
-                .error(R.drawable.student)
+                .placeholder(R.drawable.staff)
+                .error(R.drawable.staff)
                 .skipMemoryCache(true) //2
                 .diskCacheStrategy(DiskCacheStrategy.NONE) //3
                 .transform(CircleCrop()) //4
                 .into(holder.imagicon)
         }
         else{
-            holder.imagicon.setImageResource(R.drawable.student)
+            holder.imagicon.setImageResource(R.drawable.staff)
         }
     }
     override fun getItemCount(): Int {

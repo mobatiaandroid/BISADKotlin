@@ -25,7 +25,6 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.mobatia.bisad.R
 import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
-import com.mobatia.bisad.fragment.home.loader
 import com.mobatia.bisad.fragment.home.mContext
 import com.mobatia.bisad.fragment.student_information.adapter.StudentListAdapter
 import com.mobatia.bisad.fragment.student_information.model.StudentList
@@ -601,12 +600,10 @@ class TimeTableFragment : Fragment(){
     }
     fun callStudentListApi()
     {
-        //loader.visibility = View.VISIBLE
         val token = sharedprefs.getaccesstoken(mContext)
         val call: Call<StudentListModel> = ApiClient.getClient.studentList("Bearer " + token)
         call.enqueue(object : Callback<StudentListModel> {
             override fun onFailure(call: Call<StudentListModel>, t: Throwable) {
-                loader.visibility = View.GONE
                 Log.e("Error", t.localizedMessage)
             }
 
@@ -614,7 +611,6 @@ class TimeTableFragment : Fragment(){
                 call: Call<StudentListModel>,
                 response: Response<StudentListModel>
             ) {
-                loader.visibility = View.GONE
                 //  val arraySize: Int = response.body()!!.responseArray!!.studentList.size
                 if (response.body()!!.status == 100) {
 

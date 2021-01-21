@@ -21,7 +21,6 @@ import com.mobatia.bisad.constants.JsonConstants
 import com.mobatia.bisad.fragment.apps.adapter.AppsRecyclerAdapter
 import com.mobatia.bisad.fragment.apps.model.AppsListDetailModel
 import com.mobatia.bisad.fragment.apps.model.AppsListModel
-import com.mobatia.bisad.fragment.home.loader
 import com.mobatia.bisad.fragment.home.mContext
 import com.mobatia.bisad.fragment.messages.adapter.MessageListRecyclerAdapter
 import com.mobatia.bisad.fragment.messages.model.MessageListApiModel

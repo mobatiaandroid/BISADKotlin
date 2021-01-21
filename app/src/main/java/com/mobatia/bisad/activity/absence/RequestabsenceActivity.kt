@@ -28,7 +28,6 @@ import com.mobatia.bisad.activity.absence.model.RequestAbsenceApiModel
 import com.mobatia.bisad.activity.home.HomeActivity
 import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
-import com.mobatia.bisad.fragment.home.loader
 import com.mobatia.bisad.fragment.messages.model.MessageListApiModel
 import com.mobatia.bisad.fragment.report_absence.model.AbsenceLeaveApiModel
 import com.mobatia.bisad.fragment.student_information.adapter.StudentListAdapter
@@ -250,16 +249,13 @@ class RequestabsenceActivity : AppCompatActivity(){
     fun callStudentListApi()
     {
         studentArrayList=ArrayList<StudentList>()
-        loader.visibility = View.VISIBLE
         val token = sharedprefs.getaccesstoken(mContext)
         val call: Call<StudentListModel> = ApiClient.getClient.studentList("Bearer "+token)
         call.enqueue(object : Callback<StudentListModel> {
             override fun onFailure(call: Call<StudentListModel>, t: Throwable) {
-                loader.visibility = View.GONE
                 Log.e("Error", t.localizedMessage)
             }
             override fun onResponse(call: Call<StudentListModel>, response: Response<StudentListModel>) {
-                loader.visibility = View.GONE
                 val arraySize :Int =response.body()!!.responseArray!!.studentList.size
                 if (response.body()!!.status==100)
                 {

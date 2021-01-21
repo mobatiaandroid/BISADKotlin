@@ -31,7 +31,6 @@ import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.fragment.attendance.model.AttendanceApiModel
 import com.mobatia.bisad.fragment.attendance.model.AttendanceListDetailModel
 import com.mobatia.bisad.fragment.attendance.model.AttendanceListModel
-import com.mobatia.bisad.fragment.home.loader
 import com.mobatia.bisad.fragment.home.mContext
 import com.mobatia.bisad.fragment.student_information.adapter.StudentListAdapter
 import com.mobatia.bisad.fragment.student_information.model.StudentList
@@ -90,12 +89,10 @@ class AttendanceFragment : Fragment() {
     }
 
     fun callStudentListApi() {
-        loader.visibility = View.VISIBLE
         val token = sharedprefs.getaccesstoken(mContext)
         val call: Call<StudentListModel> = ApiClient.getClient.studentList("Bearer " + token)
         call.enqueue(object : Callback<StudentListModel> {
             override fun onFailure(call: Call<StudentListModel>, t: Throwable) {
-                loader.visibility = View.GONE
                 Log.e("Error", t.localizedMessage)
             }
 
@@ -103,7 +100,6 @@ class AttendanceFragment : Fragment() {
                 call: Call<StudentListModel>,
                 response: Response<StudentListModel>
             ) {
-                loader.visibility = View.GONE
                 if (response.body()!!.status == 100) {
                     studentListArrayList.addAll(response.body()!!.responseArray.studentList)
                     println("CalendarResoponse" + response.body())
@@ -176,7 +172,7 @@ class AttendanceFragment : Fragment() {
         studentNameTxt = view!!.findViewById(R.id.studentName) as TextView
         titleTextView = view!!.findViewById(R.id.titleTextView) as TextView
         calendarView = view!!.findViewById(R.id.calendarView) as CalendarView
-
+        calendarView.isClickable=false
         titleTextView.text = "Attendance"
 
         val aniRotate: Animation =
@@ -256,7 +252,6 @@ class AttendanceFragment : Fragment() {
     }
 
     fun getattendancedetails() {
-        loader.visibility = View.VISIBLE
         val token = sharedprefs.getaccesstoken(mContext)
         val attendancerBody = AttendanceApiModel(sharedprefs.getStudentID(mContext)!!)
 
@@ -265,7 +260,6 @@ class AttendanceFragment : Fragment() {
         call.enqueue(object : Callback<AttendanceListModel> {
             override fun onFailure(call: Call<AttendanceListModel>, t: Throwable) {
                 progressDialog.visibility = View.GONE
-                loader.visibility = View.GONE
                 Log.e("Error", t.localizedMessage)
             }
 
@@ -274,7 +268,6 @@ class AttendanceFragment : Fragment() {
                 call: Call<AttendanceListModel>,
                 response: Response<AttendanceListModel>
             ) {
-                loader.visibility = View.GONE
                 progressDialog.visibility = View.GONE
                 when (response.body()!!.status) {
                     100 -> {

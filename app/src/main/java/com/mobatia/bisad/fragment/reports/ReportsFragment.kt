@@ -24,7 +24,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.mobatia.bisad.R
 import com.mobatia.bisad.constants.InternetCheckClass
-import com.mobatia.bisad.fragment.home.loader
 import com.mobatia.bisad.fragment.home.mContext
 import com.mobatia.bisad.fragment.messages.model.MessageListDetailModel
 import com.mobatia.bisad.fragment.reports.model.ReportApiModel
@@ -85,12 +84,10 @@ class ReportsFragment : Fragment() {
     }
 
     fun callStudentListApi() {
-        loader.visibility = View.VISIBLE
         val token = sharedprefs.getaccesstoken(mContext)
         val call: Call<StudentListModel> = ApiClient.getClient.studentList("Bearer " + token)
         call.enqueue(object : Callback<StudentListModel> {
             override fun onFailure(call: Call<StudentListModel>, t: Throwable) {
-                loader.visibility = View.GONE
                 Log.e("Error", t.localizedMessage)
             }
 
@@ -98,7 +95,6 @@ class ReportsFragment : Fragment() {
                 call: Call<StudentListModel>,
                 response: Response<StudentListModel>
             ) {
-                loader.visibility = View.GONE
                 if (response.body()!!.status == 100) {
                     studentListArrayList.addAll(response.body()!!.responseArray.studentList)
                     println("CalendarResoponse" + response.body())
@@ -259,7 +255,6 @@ class ReportsFragment : Fragment() {
     }
 
     private fun getreportsdetails() {
-        loader.visibility = View.VISIBLE
         val token = sharedprefs.getaccesstoken(mContext)
         val studentid = ReportApiModel(sharedprefs.getStudentID(mContext)!!)
         val call: Call<ReportListModel> =
@@ -267,7 +262,6 @@ class ReportsFragment : Fragment() {
         call.enqueue(object : Callback<ReportListModel> {
             override fun onFailure(call: Call<ReportListModel>, t: Throwable) {
                 progressDialog.visibility = View.GONE
-                loader.visibility = View.GONE
                 Log.e("Error", t.localizedMessage)
             }
 
@@ -275,7 +269,6 @@ class ReportsFragment : Fragment() {
                 call: Call<ReportListModel>,
                 response: Response<ReportListModel>
             ) {
-                loader.visibility = View.GONE
                 progressDialog.visibility = View.GONE
                 when (response.body()!!.status) {
                     100 -> {

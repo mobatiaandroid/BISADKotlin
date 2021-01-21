@@ -123,7 +123,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
             applicationContext.resources.obtainTypedArray(R.array.navigation_icons_guest)
 
 
-        val width = (resources.displayMetrics.widthPixels / 2.2).toInt()
+        val width = (resources.displayMetrics.widthPixels / 2).toInt()
         val params = linear_layout
             .getLayoutParams() as DrawerLayout.LayoutParams
         params.width = width

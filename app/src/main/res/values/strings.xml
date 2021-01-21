@@ -41,7 +41,7 @@
         <item>Student Information</item>
         <item>Calendar</item>
         <item>Messages</item>
-        <item>Communication</item>
+        <item>News Letters</item>
         <item>Report Absence</item>
         <item>Teacher Contact</item>
         <item>Social Media</item>
@@ -67,7 +67,7 @@
         <item>@drawable/report_side</item>
         <item>@drawable/attendance_side</item>
         <item>@drawable/time_table_side</item>
-        <item>@drawable/permission_slip</item>
+        <item>@drawable/termdates</item>
         <item>@drawable/ccas</item>
         <item>@drawable/contacts</item>
         <item>@drawable/app</item>
@@ -81,7 +81,7 @@
         <item>Student Information</item>
         <item>Calendar</item>
         <item>Messages</item>
-        <item>Communication</item>
+        <item>News Letters</item>
         <item>Report Absence</item>
         <item>Teacher Contact</item>
         <item>Social Media</item>
@@ -107,7 +107,7 @@
         <item>@drawable/report_side</item>
         <item>@drawable/attendance_side</item>
         <item>@drawable/time_table_side</item>
-        <item>@drawable/permission_slip</item>
+        <item>@drawable/termdates</item>
         <item>@drawable/ccas</item>
         <item>@drawable/contacts</item>
         <item>@drawable/app</item>

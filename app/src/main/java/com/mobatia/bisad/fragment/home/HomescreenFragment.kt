@@ -93,7 +93,6 @@ lateinit var relImgseven: ImageView
 lateinit var relImgeight: ImageView
 lateinit var relImgnine: ImageView
 
-lateinit var loader: MKLoader
 lateinit var mSectionText: Array<String?>
 lateinit var homeActivity: HomeActivity
 lateinit var appController: AppController
@@ -664,7 +663,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     }
                     else if(listitems[sPosition] == "Student Information")
                     {
-                        relstring ="STUDENT"
+                        relstring ="STUDENT INFORMATION"
                     }
                     else {
                         relstring = listitems[sPosition].toUpperCase(Locale.getDefault())
@@ -683,7 +682,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     }
                     else if(listitems[sPosition] == "Student Information")
                     {
-                        relstring ="STUDENT"
+                        relstring ="STUDENT INFORMATION"
                     }
                     else {
                         relstring = listitems[sPosition].toUpperCase(Locale.getDefault())
@@ -702,7 +701,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     }
                     else if(listitems[sPosition] == "Student Information")
                     {
-                        relstring ="STUDENT"
+                        relstring ="STUDENT INFORMATION"
                     }
                     else {
                         relstring = listitems[sPosition].toUpperCase(Locale.getDefault())
@@ -720,7 +719,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                         relstring = "CCAS"
                     } else if(listitems[sPosition] == "Student Information")
                     {
-                        relstring ="STUDENT"
+                        relstring ="STUDENT INFORMATION"
                     }
                     else {
                         relstring = listitems[sPosition].toUpperCase(Locale.getDefault())
@@ -739,7 +738,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     }
                     else if(listitems[sPosition] == "Student Information")
                     {
-                        relstring ="STUDENT"
+                        relstring ="STUDENT INFORMATION"
                     }
                     else {
                         relstring = listitems[sPosition].toUpperCase(Locale.getDefault())
@@ -758,7 +757,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     }
                     else if(listitems[sPosition] == "Student Information")
                     {
-                        relstring ="STUDENT"
+                        relstring ="STUDENT INFORMATION"
                     }
                     else {
                         relstring = listitems[sPosition].toUpperCase(Locale.getDefault())
@@ -777,7 +776,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     }
                     else if(listitems[sPosition] == "Student Information")
                     {
-                        relstring ="STUDENT"
+                        relstring ="STUDENT INFORMATION"
                     }
                     else {
                         relstring = listitems[sPosition].toUpperCase(Locale.getDefault())
@@ -796,7 +795,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     }
                     else if(listitems[sPosition] == "Student Information")
                     {
-                        relstring ="STUDENT"
+                        relstring ="STUDENT INFORMATION"
                     }
                     else {
                         relstring = listitems[sPosition].toUpperCase(Locale.getDefault())
@@ -816,7 +815,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     }
                     else if(listitems[sPosition] == "Student Information")
                     {
-                        relstring ="STUDENT"
+                        relstring ="STUDENT INFORMATION"
                     }
                     else {
                         relstring = listitems[sPosition].toUpperCase(Locale.getDefault())
@@ -890,15 +889,10 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
             Log.e("TEXT DATA",textdata)
             when {
 
-                textdata.equals("STUDENT") -> {
+                textdata.equals(classNameConstants.STUDENT_INFORMATION) -> {
                     TAB_ID = naisTabConstants.TAB_STUDENT_INFORMATION
 
-                }
-                textdata.equals("STUDENT INFORMATION", ignoreCase = true) -> {
-                    TAB_ID = naisTabConstants.TAB_STUDENT_INFORMATION
-
-                }
-                textdata.equals("STUDENT", ignoreCase = true) -> {
+                } textdata.equals("Student Information") -> {
                     TAB_ID = naisTabConstants.TAB_STUDENT_INFORMATION
 
                 }
@@ -1074,9 +1068,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
         relImgseven = view!!.findViewById(R.id.relImgSeven) as ImageView
         relImgeight = view!!.findViewById(R.id.relImgEight) as ImageView
         relImgnine = view!!.findViewById(R.id.relImgNine) as ImageView
-
-        loader = view!!.findViewById(R.id.progressbar)
-        loader.visibility=View.GONE
         mSectionText = arrayOfNulls(9)
         // mListImgArrays = appController.mListImgArrays!!
 
@@ -1317,18 +1308,15 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
 
     fun getbannerimages()
     {
-       // loader.visibility = View.VISIBLE
         val bannerModel=BannerModel("1.0.0",2)
         val token = sharedprefs.getaccesstoken(mContext)
         val call: Call<ResponseBody> = ApiClient.getClient.bannerimages(bannerModel,"Bearer "+token)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                loader.visibility = View.GONE
                 Log.e("Error", t.localizedMessage)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                loader.visibility = View.GONE
 
                 val bannerresponse = response.body()
                 if (bannerresponse != null) {

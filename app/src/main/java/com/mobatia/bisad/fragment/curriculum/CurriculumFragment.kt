@@ -28,7 +28,6 @@ import com.mobatia.bisad.fragment.curriculum.adapter.CurriculumRecyclerAdapter
 import com.mobatia.bisad.fragment.curriculum.model.CuriculumListModel
 import com.mobatia.bisad.fragment.curriculum.model.CuriculumResponseArray
 import com.mobatia.bisad.fragment.curriculum.model.CurriculumStudentApiModel
-import com.mobatia.bisad.fragment.home.loader
 import com.mobatia.bisad.fragment.reports.ReportListRecyclerAdapter
 import com.mobatia.bisad.fragment.reports.model.ReportApiModel
 import com.mobatia.bisad.fragment.reports.model.ReportListDetailModel
@@ -85,12 +84,10 @@ class CurriculumFragment : Fragment() {
     }
 
     fun callStudentListApi() {
-        loader.visibility = View.VISIBLE
         val token = sharedprefs.getaccesstoken(mContext)
         val call: Call<StudentListModel> = ApiClient.getClient.studentList("Bearer " + token)
         call.enqueue(object : Callback<StudentListModel> {
             override fun onFailure(call: Call<StudentListModel>, t: Throwable) {
-                loader.visibility = View.GONE
                 Log.e("Error", t.localizedMessage)
             }
 
@@ -98,7 +95,6 @@ class CurriculumFragment : Fragment() {
                 call: Call<StudentListModel>,
                 response: Response<StudentListModel>
             ) {
-                loader.visibility = View.GONE
                 if (response.body()!!.status == 100) {
                     studentListArrayList.addAll(response.body()!!.responseArray.studentList)
                     println("CalendarResoponse" + response.body())
@@ -265,7 +261,6 @@ class CurriculumFragment : Fragment() {
         call.enqueue(object : Callback<CuriculumListModel> {
             override fun onFailure(call: Call<CuriculumListModel>, t: Throwable) {
                 progressDialog.visibility = View.GONE
-                loader.visibility = View.GONE
                 Log.e("Error", t.localizedMessage)
             }
 
@@ -273,7 +268,6 @@ class CurriculumFragment : Fragment() {
                 call: Call<CuriculumListModel>,
                 response: Response<CuriculumListModel>
             ) {
-                loader.visibility = View.GONE
                 progressDialog.visibility = View.GONE
                 when (response.body()!!.status) {
                     100 -> {

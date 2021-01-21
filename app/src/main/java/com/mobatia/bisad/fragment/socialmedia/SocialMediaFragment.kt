@@ -27,7 +27,6 @@ import com.mobatia.bisad.activity.apps.AppsDetailActivity
 import com.mobatia.bisad.activity.social_media.SocialMediaDetailActivity
 import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
-import com.mobatia.bisad.fragment.home.loader
 import com.mobatia.bisad.fragment.home.mContext
 import com.mobatia.bisad.fragment.home.pager
 import com.mobatia.bisad.fragment.messages.adapter.MessageListRecyclerAdapter
@@ -54,7 +53,7 @@ class SocialMediaFragment : Fragment(){
     lateinit var sharedprefs: PreferenceData
     lateinit var bannerImageViewPager: ImageView
     var bannerarray = ArrayList<String>()
-    var socialMediaArrayList = ArrayList<SocialMediaDetailModel>()
+   lateinit var socialMediaArrayList : ArrayList<SocialMediaDetailModel>
     lateinit var progressDialog: RelativeLayout
     lateinit var mContext: Context
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -103,7 +102,7 @@ class SocialMediaFragment : Fragment(){
 
     fun callSocialMediaList()
     {
-        loader.visibility = View.VISIBLE
+        socialMediaArrayList=ArrayList()
         bannerarray = ArrayList()
         val token = sharedprefs.getaccesstoken(mContext)
         val call: Call<SocialMediaListModel> = ApiClient.getClient.socialMedia("Bearer "+token)

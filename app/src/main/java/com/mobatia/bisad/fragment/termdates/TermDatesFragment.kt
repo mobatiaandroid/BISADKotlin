@@ -29,7 +29,6 @@ import com.mobatia.bisad.activity.apps.AppsDetailActivity
 import com.mobatia.bisad.activity.term_dates.TermDatesDetailActivity
 import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
-import com.mobatia.bisad.fragment.home.loader
 import com.mobatia.bisad.fragment.home.mContext
 import com.mobatia.bisad.fragment.messages.adapter.MessageListRecyclerAdapter
 import com.mobatia.bisad.fragment.messages.model.MessageListApiModel

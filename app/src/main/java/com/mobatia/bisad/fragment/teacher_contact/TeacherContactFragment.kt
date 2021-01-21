@@ -21,7 +21,6 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.mobatia.bisad.R
 import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
-import com.mobatia.bisad.fragment.home.loader
 import com.mobatia.bisad.fragment.home.mContext
 import com.mobatia.bisad.fragment.student_information.adapter.StudentListAdapter
 import com.mobatia.bisad.fragment.student_information.model.StudentList
@@ -126,7 +125,7 @@ class TeacherContactFragment : Fragment(){
           var text_dialog = dialog.findViewById(R.id.text_dialog) as EditText
           var text_content = dialog.findViewById(R.id.text_content) as EditText
           var progressDialog = dialog.findViewById(R.id.progressDialog) as RelativeLayout
-          iconImageView.setImageResource(R.drawable.boy)
+          iconImageView.setImageResource(R.drawable.roundemail)
           text_dialog.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
               if (hasFocus) {
                   text_dialog.hint = ""
@@ -181,16 +180,13 @@ class TeacherContactFragment : Fragment(){
 
     fun callStudentListApi()
     {
-        loader.visibility = View.VISIBLE
         val token = sharedprefs.getaccesstoken(mContext)
         val call: Call<StudentListModel> = ApiClient.getClient.studentList("Bearer "+token)
         call.enqueue(object : Callback<StudentListModel>{
             override fun onFailure(call: Call<StudentListModel>, t: Throwable) {
-                loader.visibility = View.GONE
                 Log.e("Error", t.localizedMessage)
             }
             override fun onResponse(call: Call<StudentListModel>, response: Response<StudentListModel>) {
-                loader.visibility = View.GONE
                 val arraySize :Int =response.body()!!.responseArray!!.studentList.size
                 if (response.body()!!.status==100)
                 {
@@ -208,17 +204,14 @@ class TeacherContactFragment : Fragment(){
     fun callStaffListApi(studentID:String)
     {
         staffListArray = ArrayList<StaffInfoDetail>()
-        loader.visibility = View.VISIBLE
         val token = sharedprefs.getaccesstoken(mContext)
         var staffBody=StaffListApiModel(studentID)
         val call: Call<StaffListModel> = ApiClient.getClient.staffList(staffBody,"Bearer "+token)
         call.enqueue(object : Callback<StaffListModel>{
             override fun onFailure(call: Call<StaffListModel>, t: Throwable) {
-                loader.visibility = View.GONE
                 Log.e("Error", t.localizedMessage)
             }
             override fun onResponse(call: Call<StaffListModel>, response: Response<StaffListModel>) {
-                loader.visibility = View.GONE
                 val arraySize :Int =response.body()!!.responseArray!!.staff_info.size
                 if (response.body()!!.status==100)
                 {
@@ -310,7 +303,7 @@ class TeacherContactFragment : Fragment(){
         var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
         var btn_dismiss = dialog.findViewById(R.id.btn_dismiss) as Button
         var studentListRecycler = dialog.findViewById(R.id.studentListRecycler) as RecyclerView
-        iconImageView.setImageResource(R.drawable.boy)
+        iconImageView.setImageResource(R.drawable.staff)
         //if(mSocialMediaArray.get())
         val sdk = Build.VERSION.SDK_INT
         if (sdk < Build.VERSION_CODES.JELLY_BEAN) {
@@ -343,15 +336,15 @@ class TeacherContactFragment : Fragment(){
                 {
                     Glide.with(mContext) //1
                         .load(staffImg)
-                        .placeholder(R.drawable.student)
-                        .error(R.drawable.student)
+                        .placeholder(R.drawable.staff)
+                        .error(R.drawable.staff)
                         .skipMemoryCache(true) //2
                         .diskCacheStrategy(DiskCacheStrategy.NONE) //3
                         .transform(CircleCrop()) //4
-                        .into(selectStudentImgView)
+                        .into(selectStaffImgView)
                 }
                 else{
-                    selectStudentImgView.setImageResource(R.drawable.student)
+                    selectStaffImgView.setImageResource(R.drawable.staff)
                 }
                 contactStaffBtn.visibility=View.VISIBLE
                 dialog.dismiss()

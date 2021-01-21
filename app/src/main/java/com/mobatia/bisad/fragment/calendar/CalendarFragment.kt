@@ -32,7 +32,6 @@ import com.mobatia.bisad.fragment.calendar.adapter.CalendarListRecyclerAdapter
 import com.mobatia.bisad.fragment.calendar.model.CalendarApiModel
 import com.mobatia.bisad.fragment.calendar.model.CalendarListModel
 import com.mobatia.bisad.fragment.calendar.model.VEVENT
-import com.mobatia.bisad.fragment.home.loader
 import com.mobatia.bisad.fragment.home.mContext
 import com.mobatia.bisad.fragment.student_information.adapter.StudentListAdapter
 import com.mobatia.bisad.fragment.student_information.model.StudentList
@@ -106,14 +105,12 @@ class CalendarFragment : Fragment() {
         val call: Call<StudentListModel> = ApiClient.getClient.studentList("Bearer " + token)
         call.enqueue(object : Callback<StudentListModel> {
             override fun onFailure(call: Call<StudentListModel>, t: Throwable) {
-                loader.visibility = View.GONE
             }
 
             override fun onResponse(
                 call: Call<StudentListModel>,
                 response: Response<StudentListModel>
             ) {
-                loader.visibility = View.GONE
               //  val arraySize: Int = response.body()!!.responseArray!!.studentList.size
                 if (response.body()!!.status == 100) {
 
@@ -409,14 +406,12 @@ class CalendarFragment : Fragment() {
         call.enqueue(object : Callback<CalendarListModel> {
             override fun onFailure(call: Call<CalendarListModel>, t: Throwable) {
                 progressDialog.visibility = View.GONE
-                loader.visibility = View.GONE
             }
 
             override fun onResponse(
                 call: Call<CalendarListModel>,
                 response: Response<CalendarListModel>
             ) {
-                loader.visibility = View.GONE
                 progressDialog.visibility = View.GONE
                 if (response.body()!!.status == 100) {
                     calendarArrayList.addAll(response.body()!!.responseArray.calendarDetail.cal.VEVENT)

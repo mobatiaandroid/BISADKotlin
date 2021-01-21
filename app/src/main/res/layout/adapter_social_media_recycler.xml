@@ -12,7 +12,7 @@
         android:orientation="horizontal"
         android:gravity="center"
         android:background="@drawable/curve_tw">
-        <com.github.siyamed.shapeimageview.CircularImageView
+        <ImageView
             android:id="@+id/socialMediaIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
