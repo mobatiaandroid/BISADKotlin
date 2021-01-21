@@ -957,7 +957,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
 
             val array2 = IntArray(2)
             reltwo.getLocationInWindow(array2)
-            val x3: Int = array1[0]
+            val x3: Int = array2[0]
             val x4 = x3 + reltwo.width
             val y3: Int = array2[1]
             val y4 = y3 + reltwo.height
@@ -970,7 +970,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
             val y6 = y5 + relthree.height
 
             val array4 = IntArray(2)
-            relfour.getLocationInWindow(array3)
+            relfour.getLocationInWindow(array4)
             val x7: Int = array4[0]
             val x8 = x7 + relfour.width
             val y7: Int = array4[1]

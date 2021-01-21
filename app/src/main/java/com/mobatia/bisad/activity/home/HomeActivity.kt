@@ -60,8 +60,6 @@ import com.mobatia.bisad.rest.AccessModel
 class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
 
     val manager = supportFragmentManager
-    var bannerarray = ArrayList<String>()
-    var dataList = ArrayList<AccessModel>()
     lateinit var sharedprefs: PreferenceData
     lateinit var navigation_menu: ImageView
     lateinit var settings_icon: ImageView
@@ -69,7 +67,6 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
     lateinit var jsonConstans: JsonConstants
     lateinit var context: Context
     lateinit var clipData: ClipData
-    lateinit var drawerLayout: DrawerLayout
     lateinit var mListItemArray: Array<String>
     var mListImgArray: TypedArray? = null
     lateinit var linear_layout: LinearLayout
@@ -77,11 +74,8 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
     lateinit var toolbar: Toolbar
     lateinit var logoClickImgView: ImageView
     lateinit var   homelist: ListView
-    lateinit var drawerToggle: ActionBarDrawerToggle
-    private var usertype: String = ""
     var mFragment: Fragment? = null
     var sPosition: Int = 0
-    var tabPositionProceed: Int = 0
 
 
     @RequiresApi(Build.VERSION_CODES.M)

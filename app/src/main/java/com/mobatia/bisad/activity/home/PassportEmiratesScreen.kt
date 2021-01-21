@@ -171,17 +171,17 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         })
         if (passportDetailArrayList.get(foundPosition).passport_image_name.equals("")) {
 
-            PassImageName.setText(passportDetailArrayList.get(foundPosition).passport_image_name)
+            PassImageName.text = passportDetailArrayList.get(foundPosition).passport_image_name
         }
         else {
-            PassImageName.setText(passportDetailArrayList.get(foundPosition).passport_image_name)
+            PassImageName.text = passportDetailArrayList.get(foundPosition).passport_image_name
         }
         if (passportDetailArrayList.get(foundPosition).emirates_id_image_name.equals("")) {
 
-            VisaImageName.setText(passportDetailArrayList.get(foundPosition).emirates_id_image_name)
+            VisaImageName.text = passportDetailArrayList.get(foundPosition).emirates_id_image_name
         }
         else {
-            VisaImageName.setText(passportDetailArrayList.get(foundPosition).emirates_id_image_name)
+            VisaImageName.text = passportDetailArrayList.get(foundPosition).emirates_id_image_name
         }
         if (passportDetailArrayList.get(foundPosition).emirates_id_image_path.equals("")) {
 
@@ -203,7 +203,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
             imagicon.setImageResource(R.drawable.boy)
         }
       //  studentNameTxt.setText(studentName)
-        studentNameTxt.setText(passportDetailArrayList.get(foundPosition).student_name)
+        studentNameTxt.text = passportDetailArrayList.get(foundPosition).student_name
         countryArrayList= ArrayList()
         countryArrayList=sharedprefs.getCountryArrayList(mContext)
         var countryData=ArrayList<String>()
@@ -214,12 +214,12 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
 
        if (passportDetailArrayList.get(foundPosition).nationality.equals(""))
        {
-           passportNationalityTxt.setText(countryData.get(0).toString())
+           passportNationalityTxt.text = countryData.get(0).toString()
        }
         else
        {
            Log.e("Nationality",passportDetailArrayList.get(foundPosition).nationality)
-           passportNationalityTxt.setText(passportDetailArrayList.get(foundPosition).nationality)
+           passportNationalityTxt.text = passportDetailArrayList.get(foundPosition).nationality
        }
         spinnerDialog = SpinnerDialog(activity, countryData, "Select Country", "Close") // With No Animation
         spinnerDialog = SpinnerDialog(activity, countryData, "Select Country", R.style.DialogAnimations_SmileWindow, "Close") // With 	Animation
@@ -227,7 +227,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         spinnerDialog.setShowKeyboard(false)
         spinnerDialog.bindOnSpinerListener(object : OnSpinerItemClick {
             override fun onClick(item: String, position: Int) {
-                passportNationalityTxt.setText(item)
+                passportNationalityTxt.text = item
                 var passportID=passportDetailArrayList.get(foundPosition).id
                 var model=PassportApiModel()
                  model.id=passportDetailArrayList.get(foundPosition).id
@@ -287,7 +287,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         })
 
 
-        passportNumberTxt.setImeOptions(EditorInfo.IME_ACTION_DONE)
+        passportNumberTxt.imeOptions = EditorInfo.IME_ACTION_DONE
         passportNumberTxt.isFocusable=true
         passportNumberTxt.isFocusableInTouchMode=true
         if(passportDetailArrayList.get(foundPosition).passport_number.equals(""))
@@ -449,7 +449,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
                 isChanged=true
             }
         })
-        visaPermitNumberTxt.setImeOptions(EditorInfo.IME_ACTION_DONE)
+        visaPermitNumberTxt.imeOptions = EditorInfo.IME_ACTION_DONE
         visaPermitNumberTxt.isFocusable=true
         visaPermitNumberTxt.isFocusableInTouchMode=true
         if(passportDetailArrayList.get(foundPosition).emirates_id_no.equals(""))
@@ -586,77 +586,71 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
      //   var options= arrayOf("Open Camera", "Choose from Gallery", "Cancel")
        // final CharSequence[] options = {"Open Camera", "Choose from Gallery", "Cancel"};
         var builder=AlertDialog.Builder(mContext)
-        builder.setTitle("Add Photo!");
+        builder.setTitle("Add Photo!")
 
-        builder.setItems(array,{_, which ->
+        builder.setItems(array) { _, which ->
             val selected = array[which]
             try {
-             if (selected.equals("Open Camera"))
-             {
-                 var name:String= System.currentTimeMillis().toString()
-               var imageFileName=  name+ ".jpg"
-                var storageDir:File = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES)
-                pictureImagePath=storageDir.getAbsolutePath() + "/" + imageFileName
-                var cameraIntent=Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(cameraIntent, CLICK_IMAGE_REQUEST)
-             }
+                when (selected) {
+                    "Open Camera" -> {
+                        var name:String= System.currentTimeMillis().toString()
+                        var imageFileName= "$name.jpg"
+                        var storageDir:File = Environment.getExternalStoragePublicDirectory(
+                            Environment.DIRECTORY_PICTURES)
+                        pictureImagePath=storageDir.absolutePath + "/" + imageFileName
+                        Log.e("PICTUREPATH : ",pictureImagePath)
+                        var cameraIntent=Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        startActivityForResult(cameraIntent, CLICK_IMAGE_REQUEST)
+                    }
+                    "Choose from Gallery" -> {
+                        var intent=Intent(Intent.ACTION_GET_CONTENT)
+                        intent.type = "image/*"
+                        startActivityForResult(intent, PICK_IMAGE_REQUEST)
 
-             else if (selected.equals("Choose from Gallery"))
-             {
-                 var intent=Intent(Intent.ACTION_GET_CONTENT)
-                intent.setType("image/*");
-                startActivityForResult(intent, PICK_IMAGE_REQUEST);
+                    }
+                    else -> {
+                    }
+                }
+            } catch (e:IllegalArgumentException){
 
-             }
-                else{
-             }
             }
-            catch (e:IllegalArgumentException){
-
-            }
-        })
+        }
         val dialog = builder.create()
-        dialog.show();
+        dialog.show()
     }
     fun chooseVisa()
     {
         val array = arrayOf("Open Camera", "Choose from Gallery", "Cancel")
         var builder=AlertDialog.Builder(mContext)
-        builder.setTitle("Add Photo!");
+        builder.setTitle("Add Photo!")
 
-        builder.setItems(array,{_, which ->
+        builder.setItems(array) { _, which ->
             val selected = array[which]
             try {
-                if (selected.equals("Open Camera"))
-                {
+                if (selected.equals("Open Camera")) {
                     var name:String= System.currentTimeMillis().toString()
                     var imageFileName=  name+ ".jpg"
                     var storageDir:File = Environment.getExternalStoragePublicDirectory(
                         Environment.DIRECTORY_PICTURES)
-                    pictureImagePath=storageDir.getAbsolutePath() + "/" + imageFileName
+                    pictureImagePath=storageDir.absolutePath + "/" + imageFileName
                     var cameraIntent=Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                     startActivityForResult(cameraIntent, VISA_CAMERA_REQUEST)
-                }
-
-                else if (selected.equals("Choose from Gallery"))
-                {
+                } else if (selected.equals("Choose from Gallery")) {
                     var intent=Intent(Intent.ACTION_GET_CONTENT)
-                    intent.setType("image/*");
-                    startActivityForResult(intent, VISA_GALLERY_REQUEST);
+                    intent.type = "image/*"
+                    startActivityForResult(intent, VISA_GALLERY_REQUEST)
 
                     Log.e("WORKS","GALLERY")
-                }
-                else{
+                } else{
 
                 }
             }catch (e:IllegalArgumentException){
                 // Catch the color string parse exception
                 // toast("$selected Color not supported.")
             }
-        })
+        }
         val dialog = builder.create()
-        dialog.show();
+        dialog.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -682,7 +676,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
                     .compressToFile(actualImage)
                 setCompressedImage()
                 passport_image_name_path = compressedImage.name
-                PassImageName.setText(compressedImage.name)
+                PassImageName.text = compressedImage.name
 
                 //clearImage();
             } catch (e: IOException) {
@@ -692,7 +686,9 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         }
         if (requestCode == CLICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
             PassportCamera = File(pictureImagePath)
-            if (PassportCamera.exists()) {
+            Log.e("PassportCamera", PassportCamera.toString())
+            Log.e("PHOTOCONDITION","WORKING1")
+            if (!PassportCamera.exists()) {
                 try {
                     if (data != null) {
                         PassportCamera = FileUtil.from(mContext, data.data)
@@ -709,8 +705,9 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
                         )
                         .build()
                         .compressToFile(PassportCamera)
+                    Log.e("PHOTO","WORKING2")
                     CompressPassportCamera()
-                    PassImageName.setText(CompressPassportCamera.name)
+                    PassImageName.text = CompressPassportCamera.name
                     passport_image_name_path = CompressPassportCamera.name
 
 //                  Toast.makeText(mContext, "Compressed image save in " + compressedImage.getPath(), Toast.LENGTH_LONG).show();
@@ -739,8 +736,8 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
                         .build()
                         .compressToFile(VisaCamera)
                     CompressVISAcamera()
-                    VisaImageName.setText(CompressVisaCamera1.getName())
-                    visa_image_name_path = CompressVisaCamera1.getName()
+                    VisaImageName.text = CompressVisaCamera1.name
+                    visa_image_name_path = CompressVisaCamera1.name
                     //                    Toast.makeText(mContext, "Compressed image save in " + compressedImage.getPath(), Toast.LENGTH_LONG).show();
                 } catch (e: IOException) {
                     e.printStackTrace()
@@ -974,14 +971,14 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         val options = BitmapFactory.Options()
 
         options.inSampleSize = 2
-        bitmap = BitmapFactory.decodeFile(CompressVisaCamera1.getPath(), options)
-        ViewSelectedVisa.setImageBitmap(BitmapFactory.decodeFile(CompressVisaCamera1.getPath()))
-        visa_image_path = CompressVisaCamera1.getPath()
-        visa_image_name_path = CompressVisaCamera1.getName()
+        bitmap = BitmapFactory.decodeFile(CompressVisaCamera1.path, options)
+        ViewSelectedVisa.setImageBitmap(BitmapFactory.decodeFile(CompressVisaCamera1.path))
+        visa_image_path = CompressVisaCamera1.path
+        visa_image_name_path = CompressVisaCamera1.name
         var inputStream: InputStream? = null // You can get an inputStream using any I/O API
 
         try {
-            inputStream = FileInputStream(CompressVisaCamera1.getPath())
+            inputStream = FileInputStream(CompressVisaCamera1.path)
         } catch (e: FileNotFoundException) {
             e.printStackTrace()
         }
@@ -1166,7 +1163,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
     {
         val myFormat = "dd MMMM yyyy" //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.US)
-        passportExpiryTxt.setText(sdf.format(myCalendar.getTime()))
+        passportExpiryTxt.setText(sdf.format(myCalendar.time))
         var passportID=passportDetailArrayList.get(foundPosition).id
         var model=PassportApiModel()
         model.id=passportDetailArrayList.get(foundPosition).id
