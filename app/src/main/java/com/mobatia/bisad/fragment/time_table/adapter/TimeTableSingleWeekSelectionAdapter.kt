@@ -1,5 +1,6 @@
 package com.mobatia.bisad.fragment.time_table.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +13,12 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.mobatia.bisad.R
 import com.mobatia.bisad.fragment.time_table.model.apimodel.TimeTableApiListModel
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
-internal class TimeTableSingleWeekSelectionAdapter (private var mContetx:Context,private var calendarArrayList: List<TimeTableApiListModel>) :
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+internal class TimeTableSingleWeekSelectionAdapter (private var mContetx:Context, private var calendarArrayList: List<TimeTableApiListModel>) :
     RecyclerView.Adapter<TimeTableSingleWeekSelectionAdapter.MyViewHolder>() {
     internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var llread: RelativeLayout = view.findViewById(R.id.llread)
@@ -34,6 +39,7 @@ internal class TimeTableSingleWeekSelectionAdapter (private var mContetx:Context
             .inflate(R.layout.adapter_single_week_selection, parent, false)
         return MyViewHolder(itemView)
     }
+    @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val summary = calendarArrayList[position]
 
@@ -41,10 +47,21 @@ internal class TimeTableSingleWeekSelectionAdapter (private var mContetx:Context
         holder.timeAPTxt.visibility = View.GONE
         holder.llreadbreak.visibility = View.GONE
         holder.starLinear.visibility = View.GONE
-        holder.timeTxt.setText(calendarArrayList.get(position).starttime)
-        holder.tutorNameTxt.setText(calendarArrayList.get(position).staff)
-        holder.subjectTxt.setText(calendarArrayList.get(position).sortname)
-        holder.subjectNameTxt.setText(calendarArrayList.get(position).subject_name)
+        holder.tutorNameTxt.text = calendarArrayList[position].staff
+        holder.subjectTxt.text = calendarArrayList[position].sortname
+        holder.subjectNameTxt.text = calendarArrayList[position].subject_name
+
+        val time = calendarArrayList[position].starttime
+
+        try {
+            val sdf = SimpleDateFormat("HH:mm")
+            val dateObj: Date = sdf.parse(time)
+            println(dateObj)
+            println(SimpleDateFormat("hh:mm a").format(dateObj))
+            holder.timeTxt.text = SimpleDateFormat("hh:mm a").format(dateObj)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
 
 
 

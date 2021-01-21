@@ -35,11 +35,9 @@ class PageView : PagerAdapter {
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        var pageview: View?
         inflater = LayoutInflater.from(context)
-        pageview = inflater.inflate(R.layout.swipe_homefragment, null)
+        var pageview: View? = inflater.inflate(R.layout.swipe_homefragment, null)
         val imageView = pageview?.findViewById<View>(R.id.img) as ImageView
-       // Log.e("adapterlength", imagesarray.size.toString())
         if (imagesarray[position] != "") {
             Glide.with(context).load(imagesarray[position]).centerCrop().into(imageView)
 

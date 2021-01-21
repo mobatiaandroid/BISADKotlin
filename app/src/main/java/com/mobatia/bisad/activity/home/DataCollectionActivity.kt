@@ -748,6 +748,7 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
     {
         val token = sharedprefs.getaccesstoken(context)
         val requestLeaveBody= DataCollectionSubmissionModel(overallStatus,JSONSTRING,triggertype)
+        Log.e("DATACOLLECTION:", requestLeaveBody.toString())
         val call: Call<ResponseBody> = ApiClient.getClient.dataCollectionSubmittion(requestLeaveBody,"Bearer "+token)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
