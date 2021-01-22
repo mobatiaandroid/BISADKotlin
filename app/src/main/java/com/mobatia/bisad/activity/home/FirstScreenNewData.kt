@@ -1878,6 +1878,7 @@ class FirstScreenNewData:Fragment() {
                             }
                             else
                             {
+                                Log.e("PASS ARRAY SIZE",sharedprefs.getKinDetailPassArrayList(mContext)!!.size.toString())
                                 var dataArrayList=ArrayList<KinDetailApiModel>()
                                 var model=KinDetailApiModel()
                                 model.id=0
@@ -1904,6 +1905,7 @@ class FirstScreenNewData:Fragment() {
                                 sharedprefs.getKinDetailArrayList(mContext)!!.clear()
                                 sharedprefs.setKinDetailArrayList(mContext,kinDetailArrayList)
                                 sharedprefs.setKinDetailPassArrayList(mContext,kinDetailPassArrayList)
+                                Log.e("PASS ARRAY SIZE",sharedprefs.getKinDetailPassArrayList(mContext)!!.size.toString())
                                 familyKinRecyclerAdapter= FamilyContactRecyclerAdapter(sharedprefs.getKinDetailArrayList(mContext)!!)
                                 familyContactRecycler.setAdapter(familyKinRecyclerAdapter)
                                 dialog.dismiss()
