@@ -117,7 +117,7 @@
     <string name="requestHint">If you need to cancel a registered absence please contact reception (phone or email).</string>
     <string name="null_value"></string>
     <string name="submit">SUBMIT</string>
-    <string name="no_family_data_content">There are currently no other contacts associated with students(s).Please add at least one family contact for the family as required.</string>
+    <string name="no_family_data_content">There are currently no other contacts associated with students(s).Please add at least one emergency contact for the family as required.</string>
     <string name="own_details_confirm_first_name">First name</string>
     <string name="own_details_confirm_last_name">Last name</string>
     <string name="own_details_confirm_email_id">Email-ID</string>

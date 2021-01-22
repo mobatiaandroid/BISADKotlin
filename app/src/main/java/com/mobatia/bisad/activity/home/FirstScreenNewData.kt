@@ -864,15 +864,16 @@ class FirstScreenNewData:Fragment() {
         var remove_kin=dialog.findViewById(R.id.remove_kin)as ImageView
         var ContactDetails_Spinnertype=dialog.findViewById(R.id.ContactDetails_Spinnertype)as AutoCompleteTextView
         var relationShipLinear=dialog.findViewById(R.id.relationShipLinear)as LinearLayout
+        var communicationPreferenceLinear=dialog.findViewById(R.id.communicationPreferenceLinear)as LinearLayout
         var contactDetails_fname=dialog.findViewById(R.id.contactDetails_fname)as EditText
         var ContactDetails_Lastname=dialog.findViewById(R.id.ContactDetails_Lastname)as EditText
         var ContactDetails_Email=dialog.findViewById(R.id.ContactDetails_Email)as EditText
         var ContactDetails_Phone=dialog.findViewById(R.id.ContactDetails_Phone)as EditText
         var relationshipTxt=dialog.findViewById(R.id.relationshipTxt)as TextView
         var spinnerCode=dialog.findViewById(R.id.spinnerCode)as EditText
+        var communicationPreferenceInfoTxt=dialog.findViewById(R.id.communicationPreferenceInfoTxt)as TextView
         var ContactDetails_Submit=dialog.findViewById(R.id.ContactDetails_Submit)as Button
         var spinnerRelationShipDialog:SpinnerDialog
-
         ContactDetails_Lastname.setImeOptions(EditorInfo.IME_ACTION_DONE)
         ContactDetails_Email.setImeOptions(EditorInfo.IME_ACTION_DONE)
         ContactDetails_Phone.setImeOptions(EditorInfo.IME_ACTION_DONE)
@@ -914,6 +915,35 @@ class FirstScreenNewData:Fragment() {
         {
             ContactDetails_Spinnertype.setText(kinDetailArrayList.get(positionClicked).title)
         }
+        communicationPreferenceInfoTxt.setOnClickListener(View.OnClickListener {
+
+            val deliveryAddress =
+                arrayOf("mobileapp@bisad.ae")
+            val emailIntent = Intent(Intent.ACTION_SEND)
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, deliveryAddress)
+            emailIntent.setType("text/plain")
+            emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            val pm: PackageManager = communicationPreferenceInfoTxt.getContext().getPackageManager()
+            val activityList = pm.queryIntentActivities(
+                emailIntent, 0
+            )
+            println("packge size" + activityList.size)
+            for (app in activityList) {
+                println("packge name" + app.activityInfo.name)
+                if (app.activityInfo.name.contains("com.google.android.gm")) {
+                    val activity = app.activityInfo
+                    val name = ComponentName(
+                        activity.applicationInfo.packageName, activity.name
+                    )
+                    emailIntent.addCategory(Intent.CATEGORY_LAUNCHER)
+                    emailIntent.flags = (Intent.FLAG_ACTIVITY_NEW_TASK
+                            or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
+                    emailIntent.component = name
+                    communicationPreferenceInfoTxt.getContext().startActivity(emailIntent)
+                    break
+                }
+            }
+        })
         val DROP = ArrayAdapter(activity, android.R.layout.simple_list_item_1, SpinnerData)
         ContactDetails_Spinnertype.isCursorVisible = false
         ContactDetails_Spinnertype.isFocusable = false
@@ -1096,7 +1126,14 @@ class FirstScreenNewData:Fragment() {
         else{
             spinnerCode.setText(kinDetailArrayList.get(positionClicked).code)
         }
-
+       if (kinDetailArrayList.get(positionClicked).NewData)
+       {
+           communicationPreferenceLinear.visibility=View.INVISIBLE
+       }
+        else
+       {
+           communicationPreferenceLinear.visibility=View.VISIBLE
+       }
         contactDetails_fname.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int)
             {
@@ -1755,7 +1792,7 @@ class FirstScreenNewData:Fragment() {
         var ContactDetails_Email=dialog.findViewById(R.id.ContactDetails_Email)as EditText
         var ContactDetails_Phone=dialog.findViewById(R.id.ContactDetails_Phone)as EditText
         var communicationPreferenceLinear=dialog.findViewById(R.id.communicationPreferenceLinear)as LinearLayout
-        communicationPreferenceLinear.visibility=View.VISIBLE
+        communicationPreferenceLinear.visibility=View.INVISIBLE
         var spinnerCode=dialog.findViewById(R.id.spinnerCode)as EditText
         contactDetails_fname.setImeOptions(EditorInfo.IME_ACTION_DONE)
         contactDetails_fname.isFocusable=true

@@ -299,26 +299,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
 
         closeImg.setOnClickListener {
             closeImg.setOnClickListener(View.OnClickListener {
-                val dialog = Dialog(mContext)
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                dialog.setCancelable(false)
-                dialog.setContentView(R.layout.alert_dialogue_ok_layout)
-                var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
-                var alertHead = dialog.findViewById(R.id.alertHead) as TextView
-                var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
-                var btn_Ok = dialog.findViewById(R.id.btn_Ok) as Button
-                text_dialog.text = "Please update this information next time"
-                alertHead.text = "Alert"
-                btn_Ok.setText("Continue")
-                iconImageView.setImageResource(R.drawable.exclamationicon)
-                btn_Ok?.setOnClickListener()
-                {
-                    sharedprefs.setSuspendTrigger(mContext,"1")
-                    dialog.dismiss()
-                    activity?.finish()
-                }
-                dialog.show()
+                activity?.finish()
             })
         }
 

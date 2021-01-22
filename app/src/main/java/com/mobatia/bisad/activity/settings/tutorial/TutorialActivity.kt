@@ -32,12 +32,11 @@ class TutorialActivity : AppCompatActivity() {
         mContext = this
         sharedprefs = PreferenceData()
         jsonConstans = JsonConstants()
-        bannerarray.add(R.drawable.tut_1)
-        bannerarray.add(R.drawable.tut__2)
-        bannerarray.add(R.drawable.tut_3)
-        bannerarray.add(R.drawable.tut__4)
-        bannerarray.add(R.drawable.tut__5)
-        bannerarray.add(R.drawable.tut_6)
+        bannerarray.add(R.drawable.tut1)
+        bannerarray.add(R.drawable.tut4)
+        bannerarray.add(R.drawable.tut5)
+        bannerarray.add(R.drawable.tut2)
+        bannerarray.add(R.drawable.tut6)
         initializeUI()
     }
 

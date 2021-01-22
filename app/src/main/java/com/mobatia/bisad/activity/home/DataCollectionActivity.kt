@@ -231,8 +231,8 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
                             }
                             else{
 
-                                var triggerType = 3
-                                var overallStatus =2
+                                var triggerType = 4
+                                var overallStatus =1
                                 callSubmitAPI(triggerType, overallStatus)
 
                             }
@@ -605,10 +605,19 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
                 finish()
 
             }
-            else if(triggertype==3 && overallStatus==2)
+            else if(triggertype==4 && overallStatus==1)
             {
+                sharedprefs.getOwnContactDetailArrayList(context)!!.clear()
+                var dummyOwn=ArrayList<OwnContactModel>()
+                sharedprefs.setOwnContactDetailArrayList(context,dummyOwn)
+                sharedprefs.getKinDetailPassArrayList(context)!!.clear()
+                var dummyKinPass=ArrayList<KinDetailApiModel>()
+                sharedprefs.setKinDetailPassArrayList(context,dummyKinPass)
+                sharedprefs.getKinDetailArrayList(context)!!.clear()
+                var dummyKinShow=ArrayList<KinDetailApiModel>()
+                sharedprefs.setKinDetailArrayList(context,dummyKinShow)
                 sharedprefs.setDataCollection(context,1)
-                sharedprefs.setTriggerType(context,3)
+                sharedprefs.setTriggerType(context,4)
                 finish()
                 val intent = Intent(context, DataCollectionActivity::class.java)
                 context.startActivity(intent)
@@ -622,29 +631,35 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
 
    fun callSubmitAPI(triggertype:Int,overallStatus:Int)
     {
+
+
        var OWNDATA:String=""
         var ownArray=ArrayList<OwnContactModel>()
         var kinArray=ArrayList<KinDetailApiModel>()
         ownArray=sharedprefs.getOwnContactDetailArrayList(context)!!
-        var id=ownArray.get(0).id
-        var user_id=ownArray.get(0).user_id
-        var title=ownArray.get(0).title
-        var name=ownArray.get(0).name
-        var last_name=ownArray.get(0).last_name
-        var relationship=ownArray.get(0).relationship
-        var email=ownArray.get(0).email
-        var phone=ownArray.get(0).phone
-        var code=ownArray.get(0).code
-        var user_mobile=ownArray.get(0).user_mobile
-        var address1=ownArray.get(0).address1
-        var address2=ownArray.get(0).address2
-        var address3=ownArray.get(0).address3
-        var town=ownArray.get(0).town
-        var state=ownArray.get(0).state
-        var status=ownArray.get(0).status
-        OWNDATA="\"own_details\":{\"id\":"+id+",\"user_id\":"+user_id+",\"title\":\""+title+"\",\"name\":\""+name+"\",\"last_name\":\""+last_name+"\",\"relationship\":\""+relationship+"\",\"email\":\""+email+"\",\"phone\":\""+phone+"\",\"code\":\""+code+"\",\"user_mobile\":\""+user_mobile+"\",\"address1\":\""+address1+"\",\"address2\":\""+address2+"\",\"address3\":\""+address3+"\",\"town\":\""+town+"\",\"state\":\""+state+"\",\"status\":"+status+"}"
-        Log.e("OWNDATA",OWNDATA)
-        
+        if (ownArray.size>0)
+        {
+            var id=ownArray.get(0).id
+            var user_id=ownArray.get(0).user_id
+            var title=ownArray.get(0).title
+            var name=ownArray.get(0).name
+            var last_name=ownArray.get(0).last_name
+            var relationship=ownArray.get(0).relationship
+            var email=ownArray.get(0).email
+            var phone=ownArray.get(0).phone
+            var code=ownArray.get(0).code
+            var user_mobile=ownArray.get(0).user_mobile
+            var address1=ownArray.get(0).address1
+            var address2=ownArray.get(0).address2
+            var address3=ownArray.get(0).address3
+            var town=ownArray.get(0).town
+            var state=ownArray.get(0).state
+            var status=ownArray.get(0).status
+            OWNDATA="\"own_details\":{\"id\":"+id+",\"user_id\":"+user_id+",\"title\":\""+title+"\",\"name\":\""+name+"\",\"last_name\":\""+last_name+"\",\"relationship\":\""+relationship+"\",\"email\":\""+email+"\",\"phone\":\""+phone+"\",\"code\":\""+code+"\",\"user_mobile\":\""+user_mobile+"\",\"address1\":\""+address1+"\",\"address2\":\""+address2+"\",\"address3\":\""+address3+"\",\"town\":\""+town+"\",\"state\":\""+state+"\",\"status\":"+status+"}"
+            Log.e("OWNDATA",OWNDATA)
+        }
+
+
         kinArray=sharedprefs.getKinDetailPassArrayList(context)!!
         var FirstArray=ArrayList<KinDetailApiModel>()
         FirstArray=kinArray
@@ -685,7 +700,7 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
         if (sharedprefs.getTriggerType(context)==1)
         {
             Log.e("DATA","TRIGGER 1")
-            if (triggertype==3 && overallStatus==2)
+            if (triggertype==4 && overallStatus==1)
             {
                 Log.e("DATA","TRIGGER 13")
                 JSONSTRING="{"+OWNDATA+","+"\"kin_details\""+":"+FIRSTDATA+" }"
@@ -710,7 +725,6 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
 
                 if (sharedprefs.getTriggerType(context)==4)
                 {
-
                     Log.e("DATA","TRIGGER 3")
                     JSONSTRING="{"+"\"health_details\""+":"+HEALTHDATA+","+"\"passport_details\""+":"+PASSPORTDATA+" }"
                 }
