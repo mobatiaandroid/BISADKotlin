@@ -19,6 +19,18 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bubble">
 
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:padding="5dp"
+                android:id="@+id/popup_close"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/close" />
+
+
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_timetable"
             android:layout_width="match_parent"

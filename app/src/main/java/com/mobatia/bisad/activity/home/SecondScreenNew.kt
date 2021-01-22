@@ -90,7 +90,7 @@ class SecondScreenNew :Fragment() {
             var btn_Ok = dialog.findViewById(R.id.btn_Ok) as Button
             text_dialog.text = "Please update this information next time"
             alertHead.text = "Alert"
-            btn_Ok.setText("Continue")
+            btn_Ok.setText("Ok")
             iconImageView.setImageResource(R.drawable.exclamationicon)
             btn_Ok?.setOnClickListener()
             {

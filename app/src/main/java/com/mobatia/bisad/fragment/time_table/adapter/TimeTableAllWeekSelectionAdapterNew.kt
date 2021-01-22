@@ -6,10 +6,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -190,6 +187,14 @@ class TimeTableAllWeekSelectionAdapterNew(
                     .inflate(R.layout.popup_timetable_activity, null, false)
                 val recycler_view_timetable: RecyclerView =
                     itemView.findViewById(R.id.recycler_view_timetable)
+                val linearlayout: LinearLayout =
+                    itemView.findViewById(R.id.Linear)
+                val close_popup: ImageView = itemView.findViewById(R.id.popup_close)
+
+                close_popup.setOnClickListener {
+                    linearlayout.visibility = View.GONE
+                }
+
                 recycler_view_timetable.setHasFixedSize(true)
                 //mainRecycleRel.setVisibility(View.GONE);
                 val llmAtime = LinearLayoutManager(mContext)
@@ -228,51 +233,7 @@ class TimeTableAllWeekSelectionAdapterNew(
                 tipContainer.addTooltip(t)
             }
         }
-//        holder.tutor1.setOnClickListener(View.OnClickListener {
-//
-//            if (holder.tutor1.text.equals("")) {
-//
-//            }
-//            else {
-//                isClick = true
-//                val itemView: View = LayoutInflater.from(mContext)
-//                    .inflate(R.layout.popup_timetable_activity, null, false)
-//                val recycler_view_timetable: RecyclerView =
-//                    itemView.findViewById(R.id.recycler_view_timetable)
-//                recycler_view_timetable.setHasFixedSize(true)
-//                val llmAtime = LinearLayoutManager(mContext)
-//                llmAtime.orientation = LinearLayoutManager.VERTICAL
-//                recycler_view_timetable.layoutManager = llmAtime
-//                val mTimeTablePopUpRecyclerAdapter =
-//                    TimeTablePopUpRecyclerAdapter(
-//                        mContext,
-//                        mPeriodModel.get(position).timeTableListS
-//                    )
-//                mTimeTablePopUpRecyclerAdapter.notifyDataSetChanged()
-//                recycler_view_timetable.adapter = mTimeTablePopUpRecyclerAdapter
-//                var t: ToolTip? = null
-//                t = if (position == 0) {
-//                    ToolTip.Builder(mContext)
-//                        .anchor(holder.tutor1) // The view to which the ToolTip should be anchored
-//                        .gravity(Gravity.BOTTOM) // The location of the view in relation to the anchor (LEFT, RIGHT, TOP, BOTTOM)
-//                        .color(mContext.resources.getColor(R.color.ttpop)) // The color of the pointer arrow
-//                        .pointerSize(10) // The size of the pointer
-//                        .contentView(itemView) // The actual contents of the ToolTip
-//                        .build()
-//                } else {
-//                    ToolTip.Builder(mContext)
-//                        .anchor(holder.tutor1) // The view to which the ToolTip should be anchored
-//                        .gravity(Gravity.TOP) // The location of the view in relation to the anchor (LEFT, RIGHT, TOP, BOTTOM)
-//                        .color(
-//                            mContext.resources.getColor(R.color.ttpop)
-//                        )
-//                        .pointerSize(10) // The size of the pointer
-//                        .contentView(itemView) // The actual contents of the ToolTip
-//                        .build()
-//                }
-//                tipContainer.addTooltip(t)
-//            }
-//        })
+
         holder.tutor2.setOnClickListener(View.OnClickListener {
             if (holder.tutor2.text.equals("")) {
 
@@ -282,6 +243,13 @@ class TimeTableAllWeekSelectionAdapterNew(
                     .inflate(R.layout.popup_timetable_activity, null, false)
                 val recycler_view_timetable: RecyclerView =
                     itemView.findViewById(R.id.recycler_view_timetable)
+                val linearlayout: LinearLayout =
+                    itemView.findViewById(R.id.Linear)
+                val close_popup: ImageView = itemView.findViewById(R.id.popup_close)
+
+                close_popup.setOnClickListener {
+                    linearlayout.visibility = View.GONE
+                }
                 recycler_view_timetable.setHasFixedSize(true)
                 val llmAtime = LinearLayoutManager(mContext)
                 llmAtime.orientation = LinearLayoutManager.VERTICAL
@@ -319,30 +287,24 @@ class TimeTableAllWeekSelectionAdapterNew(
         holder.tutor3.setOnClickListener {
 
             if (holder.tutor3.text == "") {
-                Log.e("TIMETABLE", "CLICKED1")
+
             } else {
-                Log.e("TIMETABLE", "CLICKED2")
 
                 isClick = true
-                Log.e("TIMETABLE", "CLICKED3")
-    //                val dialog = Dialog(mContext)
-    //                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-    //                dialog.setCancelable(false)
-    //                dialog.setContentView(R.layout.popup_timetable_activity)
-    //                dialog.show()
-    //                dialog.setCanceledOnTouchOutside(true)
-                Toast.makeText(mContext,"click working",Toast.LENGTH_SHORT).show()
 
 
                 val itemView = LayoutInflater.from(mContext)
                     .inflate(R.layout.popup_timetable_activity, null, false)
 
 
-                Log.e("TIMETABLE", "CLICKED4")
                 val recycler_view_timetable: RecyclerView = itemView.findViewById(R.id.recycler_view_timetable)
-                val test: LinearLayout = itemView.findViewById(R.id.Linear)
+                val linearlayout: LinearLayout =
+                    itemView.findViewById(R.id.Linear)
+                val close_popup: ImageView = itemView.findViewById(R.id.popup_close)
 
-               // test.removeView(it)
+                close_popup.setOnClickListener {
+                    linearlayout.visibility = View.GONE
+                }
 
                 recycler_view_timetable.setHasFixedSize(true)
                 val llmAtime = LinearLayoutManager(mContext)
@@ -354,9 +316,8 @@ class TimeTableAllWeekSelectionAdapterNew(
                 mTimeTablePopUpRecyclerAdapter.notifyDataSetChanged()
                 recycler_view_timetable.adapter = mTimeTablePopUpRecyclerAdapter
                 var t: ToolTip? = null
-                Log.e("POSITIONNITHIN", position.toString())
                  if (position == 0) {
-                  t =  ToolTip.Builder(mContext)
+                  t =  ToolTip.Builder(mContext.applicationContext)
                         .anchor(holder.tutor3) // The view to which the ToolTip should be anchored
                         .gravity(Gravity.BOTTOM) // The location of the view in relation to the anchor (LEFT, RIGHT, TOP, BOTTOM)
                         .color(mContext.resources.getColor(R.color.ttpop)) // The color of the pointer arrow
@@ -373,9 +334,9 @@ class TimeTableAllWeekSelectionAdapterNew(
                         .pointerSize(10) // The size of the pointer
                         .contentView(itemView) // The actual contents of the ToolTip
                         .build()
+
                 }
                 tipContainer.addTooltip(t)
-               // test.addView(it,0)
             }
 
         }
@@ -388,6 +349,13 @@ class TimeTableAllWeekSelectionAdapterNew(
                     .inflate(R.layout.popup_timetable_activity, null, false)
                 val recycler_view_timetable: RecyclerView =
                     itemView.findViewById(R.id.recycler_view_timetable)
+                val linearlayout: LinearLayout =
+                    itemView.findViewById(R.id.Linear)
+                val close_popup: ImageView = itemView.findViewById(R.id.popup_close)
+
+                close_popup.setOnClickListener {
+                    linearlayout.visibility = View.GONE
+                }
                 recycler_view_timetable.setHasFixedSize(true)
                 val llmAtime = LinearLayoutManager(mContext)
                 llmAtime.orientation = LinearLayoutManager.VERTICAL
@@ -431,6 +399,13 @@ class TimeTableAllWeekSelectionAdapterNew(
                     .inflate(R.layout.popup_timetable_activity, null, false)
                 val recycler_view_timetable: RecyclerView =
                     itemView.findViewById(R.id.recycler_view_timetable)
+                val linearlayout: LinearLayout =
+                    itemView.findViewById(R.id.Linear)
+                val close_popup: ImageView = itemView.findViewById(R.id.popup_close)
+
+                close_popup.setOnClickListener {
+                    linearlayout.visibility = View.GONE
+                }
                 recycler_view_timetable.setHasFixedSize(true)
                 val llmAtime = LinearLayoutManager(mContext)
                 llmAtime.orientation = LinearLayoutManager.VERTICAL

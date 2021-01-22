@@ -47,9 +47,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+
+
 class TimeTableFragment : Fragment(){
     lateinit var jsonConstans: JsonConstants
-    lateinit var mContext: Context
     lateinit var sharedprefs: PreferenceData
     var weekListArrayString = ArrayList<String>()
     lateinit var weekListArray:ArrayList<WeekModel>
@@ -131,10 +132,7 @@ class TimeTableFragment : Fragment(){
         timeTableSingleRecycler.layoutManager = linearLayoutManagerVertical1
         timeTableSingleRecycler.itemAnimator = DefaultItemAnimator()
 
-        timeTableAllRecycler = view!!.findViewById(R.id.timeTableAllRecycler) as RecyclerView
-        linearLayoutManagerVertical.orientation=LinearLayoutManager.VERTICAL
-        timeTableAllRecycler.layoutManager = linearLayoutManagerVertical
-        timeTableAllRecycler.itemAnimator = DefaultItemAnimator()
+        recyclerinitializer()
 
         studentSpinner = view!!.findViewById(R.id.studentSpinner) as LinearLayout
         progressDialog = view!!.findViewById(R.id.progressDialog) as RelativeLayout
@@ -223,24 +221,22 @@ class TimeTableFragment : Fragment(){
                 if (position!=0)
                 {
                     card_viewAll.visibility=View.GONE
-                    timeTableAllRecycler.visibility=View.GONE
+                  //  timeTableAllRecycler.visibility=View.GONE
                     tipContainer.visibility=View.GONE
                     timeTableSingleRecycler.visibility=View.VISIBLE
 //                    if (mRangeModel.size>0)
 //                    {
-                        card_viewAll.visibility = View.GONE
-                        timeTableAllRecycler.visibility = View.GONE
+                        //card_viewAll.visibility = View.GONE
+                       // timeTableAllRecycler.visibility = View.GONE
                         timeTableSingleRecycler.visibility = View.VISIBLE
                         if (weekPosition==1)
                         {
-                            Log.e("WEEKDATA","1")
                             var mRecyclerViewMainAdapter=
                                 TimeTableSingleWeekSelectionAdapter(mContext,mSundayArrayList)
                             timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
                         }
                         else if (weekPosition==2)
                         {
-                            Log.e("WEEKDATA","2")
                             var mRecyclerViewMainAdapter=TimeTableSingleWeekSelectionAdapter(mContext,mMondayArrayList)
                             timeTableSingleRecycler.adapter = mRecyclerViewMainAdapter
 
@@ -260,11 +256,16 @@ class TimeTableFragment : Fragment(){
                 }
                 else{
                     timeTableSingleRecycler.visibility = View.GONE
-                    timeTableAllRecycler.visibility = View.VISIBLE
+                   // timeTableAllRecycler.visibility = View.VISIBLE
+                    tipContainer.visibility=View.VISIBLE
+
                     card_viewAll.visibility = View.VISIBLE
+
                     if (mPeriodModel.size>0)
                     {
-                        var mRecyclerAllAdapter= TimeTableAllWeekSelectionAdapterNew(mContext, mPeriodModel,timeTableAllRecycler,tipContainer,feildAPIArrayList)
+                        recyclerinitializer()
+
+                        var mRecyclerAllAdapter= TimeTableAllWeekSelectionAdapterNew(activity?.applicationContext!!, mPeriodModel,timeTableAllRecycler,tipContainer,feildAPIArrayList)
                         timeTableAllRecycler.adapter = mRecyclerAllAdapter
                     }
 
@@ -294,6 +295,7 @@ class TimeTableFragment : Fragment(){
                 progressDialog.visibility = View.GONE
                 if (response.body()!!.status == 100)
                 {
+                    Log.e("APISUCCESS", response.body().toString())
                     if (response.body()!!.responseArray.timeTableList.size>0)
 
                     {
@@ -505,7 +507,6 @@ class TimeTableFragment : Fragment(){
                             }
                         }
                         else{
-                            Log.e("VALUETEST",weekPosition.toString())
 
                             timeTableSingleRecycler.visibility = View.GONE
                             timeTableAllRecycler.visibility = View.VISIBLE
@@ -596,8 +597,6 @@ class TimeTableFragment : Fragment(){
                 timeTableSingleRecycler.visibility=View.GONE
                 timeTableAllRecycler.visibility=View.GONE
                 callTimeTableApi()
-                //    Toast.makeText(activity, mStudentList.get(position).name, Toast.LENGTH_SHORT).show()
-              //  callCalendarListApi()
                 dialog.dismiss()
             }
         })
@@ -706,6 +705,12 @@ class TimeTableFragment : Fragment(){
 
         }
         dialog.show()
+    }
+    fun recyclerinitializer(){
+        timeTableAllRecycler = view!!.findViewById(R.id.timeTableAllRecycler) as RecyclerView
+        linearLayoutManagerVertical.orientation=LinearLayoutManager.VERTICAL
+        timeTableAllRecycler.layoutManager = linearLayoutManagerVertical
+        timeTableAllRecycler.itemAnimator = DefaultItemAnimator()
     }
 
 }
