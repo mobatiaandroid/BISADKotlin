@@ -219,6 +219,7 @@ class AppsFragment  : Fragment() {
                         if (!stopLoading)
                         {
                             start=start+limit
+                            progressDialog.visibility = View.VISIBLE
                             callAppsList(start,limit)
                             isLoading = true
                         }
@@ -300,6 +301,7 @@ class AppsFragment  : Fragment() {
                 start=0
                 limit=20
                 calendarArrayList = ArrayList()
+                progressDialog.visibility = View.VISIBLE
                 callAppsList(start,limit)
                 dialog.dismiss()
             }

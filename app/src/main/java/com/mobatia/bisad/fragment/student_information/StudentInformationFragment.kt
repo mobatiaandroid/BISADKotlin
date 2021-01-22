@@ -193,6 +193,7 @@ class StudentInformationFragment : Fragment(){
 
     fun callStudentInfoApi()
     {
+        progressDialog.visibility = View.VISIBLE
         var studentInfoArrayList = ArrayList<StudentInfoDetail>()
         val token = sharedprefs.getaccesstoken(mContext)
         val studentbody= StudentInfoApiModel(sharedprefs.getStudentID(mContext)!!)
@@ -284,6 +285,7 @@ class StudentInformationFragment : Fragment(){
                     studImg.setImageResource(R.drawable.student)
                 }
                 progressDialog.visibility=View.VISIBLE
+                studentInfoRecycler.visibility=View.GONE
                 callStudentInfoApi()
                 dialog.dismiss()
             }

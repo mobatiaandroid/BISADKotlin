@@ -178,5 +178,6 @@
     <string name="display">It is important the school has the latest contact information for your family, please take the time to confirm/update your details. Please ensure you have access to the following documents before continuing:\n \u2022 Passport copy\n \u2022 Emirates ID copy</string>
     <string name="passport_number_red">Passport Number<font fgcolor="red">*</font></string>
     <string name="passport_expiry_new">Passport Expiry<font fgcolor="red">*</font></string>
+    <string name="emirates_id_new">Emirates ID Number<font fgcolor="red">*</font></string>
 
 </resources>

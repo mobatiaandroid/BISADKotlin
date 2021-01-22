@@ -243,8 +243,9 @@ class AttendanceFragment : Fragment() {
                 } else {
                     studImg.setImageResource(R.drawable.student)
                 }
+                progressDialog.visibility = View.VISIBLE
                 getattendancedetails()
-                Toast.makeText(activity, mStudentList[position].name, Toast.LENGTH_SHORT).show()
+
                 dialog.dismiss()
             }
         })
@@ -252,6 +253,7 @@ class AttendanceFragment : Fragment() {
     }
 
     fun getattendancedetails() {
+        progressDialog.visibility = View.VISIBLE
         val token = sharedprefs.getaccesstoken(mContext)
         val attendancerBody = AttendanceApiModel(sharedprefs.getStudentID(mContext)!!)
 

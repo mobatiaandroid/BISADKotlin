@@ -247,6 +247,7 @@ class ReportsFragment : Fragment() {
                 } else {
                     studImg.setImageResource(R.drawable.student)
                 }
+                progressDialog.visibility = View.VISIBLE
                 getreportsdetails()
                 dialog.dismiss()
             }
@@ -255,6 +256,7 @@ class ReportsFragment : Fragment() {
     }
 
     private fun getreportsdetails() {
+        progressDialog.visibility = View.VISIBLE
         val token = sharedprefs.getaccesstoken(mContext)
         val studentid = ReportApiModel(sharedprefs.getStudentID(mContext)!!)
         val call: Call<ReportListModel> =

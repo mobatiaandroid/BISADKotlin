@@ -261,6 +261,7 @@ class ReportAbsenceFragment : Fragment(){
                 {
                     studImg.setImageResource(R.drawable.student)
                 }
+                progressDialog.visibility = View.VISIBLE
                callStudentLeaveInfo()
               //  Toast.makeText(activity, mStudentList.get(position).name, Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
@@ -270,6 +271,7 @@ class ReportAbsenceFragment : Fragment(){
     }
     fun callStudentLeaveInfo()
     {
+        progressDialog.visibility = View.VISIBLE
         studentInfoCopy=ArrayList<AbsenceRequestListDetailModel>()
         studentInfoArrayList.clear()
         val token = sharedprefs.getaccesstoken(mContext)

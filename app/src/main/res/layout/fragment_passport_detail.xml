@@ -311,7 +311,7 @@
                     android:padding="5dp"
                     android:textSize="16sp"
                     android:layout_below="@+id/visaNumberHint"
-                    android:hint="Emirates ID Number*"
+                    android:hint="@string/emirates_id_new"
                     android:gravity="center_vertical"
                     android:imeOptions="actionDone"
                     android:inputType="text"
