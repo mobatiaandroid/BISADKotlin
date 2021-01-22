@@ -73,7 +73,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
     lateinit var drawer_layout: DrawerLayout
     lateinit var toolbar: Toolbar
     lateinit var logoClickImgView: ImageView
-    lateinit var   homelist: ListView
+    lateinit var homelist: ListView
     var mFragment: Fragment? = null
     var sPosition: Int = 0
 
@@ -106,7 +106,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
         sharedprefs = PreferenceData()
         jsonConstans = JsonConstants()
         context = this
-         homelist = findViewById<ListView>(R.id.homelistview)
+        homelist = findViewById<ListView>(R.id.homelistview)
         drawer_layout = findViewById(R.id.drawer_layout)
         linear_layout = findViewById(R.id.linear_layout)
         var downarrow = findViewById<ImageView>(R.id.downarrow)
@@ -194,16 +194,29 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                         "Alert"
                     )
                 } else if (position == 11) {
-                    showSuccessAlert(context,"This feature is only available for registered users.","Alert")
-                } else if (position == 12)
-                {
-                    showSuccessAlert(context,"This feature is only available for registered users.","Alert")
-                }
-                else  if(position==13)
-                {
-                    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED&& ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
-
-                    {
+                    showSuccessAlert(
+                        context,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )
+                } else if (position == 12) {
+                    showSuccessAlert(
+                        context,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )
+                } else if (position == 13) {
+                    if (ActivityCompat.checkSelfPermission(
+                            context,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                            context,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                            context,
+                            Manifest.permission.CALL_PHONE
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
                         checkpermission()
 
 
@@ -212,114 +225,97 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                         replaceFragmentsSelected(position)
                     }
 
-                }
-                else  if(position==14)
-                {
+                } else if (position == 14) {
                     showSuccessAlert(
                         context,
                         "This feature is only available for registered users.",
                         "Alert"
                     )
                 }
-            }
-            else
-            {
-                if(position==0)
-                {
+            } else {
+                if (position == 0) {
                     mFragment = HomescreenFragment()
                     replaceFragmentsSelected(position)
-                }
-                else  if(position==1)
-                {
+                } else if (position == 1) {
                     sharedprefs.setStudentID(context, "")
                     sharedprefs.setStudentName(context, "")
                     sharedprefs.setStudentPhoto(context, "")
                     sharedprefs.setStudentClass(context, "")
                     mFragment = StudentInformationFragment()
                     replaceFragmentsSelected(position)
-                }
-                else  if(position==2)
-                {
+                } else if (position == 2) {
                     sharedprefs.setStudentID(context, "")
                     sharedprefs.setStudentName(context, "")
                     sharedprefs.setStudentPhoto(context, "")
                     sharedprefs.setStudentClass(context, "")
                     mFragment = CalendarFragment()
                     replaceFragmentsSelected(position)
-                } else  if(position==3)
-                {
+                } else if (position == 3) {
                     mFragment = MessageFragment()
                     replaceFragmentsSelected(position)
-                } else  if(position==4)
-                {
+                } else if (position == 4) {
                     mFragment = CommunicationFragment()
                     replaceFragmentsSelected(position)
-                } else  if(position==5)
-                {
+                } else if (position == 5) {
                     sharedprefs.setStudentID(context, "")
                     sharedprefs.setStudentName(context, "")
                     sharedprefs.setStudentPhoto(context, "")
                     sharedprefs.setStudentClass(context, "")
                     mFragment = ReportAbsenceFragment()
                     replaceFragmentsSelected(position)
-                } else  if(position==6)
-                {
+                } else if (position == 6) {
                     sharedprefs.setStudentID(context, "")
                     sharedprefs.setStudentName(context, "")
                     sharedprefs.setStudentPhoto(context, "")
                     sharedprefs.setStudentClass(context, "")
                     mFragment = TeacherContactFragment()
                     replaceFragmentsSelected(position)
-                }
-                else  if(position==7)
-                {
+                } else if (position == 7) {
                     mFragment = SocialMediaFragment()
                     replaceFragmentsSelected(position)
-                }
-                else  if(position==8)
-                {
+                } else if (position == 8) {
                     sharedprefs.setStudentID(context, "")
                     sharedprefs.setStudentName(context, "")
                     sharedprefs.setStudentPhoto(context, "")
                     sharedprefs.setStudentClass(context, "")
                     mFragment = ReportsFragment()
                     replaceFragmentsSelected(position)
-                }else  if(position==9)
-                {
+                } else if (position == 9) {
                     sharedprefs.setStudentID(context, "")
                     sharedprefs.setStudentName(context, "")
                     sharedprefs.setStudentPhoto(context, "")
                     sharedprefs.setStudentClass(context, "")
                     mFragment = AttendanceFragment()
                     replaceFragmentsSelected(position)
-                }else  if(position==10)
-                {
+                } else if (position == 10) {
                     sharedprefs.setStudentID(context, "")
                     sharedprefs.setStudentName(context, "")
                     sharedprefs.setStudentPhoto(context, "")
                     sharedprefs.setStudentClass(context, "")
                     mFragment = TimeTableFragment()
                     replaceFragmentsSelected(position)
-                }
-                else  if(position==11)
-                {
+                } else if (position == 11) {
                     mFragment = TermDatesFragment()
                     replaceFragmentsSelected(position)
-                }
-                else if (position==12)
-                {
-                   sharedprefs.setStudentID(context, "")
+                } else if (position == 12) {
+                    sharedprefs.setStudentID(context, "")
                     sharedprefs.setStudentName(context, "")
                     sharedprefs.setStudentPhoto(context, "")
                     sharedprefs.setStudentClass(context, "")
                     mFragment = CurriculumFragment()
                     replaceFragmentsSelected(position)
-                }
-                else  if(position==13)
-                {
-                    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED&& ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
-
-                    {
+                } else if (position == 13) {
+                    if (ActivityCompat.checkSelfPermission(
+                            context,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                            context,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                            context,
+                            Manifest.permission.CALL_PHONE
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
                         checkpermission()
 
 
@@ -328,9 +324,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                         replaceFragmentsSelected(position)
                     }
 
-                }
-                else  if(position==14)
-                {
+                } else if (position == 14) {
                     sharedprefs.setStudentID(context, "")
                     sharedprefs.setStudentName(context, "")
                     sharedprefs.setStudentPhoto(context, "")
@@ -355,7 +349,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
         navigation_menu = view.findViewById(R.id.action_bar_back)
         settings_icon = view.findViewById(R.id.action_bar_forward)
         logoClickImgView = view.findViewById(R.id.logoClickImgView)
-        settings_icon.visibility=View.VISIBLE
+        settings_icon.visibility = View.VISIBLE
         homelist.setBackgroundColor(getColor(R.color.split_bg))
         homelist.setOnScrollListener(object : AbsListView.OnScrollListener {
             override fun onScrollStateChanged(view: AbsListView, scrollState: Int) {}
@@ -392,19 +386,19 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
         logoClickImgView.setOnClickListener(View.OnClickListener {
 //            val fragmentManager =getSupportFragmentManager()
 //            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            settings_icon.visibility=View.VISIBLE
+            settings_icon.visibility = View.VISIBLE
             if (drawer_layout.isDrawerOpen(linear_layout)) {
                 drawer_layout.closeDrawer(linear_layout)
             }
             Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            mFragment=HomescreenFragment()
-            supportFragmentManager.popBackStack()
+            mFragment = HomescreenFragment()
+            supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             //replaceFragmentsSelected(0)
         })
 
         settings_icon.setOnClickListener {
 
-      //     Toast.makeText(applicationContext, "Settings", Toast.LENGTH_SHORT).show()
+            //     Toast.makeText(applicationContext, "Settings", Toast.LENGTH_SHORT).show()
 
 //                Toast.makeText(getApplicationContext(), "Forward Button is clicked", Toast.LENGTH_LONG).show();
             val fm = supportFragmentManager
@@ -418,7 +412,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                 val fragmentManager =
                     supportFragmentManager
                 fragmentManager.beginTransaction()
-                    .add(R.id.fragment_holder, mFragment!!,"Settings")
+                    .add(R.id.fragment_holder, mFragment!!, "Settings")
                     .addToBackStack("Settings").commit()
 
                 supportActionBar!!.setTitle(R.string.null_value)
@@ -451,8 +445,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
         return false
     }
 
-    private fun replaceFragmentsSelected(position: Int)
-    {
+    private fun replaceFragmentsSelected(position: Int) {
         if (mFragment != null) {
             val fragmentManager = supportFragmentManager
             fragmentManager
@@ -476,15 +469,14 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
         if (drawer_layout.isDrawerOpen(linear_layout)) {
             drawer_layout.closeDrawer(linear_layout)
         }
-        settings_icon.visibility=View.VISIBLE
+        settings_icon.visibility = View.VISIBLE
 
     }
 
     fun fragmentIntent(mFragment: Fragment?) {
-        if (mFragment != null)
-        {
+        if (mFragment != null) {
             System.out.println("title:" + appController.mTitles)
-            val fragmentManager =getSupportFragmentManager()
+            val fragmentManager = getSupportFragmentManager()
             fragmentManager.beginTransaction()
                 .add(R.id.fragment_holder, mFragment, appController.mTitles)
                 .addToBackStack(appController.mTitles).commitAllowingStateLoss() //commit
@@ -505,7 +497,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
-               this,
+                this,
                 arrayOf(
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -516,8 +508,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
         }
     }
 
-    fun showSuccessAlert(context: Context,message : String,msgHead : String)
-    {
+    fun showSuccessAlert(context: Context, message: String, msgHead: String) {
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

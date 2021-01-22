@@ -505,6 +505,7 @@ class TimeTableFragment : Fragment(){
                             }
                         }
                         else{
+                            Log.e("VALUETEST",weekPosition.toString())
 
                             timeTableSingleRecycler.visibility = View.GONE
                             timeTableAllRecycler.visibility = View.VISIBLE
