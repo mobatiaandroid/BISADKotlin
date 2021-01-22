@@ -19,6 +19,7 @@ import com.ryanharter.android.tooltips.ToolTipLayout
 
 var isClick: Boolean = false
 
+@Suppress("DEPRECATION")
 class TimeTableAllWeekSelectionAdapterNew(
     private var mContext: Context,
     private var mPeriodModel: List<PeriodModel>,
