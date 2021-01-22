@@ -195,6 +195,7 @@ class TimeTableFragment : Fragment(){
                 weekPosition = 0
             }
         }
+
         weekRecyclerList.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View)
             {
@@ -207,7 +208,7 @@ class TimeTableFragment : Fragment(){
                 else{
                     weekRecyclerList.scrollToPosition(5)
                 }
-                for (i in 0..weekListArray.size-1)
+                for (i in 0 until weekListArray.size)
                 {
                     if (i==position)
                     {

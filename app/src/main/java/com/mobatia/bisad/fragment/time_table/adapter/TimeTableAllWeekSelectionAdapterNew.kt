@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -330,16 +331,16 @@ class TimeTableAllWeekSelectionAdapterNew(
     //                dialog.setContentView(R.layout.popup_timetable_activity)
     //                dialog.show()
     //                dialog.setCanceledOnTouchOutside(true)
-             //   Toast.makeText(mContext,"this is toast message",Toast.LENGTH_SHORT).show()
+                Toast.makeText(mContext,"click working",Toast.LENGTH_SHORT).show()
 
 
-               val inflater: LayoutInflater = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                val view = inflater.inflate(R.layout.popup_timetable_activity,null,false)
+                val itemView = LayoutInflater.from(mContext)
+                    .inflate(R.layout.popup_timetable_activity, null, false)
 
 
                 Log.e("TIMETABLE", "CLICKED4")
-                val recycler_view_timetable: RecyclerView = view.findViewById(R.id.recycler_view_timetable)
-                val test: LinearLayout = view.findViewById(R.id.Linear)
+                val recycler_view_timetable: RecyclerView = itemView.findViewById(R.id.recycler_view_timetable)
+                val test: LinearLayout = itemView.findViewById(R.id.Linear)
 
                // test.removeView(it)
 
@@ -354,23 +355,23 @@ class TimeTableAllWeekSelectionAdapterNew(
                 recycler_view_timetable.adapter = mTimeTablePopUpRecyclerAdapter
                 var t: ToolTip? = null
                 Log.e("POSITIONNITHIN", position.toString())
-                t = if (position == 0) {
-                    ToolTip.Builder(mContext)
+                 if (position == 0) {
+                  t =  ToolTip.Builder(mContext)
                         .anchor(holder.tutor3) // The view to which the ToolTip should be anchored
                         .gravity(Gravity.BOTTOM) // The location of the view in relation to the anchor (LEFT, RIGHT, TOP, BOTTOM)
                         .color(mContext.resources.getColor(R.color.ttpop)) // The color of the pointer arrow
                         .pointerSize(10) // The size of the pointer
-                        .contentView(view) // The actual contents of the ToolTip
+                        .contentView(itemView) // The actual contents of the ToolTip
                         .build()
                 } else {
-                    ToolTip.Builder(mContext)
+                   t = ToolTip.Builder(mContext)
                         .anchor(holder.tutor3) // The view to which the ToolTip should be anchored
                         .gravity(Gravity.TOP) // The location of the view in relation to the anchor (LEFT, RIGHT, TOP, BOTTOM)
                         .color(
                             mContext.resources.getColor(R.color.ttpop)
                         )
                         .pointerSize(10) // The size of the pointer
-                        .contentView(view) // The actual contents of the ToolTip
+                        .contentView(itemView) // The actual contents of the ToolTip
                         .build()
                 }
                 tipContainer.addTooltip(t)
@@ -470,5 +471,9 @@ class TimeTableAllWeekSelectionAdapterNew(
 
         return mFeildList.size
 
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return (position)
     }
 }
