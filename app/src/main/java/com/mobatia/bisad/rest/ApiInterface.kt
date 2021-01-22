@@ -231,7 +231,6 @@ interface ApiInterface {
     @POST("api/v1/newsletters")
     @Headers("Content-Type: application/json")
     fun newsletters(
-        @Body  newsletterModel: NewsLetterListAPiModel,
         @Header("Authorization") token:String
     ): Call<NewsLetterListModel>
 

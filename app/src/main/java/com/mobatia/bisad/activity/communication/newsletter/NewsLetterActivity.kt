@@ -143,8 +143,7 @@ class NewsLetterActivity : AppCompatActivity() {
         progressDialog.visibility = View.VISIBLE
         newsLetterShowArrayList= ArrayList()
         val token = sharedprefs.getaccesstoken(mContext)
-        val studentbody= NewsLetterListAPiModel(startValue,limitValue)
-        val call: Call<NewsLetterListModel> = ApiClient.getClient.newsletters(studentbody,"Bearer "+token)
+        val call: Call<NewsLetterListModel> = ApiClient.getClient.newsletters("Bearer "+token)
         call.enqueue(object : Callback<NewsLetterListModel> {
             override fun onFailure(call: Call<NewsLetterListModel>, t: Throwable) {
                 progressDialog.visibility = View.GONE

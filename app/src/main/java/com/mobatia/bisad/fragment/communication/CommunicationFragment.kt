@@ -74,10 +74,6 @@ class CommunicationFragment : Fragment(){
     lateinit var progressDialog: RelativeLayout
     private lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var newsLetterRecycler: RecyclerView
-    var start:Int=0
-    var limit:Int=20
-    var stopLoading:Boolean=false
-    var isLoading:Boolean=false
     var apiCall:Int=0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -92,9 +88,7 @@ class CommunicationFragment : Fragment(){
         sharedprefs = PreferenceData()
         mContext = requireContext()
         initializeUI()
-        start=0
-        limit=20
-        callNewLetterListAPI(start,limit)
+        callNewLetterListAPI()
     }
 
     private fun initializeUI()
@@ -108,30 +102,6 @@ class CommunicationFragment : Fragment(){
         val aniRotate: Animation =
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
         progressDialog.startAnimation(aniRotate)
-        newsLetterRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(@NonNull recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-            }
-
-            override fun onScrolled(
-                @NonNull recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val linearLayoutManager =
-                    recyclerView.layoutManager as LinearLayoutManager?
-                if (!isLoading) {
-                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == newsLetterArrayList.size - 1) {
-                        //bottom of list!
-                        if (!stopLoading)
-                        {
-                            start=start+limit
-                            callNewLetterListAPI(start,limit)
-                            isLoading = true
-                        }
-
-                    }
-                }
-            }
-        })
         newsLetterRecycler.addOnItemClickListener(object: OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
 
@@ -144,13 +114,12 @@ class CommunicationFragment : Fragment(){
 
     }
 
-    fun callNewLetterListAPI(startValue:Int,limitValue:Int)
+    fun callNewLetterListAPI()
     {
         progressDialog.visibility = View.VISIBLE
         newsLetterShowArrayList= ArrayList()
         val token = sharedprefs.getaccesstoken(mContext)
-        val studentbody= NewsLetterListAPiModel(startValue,limitValue)
-        val call: Call<NewsLetterListModel> = ApiClient.getClient.newsletters(studentbody,"Bearer "+token)
+        val call: Call<NewsLetterListModel> = ApiClient.getClient.newsletters("Bearer "+token)
         call.enqueue(object : Callback<NewsLetterListModel> {
             override fun onFailure(call: Call<NewsLetterListModel>, t: Throwable) {
                 progressDialog.visibility = View.GONE
@@ -161,28 +130,13 @@ class CommunicationFragment : Fragment(){
                 if (response.body()!!.status==100)
                 {
                     progressDialog.visibility = View.GONE
-                    newsLetterShowArrayList.addAll(response.body()!!.responseArray.campaignsList)
-                    newsLetterArrayList.addAll(newsLetterShowArrayList)
-                    if (newsLetterShowArrayList.size==20)
-                    {
-                        stopLoading=false
-                    }
-                    else{
-                        stopLoading=true
-                    }
+                    newsLetterArrayList.addAll(response.body()!!.responseArray.campaignsList)
                     if (newsLetterArrayList.size>0)
                     {
                         newsLetterRecycler.visibility=View.VISIBLE
                         val newsLetterAdapter = NewsLetterRecyclerAdapter(newsLetterArrayList)
                         newsLetterRecycler.setAdapter(newsLetterAdapter)
-                        isLoading=false
-                        if(newsLetterArrayList.size>20)
-                        {
-                            if(newsLetterArrayList.size>20)
-                            {
-                                newsLetterRecycler.scrollToPosition(startValue)
-                            }
-                        }
+
                     }
                     else
                     {
@@ -196,7 +150,7 @@ class CommunicationFragment : Fragment(){
                     if (apiCall<3)
                     {
                         AccessTokenClass.getAccessToken(mContext)
-                        callNewLetterListAPI(startValue,limitValue)
+                        callNewLetterListAPI()
                     }
                     else{
                         showSuccessAlert(mContext,"Something went wrong","Alert")
