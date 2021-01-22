@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/relativeMain"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:paddingTop="10dp"
-    android:clickable="true"
-    android:paddingBottom="10dp">
+    android:layout_height="50dp"
+    android:clickable="true">
 <RelativeLayout
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
     android:id="@+id/realMain">
     <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
         android:id="@+id/title"
@@ -36,9 +36,5 @@
         android:background="@drawable/arrow" />
 </RelativeLayout>
 
-<View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="@color/split_bg"
-    android:layout_below="@+id/realMain"/>
+
 </RelativeLayout>
