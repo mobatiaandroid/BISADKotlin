@@ -82,6 +82,7 @@ class TimeTableFragment : Fragment(){
     lateinit var timeTableWeekListAdapter :TimeTableWeekListAdapter
     var weekPosition:Int=0
     lateinit var dayOfTheWeek:String
+    lateinit var mContext:Context
      private lateinit var linearLayoutManager: LinearLayoutManager
      private lateinit var linearLayoutManagerVertical: LinearLayoutManager
      private lateinit var linearLayoutManagerVertical1: LinearLayoutManager
@@ -220,6 +221,7 @@ class TimeTableFragment : Fragment(){
                 timeTableWeekListAdapter.notifyDataSetChanged()
                 if (position!=0)
                 {
+                    timeTableAllRecycler.visibility=View.GONE
                     card_viewAll.visibility=View.GONE
                   //  timeTableAllRecycler.visibility=View.GONE
                     tipContainer.visibility=View.GONE
@@ -264,7 +266,7 @@ class TimeTableFragment : Fragment(){
                     if (mPeriodModel.size>0)
                     {
                         recyclerinitializer()
-
+                        timeTableAllRecycler.visibility=View.VISIBLE
                         var mRecyclerAllAdapter= TimeTableAllWeekSelectionAdapterNew(activity?.applicationContext!!, mPeriodModel,timeTableAllRecycler,tipContainer,feildAPIArrayList)
                         timeTableAllRecycler.adapter = mRecyclerAllAdapter
                     }

@@ -5,14 +5,11 @@ import `in`.galaxyofandroid.spinerdialog.SpinnerDialog
 import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -26,7 +23,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -48,6 +44,7 @@ import java.io.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.Base64.getEncoder
 import kotlin.collections.ArrayList
 
 
@@ -822,31 +819,32 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         ViewSelectedPassport.setImageBitmap(BitmapFactory.decodeFile(compressedImage.path))
         passport_image_path = compressedImage.path
         passport_image_name_path = compressedImage.name
-
-        var inputStream: InputStream? = null // You can get an inputStream using any I/O API
-
-        try {
-            inputStream = FileInputStream(compressedImage.path)
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        }
-        val bytes: ByteArray
-        val buffer = ByteArray(8192)
-        var bytesRead: Int
-        val output = ByteArrayOutputStream()
-
-        try {
-            while (inputStream!!.read(buffer).also { bytesRead = it } != -1) {
-                output.write(buffer, 0, bytesRead)
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-        bytes = output.toByteArray()
-        val encodedString =
-            Base64.encodeToString(bytes, Base64.DEFAULT)
-        passportImageData = encodedString
+        var bytes=File(compressedImage.path).readBytes()
+        var encode= Base64.encodeToString(bytes, 2)
+//        var inputStream: InputStream? = null // You can get an inputStream using any I/O API
+//
+//        try {
+//            inputStream = FileInputStream(compressedImage.path)
+//        } catch (e: FileNotFoundException) {
+//            e.printStackTrace()
+//        }
+//        val bytes: ByteArray
+//        val buffer = ByteArray(8192)
+//        var bytesRead: Int
+//        val output = ByteArrayOutputStream()
+//
+//        try {
+//            while (inputStream!!.read(buffer).also { bytesRead = it } != -1) {
+//                output.write(buffer, 0, bytesRead)
+//            }
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//        }
+//
+//        bytes = output.toByteArray()
+//        val encodedString =
+//            Base64.encodeToString(bytes, Base64.DEFAULT)
+        passportImageData = encode
         var passportID=passportDetailArrayList.get(foundPosition).id
         var model=PassportApiModel()
         model.id=passportDetailArrayList.get(foundPosition).id
@@ -913,31 +911,32 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         ViewSelectedPassport.setImageBitmap(BitmapFactory.decodeFile(CompressPassportCamera.path))
         passport_image_path = CompressPassportCamera.path
         passport_image_name_path = CompressPassportCamera.name
-
-        var inputStream: InputStream? = null // You can get an inputStream using any I/O API
-
-        try {
-            inputStream = FileInputStream(CompressPassportCamera.path)
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        }
-        val bytes: ByteArray
-        val buffer = ByteArray(8192)
-        var bytesRead: Int
-        val output = ByteArrayOutputStream()
-
-        try {
-            while (inputStream!!.read(buffer).also { bytesRead = it } != -1) {
-                output.write(buffer, 0, bytesRead)
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-        bytes = output.toByteArray()
-        val encodedString =
-            Base64.encodeToString(bytes, Base64.DEFAULT)
-        passportImageData = encodedString
+        var bytes=File(CompressPassportCamera.path).readBytes()
+        var encode= Base64.encodeToString(bytes, 2)
+//        var inputStream: InputStream? = null // You can get an inputStream using any I/O API
+//
+//        try {
+//            inputStream = FileInputStream(CompressPassportCamera.path)
+//        } catch (e: FileNotFoundException) {
+//            e.printStackTrace()
+//        }
+//        val bytes: ByteArray
+//        val buffer = ByteArray(8192)
+//        var bytesRead: Int
+//        val output = ByteArrayOutputStream()
+//
+//        try {
+//            while (inputStream!!.read(buffer).also { bytesRead = it } != -1) {
+//                output.write(buffer, 0, bytesRead)
+//            }
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//        }
+//
+//        bytes = output.toByteArray()
+//        val encodedString =
+//            Base64.encodeToString(bytes, Base64.DEFAULT)
+        passportImageData = encode
         var passportID=passportDetailArrayList.get(foundPosition).id
         var model=PassportApiModel()
         model.id=passportDetailArrayList.get(foundPosition).id
@@ -971,7 +970,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         model.emirates_id_image_path= passportDetailArrayList.get(foundPosition).emirates_id_image_path
         model.passport_expired= passportDetailArrayList.get(foundPosition).passport_expired
         model.emirates_id_no= passportDetailArrayList.get(foundPosition).emirates_id_no
-        model.emirates_id_image= visaImageData
+        model.emirates_id_image= passportDetailArrayList.get(foundPosition).emirates_id_image
         if (passportID==0)
         {
             model.status= 0
@@ -1002,31 +1001,32 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         ViewSelectedVisa.setImageBitmap(BitmapFactory.decodeFile(CompressVisaCamera1.path))
         visa_image_path = CompressVisaCamera1.path
         visa_image_name_path = CompressVisaCamera1.name
-        var inputStream: InputStream? = null // You can get an inputStream using any I/O API
-
-        try {
-            inputStream = FileInputStream(CompressVisaCamera1.path)
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        }
-        val bytes: ByteArray
-        val buffer = ByteArray(8192)
-        var bytesRead: Int
-        val output = ByteArrayOutputStream()
-
-        try {
-            while (inputStream!!.read(buffer).also { bytesRead = it } != -1) {
-                output.write(buffer, 0, bytesRead)
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-        bytes = output.toByteArray()
-        val encodedString =
-            Base64.encodeToString(bytes, Base64.DEFAULT)
-
-        visaImageData = encodedString
+        var bytes=File(CompressVisaCamera1.path).readBytes()
+        var encode= Base64.encodeToString(bytes, 2)
+//        var inputStream: InputStream? = null // You can get an inputStream using any I/O API
+//
+//        try {
+//            inputStream = FileInputStream(CompressVisaCamera1.path)
+//        } catch (e: FileNotFoundException) {
+//            e.printStackTrace()
+//        }
+//        val bytes: ByteArray
+//        val buffer = ByteArray(8192)
+//        var bytesRead: Int
+//        val output = ByteArrayOutputStream()
+//
+//        try {
+//            while (inputStream!!.read(buffer).also { bytesRead = it } != -1) {
+//                output.write(buffer, 0, bytesRead)
+//            }
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//        }
+//
+//        bytes = output.toByteArray()
+//        val encodedString =
+//            Base64.encodeToString(bytes, Base64.DEFAULT)
+        visaImageData = encode
         var passportID=passportDetailArrayList.get(foundPosition).id
         var model=PassportApiModel()
         model.id=passportDetailArrayList.get(foundPosition).id
@@ -1100,31 +1100,33 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         ViewSelectedVisa.setImageBitmap(BitmapFactory.decodeFile(VisacompressedImage.path))
         visa_image_path = VisacompressedImage.path
         visa_image_name_path = VisacompressedImage.name
+        var bytes=File(VisacompressedImage.path).readBytes()
+        var encode= android.util.Base64.encodeToString(bytes, 2)
 
-        var inputStream: InputStream? = null // You can get an inputStream using any I/O API
-
-        try {
-            inputStream = FileInputStream(VisacompressedImage.path)
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        }
-        val bytes: ByteArray
-        val buffer = ByteArray(8192)
-        var bytesRead: Int
-        val output = ByteArrayOutputStream()
-
-        try {
-            while (inputStream!!.read(buffer).also { bytesRead = it } != -1) {
-                output.write(buffer, 0, bytesRead)
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-        bytes = output.toByteArray()
-        val encodedString =
-            Base64.encodeToString(bytes, Base64.DEFAULT)
-        visaImageData = encodedString
+//        var inputStream: InputStream? = null // You can get an inputStream using any I/O API
+//
+//        try {
+//            inputStream = FileInputStream(VisacompressedImage.path)
+//        } catch (e: FileNotFoundException) {
+//            e.printStackTrace()
+//        }
+//        val bytes: ByteArray
+//        val buffer = ByteArray(8192)
+//        var bytesRead: Int
+//        val output = ByteArrayOutputStream()
+//
+//        try {
+//            while (inputStream!!.read(buffer).also { bytesRead = it } != -1) {
+//                output.write(buffer, 0, bytesRead)
+//            }
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//        }
+//
+//        bytes = output.toByteArray()
+//        val encodedString =
+//            Base64.encodeToString(bytes, Base64.DEFAULT)
+        visaImageData = encode
         var passportID=passportDetailArrayList.get(foundPosition).id
         var model=PassportApiModel()
         model.id=passportDetailArrayList.get(foundPosition).id

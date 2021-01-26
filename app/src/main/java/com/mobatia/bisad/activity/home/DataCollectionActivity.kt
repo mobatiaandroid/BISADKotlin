@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -689,6 +690,8 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
                 passportArrayCheck.get(i).status=1
                 passportArrayCheck.get(i).request=0
             }
+            Log.e("IMAGE PATH PASS",passportArrayCheck.get(i).passport_image_path)
+            Log.e("IMAGE PATH PASS IMAGE",passportArrayCheck.get(i).passport_image)
         }
         var PASSPORTARRAY=ArrayList<PassportApiModel>()
         PASSPORTARRAY=passportArrayCheck
@@ -701,6 +704,11 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
         {
             Log.e("DATA","TRIGGER 1")
             if (triggertype==4 && overallStatus==1)
+            {
+                Log.e("DATA","TRIGGER 13")
+                JSONSTRING="{"+OWNDATA+","+"\"kin_details\""+":"+FIRSTDATA+" }"
+            }
+            else if(triggertype==3 && overallStatus==1)
             {
                 Log.e("DATA","TRIGGER 13")
                 JSONSTRING="{"+OWNDATA+","+"\"kin_details\""+":"+FIRSTDATA+" }"
@@ -723,7 +731,7 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
             else{
                 Log.e("DATA","TRIGGER !2"+sharedprefs.getTriggerType(context))
 
-                if (sharedprefs.getTriggerType(context)==4)
+                if (sharedprefs.getTriggerType(context)==4 ||sharedprefs.getTriggerType(context)==3)
                 {
                     Log.e("DATA","TRIGGER 3")
                     JSONSTRING="{"+"\"health_details\""+":"+HEALTHDATA+","+"\"passport_details\""+":"+PASSPORTDATA+" }"

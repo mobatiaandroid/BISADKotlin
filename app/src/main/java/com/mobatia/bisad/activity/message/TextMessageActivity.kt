@@ -122,12 +122,19 @@ class TextMessageActivity : AppCompatActivity(){
                                  "src: url(SourceSansPro-Regular.ttf);" +
                                  "}" +
                                  ".title {" +
-                                 "font-family: SourceSansPro-Regular;" +
+                                 "font-family: SourceSansPro-Semibold;" +
                                  "font-size:16px;" +
                                  "text-align:left;" +
-                                 "color:	#46C1D0;" +
+                                 "color: #46C1D0;" +
                                  "text-align: ####TEXT_ALIGN####;" +
                                  "}" +
+                                 ".date {\n" +
+                                 "font-family: SourceSansPro-Regular;\n" +
+                                 "font-size:12px;\n" +
+                                 "text-align:right;\n" +
+                                 "color:#908C86;\n" +
+                                 "text-align: ####TEXT_ALIGN####;\n" +
+                                 "}"+
                                  ".description {" +
                                  "font-family: SourceSansPro-Semibold;" +
                                  "text-align:justify;" +
@@ -137,9 +144,9 @@ class TextMessageActivity : AppCompatActivity(){
                                  "}" +
                                  "</style>\n" + "</head>" +
                                  "<body>" +
-                                 "<p class='title'>"+message
+                                 "<p class='title'>"+title
 
-                    pushNotificationDetail=pushNotificationDetail+ "<p class='description'>" +outputDateStr1 +" "+outputDateStr+ "</p>"
+                    pushNotificationDetail=pushNotificationDetail+"<p class='date'>"+outputDateStr1 +" "+outputDateStr+ "</p>"+"<hr>"+ "<p class='description'>" +message+ "</p>"
                     if (!url.equals(""))
                     {
                         pushNotificationDetail=pushNotificationDetail+"<center><img src='" + url + "'width='100%', height='auto'>"

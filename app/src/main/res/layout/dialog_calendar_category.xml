@@ -34,7 +34,6 @@
             android:src="@drawable/questionmark_icon"
             android:gravity="center"
             android:scaleType="fitCenter" />
-            android:scaleType="fitCenter" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -43,51 +42,27 @@
         android:layout_below="@+id/r"
         android:layout_centerHorizontal="true"
         android:background="@drawable/dialoguebottomcurve">
-
-
-        <com.mobatia.bisad.manager.CustomFontSansProTextNoColorSemiBold
-
-            android:id="@+id/alertHead"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:gravity="center_horizontal"
-            android:text="Alert"
-            android:textColor="#ff000000"
-            android:textSize="18sp" />
-
-        <com.mobatia.bisad.manager.CustomFontSansProTextBlack
-            android:id="@+id/text_dialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/alertHead"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginTop="5dp"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"
-            android:text="Password Missmatch"
-            android:textColor="#ff000000" />
-
+       <com.mobatia.bisad.manager.CustomFontSansProTextBlackBold
+           android:id="@+id/heading"
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           android:gravity="center"
+           android:textColor="@color/black"
+           android:text="Refine calendar by Category"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/checkRecycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_dialog"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"/>
+            android:background="@color/grey"
+            android:layout_below="@+id/heading"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@+id/checkRecycler"
-
             android:weightSum="100">
             <LinearLayout
                 android:layout_width="0dp"
@@ -126,5 +101,6 @@
             </LinearLayout>
 
         </LinearLayout>
+
     </RelativeLayout>
 </RelativeLayout>

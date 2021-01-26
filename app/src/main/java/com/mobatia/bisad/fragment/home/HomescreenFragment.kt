@@ -31,6 +31,7 @@ import com.mobatia.bisad.constants.NaisTabConstants
 import com.mobatia.bisad.fragment.apps.AppsFragment
 import com.mobatia.bisad.fragment.attendance.AttendanceFragment
 import com.mobatia.bisad.fragment.calendar.CalendarFragment
+import com.mobatia.bisad.fragment.calendar_new.CalendarFragmentNew
 import com.mobatia.bisad.fragment.communication.CommunicationFragment
 import com.mobatia.bisad.fragment.contact_us.ContactUsFragment
 import com.mobatia.bisad.fragment.curriculum.CurriculumFragment
@@ -1234,7 +1235,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     sharedprefs.setStudentName(mContext, "")
                     sharedprefs.setStudentPhoto(mContext, "")
                     sharedprefs.setStudentClass(mContext, "")
-                    mFragment = CalendarFragment()
+                    mFragment = CalendarFragmentNew()
                     fragmentIntent(mFragment)
                 }
 

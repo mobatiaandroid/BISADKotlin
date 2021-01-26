@@ -17,7 +17,7 @@ import com.mobatia.bisad.fragment.attendance.model.AttendanceApiModel
 import com.mobatia.bisad.fragment.attendance.model.AttendanceListModel
 import com.mobatia.bisad.fragment.calendar.model.CalendarApiModel
 import com.mobatia.bisad.fragment.calendar.model.CalendarListModel
-import com.mobatia.bisad.fragment.calendar.model.CalendarModel
+import com.mobatia.bisad.fragment.calendar_new.model.CalendarModel
 import com.mobatia.bisad.fragment.contact_us.model.ContactusModel
 import com.mobatia.bisad.fragment.curriculum.model.CuriculumListModel
 import com.mobatia.bisad.fragment.curriculum.model.CurriculumStudentApiModel
@@ -140,7 +140,7 @@ interface ApiInterface {
     ): Call<MessageListModel>
 
       /*************Calendar List****************/
-    @POST("api/v1/getcalendar")
+    @POST("api/v1/calendar")
     @Headers("Content-Type: application/json")
     fun calendarList(
         @Header("Authorization") token:String

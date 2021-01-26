@@ -81,7 +81,7 @@
                     android:paddingLeft="10dp"
                     android:textColor="@color/black"
                     android:text="Select a child"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="0dp"

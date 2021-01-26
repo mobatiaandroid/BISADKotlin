@@ -15,13 +15,14 @@ import android.view.Window
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
-import androidx.annotation.IntegerRes
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.applandeo.materialcalendarview.CalendarView
+import com.applandeo.materialcalendarview.EventDay
 import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException
+import com.applandeo.materialcalendarview.listeners.OnDayClickListener
 import com.applandeo.materialcalendarview.utils.DateUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -31,7 +32,6 @@ import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.fragment.attendance.model.AttendanceApiModel
 import com.mobatia.bisad.fragment.attendance.model.AttendanceListDetailModel
 import com.mobatia.bisad.fragment.attendance.model.AttendanceListModel
-import com.mobatia.bisad.fragment.home.mContext
 import com.mobatia.bisad.fragment.student_information.adapter.StudentListAdapter
 import com.mobatia.bisad.fragment.student_information.model.StudentList
 import com.mobatia.bisad.fragment.student_information.model.StudentListModel
@@ -43,7 +43,6 @@ import com.mobatia.bisad.rest.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.math.BigInteger
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -174,7 +173,6 @@ class AttendanceFragment : Fragment() {
         calendarView = view!!.findViewById(R.id.calendarView) as CalendarView
         calendarView.isClickable=false
         titleTextView.text = "Attendance"
-
         val aniRotate: Animation =
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
         progressDialog.startAnimation(aniRotate)
@@ -219,6 +217,8 @@ class AttendanceFragment : Fragment() {
         {
             dialog.dismiss()
         }
+        calendarView.isClickable=false
+
         studentListRecycler.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
                 // Your logic

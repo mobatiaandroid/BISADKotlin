@@ -149,7 +149,8 @@ class CalendarActivity : AppCompatActivity(){
                     )
                 }!!);
 
-                if (StartCalendar.length == 16) {
+                if (StartCalendar.length == 16)
+                {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
 

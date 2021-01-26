@@ -96,8 +96,30 @@ class FirstScreenNewData:Fragment() {
         linearLayoutManager = LinearLayoutManager(mContext)
         familyContactRecycler.layoutManager = linearLayoutManager
         familyContactRecycler.itemAnimator = DefaultItemAnimator()
-        nameValue=ownContactDetailArrayList.get(0).name
-        relationshipValue=ownContactDetailArrayList.get(0).relationship
+        if (ownContactDetailArrayList.size>0)
+        {
+            if(ownContactDetailArrayList.get(0).name.equals(""))
+            {
+                nameValue=""
+                nameOwnDetailTxt.setText(nameValue)
+            }
+            else
+            {
+                nameValue=ownContactDetailArrayList.get(0).name
+                nameOwnDetailTxt.setText(nameValue)
+            }
+            if (ownContactDetailArrayList.get(0).relationship.equals(""))
+            {
+                relationshipValue=""
+                contactTypeOwnDetailTxt.setText(relationshipValue)
+            }
+            else{
+                relationshipValue=ownContactDetailArrayList.get(0).relationship
+                contactTypeOwnDetailTxt.setText(relationshipValue)
+            }
+        }
+
+
         if (sharedprefs.getDisplayMessage(mContext).equals(""))
         {
           //  messageTxt.visibility=View.GONE
@@ -139,8 +161,8 @@ class FirstScreenNewData:Fragment() {
 
             showKinDetailAdd(activity!!)
         })
-        nameOwnDetailTxt.setText(nameValue)
-        contactTypeOwnDetailTxt.setText(relationshipValue)
+
+
         closeImg.setOnClickListener(View.OnClickListener {
             val dialog = Dialog(mContext)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -163,17 +185,20 @@ class FirstScreenNewData:Fragment() {
             }
             dialog.show()
         })
+        if(ownContactDetailArrayList.size>0)
+        {
+            if (ownContactDetailArrayList.get(0).isConfirmed)
+            {
+                ownDetailViewRelative.setBackgroundResource(R.drawable.rect_background_grey)
+                confirmBtn.visibility=View.GONE
+            }
+            else
+            {
+                ownDetailViewRelative.setBackgroundResource(R.drawable.rect_data_collection_red)
+                confirmBtn.visibility=View.VISIBLE
+            }
+        }
 
-        if (ownContactDetailArrayList.get(0).isConfirmed)
-        {
-            ownDetailViewRelative.setBackgroundResource(R.drawable.rect_background_grey)
-            confirmBtn.visibility=View.GONE
-        }
-        else
-        {
-            ownDetailViewRelative.setBackgroundResource(R.drawable.rect_data_collection_red)
-            confirmBtn.visibility=View.VISIBLE
-        }
         ownDetailViewRelative.setOnClickListener(View.OnClickListener
         {
 

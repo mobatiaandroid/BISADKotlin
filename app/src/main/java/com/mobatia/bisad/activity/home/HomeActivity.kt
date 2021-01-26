@@ -36,6 +36,7 @@ import com.mobatia.bisad.constants.JsonConstants
 import com.mobatia.bisad.fragment.apps.AppsFragment
 import com.mobatia.bisad.fragment.attendance.AttendanceFragment
 import com.mobatia.bisad.fragment.calendar.CalendarFragment
+import com.mobatia.bisad.fragment.calendar_new.CalendarFragmentNew
 import com.mobatia.bisad.fragment.communication.CommunicationFragment
 import com.mobatia.bisad.fragment.contact_us.ContactUsFragment
 import com.mobatia.bisad.fragment.curriculum.CurriculumFragment
@@ -248,7 +249,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                     sharedprefs.setStudentName(context, "")
                     sharedprefs.setStudentPhoto(context, "")
                     sharedprefs.setStudentClass(context, "")
-                    mFragment = CalendarFragment()
+                    mFragment = CalendarFragmentNew()
                     replaceFragmentsSelected(position)
                 } else if (position == 3) {
                     mFragment = MessageFragment()

@@ -110,6 +110,7 @@ class TermDatesFragment : Fragment(){
 
                   var title:String = response.body()!!.responseArray.title
                   var description = response.body()!!.responseArray.description
+                  var image = response.body()!!.responseArray.image
                     var pushNotificationDetail="<!DOCTYPE html>\n"+
                             "<html>\n" +
                             "<head>\n" +
@@ -151,7 +152,12 @@ class TermDatesFragment : Fragment(){
                             "<p class='title'>"+title
 
                     pushNotificationDetail=pushNotificationDetail+ "<p class='description'>" +description+ "</p>"
+                    if (!image.equals(""))
+                    {
+                        pushNotificationDetail=pushNotificationDetail+"<center><img src='" + image + "'width='100%', height='auto'>"
+                    }
                     pushNotificationDetail=pushNotificationDetail+"</body>\n</html>"
+
                     var htmlData=pushNotificationDetail
                     Log.e("HTML DATA",htmlData)
                     //  webView.loadData(htmlData,"text/html; charset=utf-8","utf-8")

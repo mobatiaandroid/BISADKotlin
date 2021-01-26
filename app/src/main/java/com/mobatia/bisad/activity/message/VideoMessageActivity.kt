@@ -148,9 +148,9 @@ class VideoMessageActivity : AppCompatActivity(){
                             "}" +
                             "</style>\n" + "</head>" +
                             "<body>" +
-                            "<p class='title'>"+message
+                            "<p class='title'>"+title
 
-                    pushNotificationDetail=pushNotificationDetail+ "<p class='description'>" +date + "</p>"
+                    pushNotificationDetail=pushNotificationDetail+ "<p class='description'>" +outputDateStr1 +" "+outputDateStr+  "</p>"
                     if (!url.equals(""))
                     {
                         pushNotificationDetail=pushNotificationDetail+"<center><img src='" + url + "'width='100%', height='auto'>"

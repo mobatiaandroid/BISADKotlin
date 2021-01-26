@@ -31,7 +31,9 @@ import com.mobatia.bisad.activity.communication.newsletter.NewsLetterDetailActiv
 import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
 import com.mobatia.bisad.fragment.calendar.adapter.CalendarListRecyclerAdapter
-import com.mobatia.bisad.fragment.calendar.model.*
+import com.mobatia.bisad.fragment.calendar.model.CalendarListResponse
+import com.mobatia.bisad.fragment.calendar_new.model.CalendarModel
+
 import com.mobatia.bisad.fragment.home.mContext
 import com.mobatia.bisad.fragment.student_information.adapter.StudentListAdapter
 import com.mobatia.bisad.fragment.student_information.model.StudentList
@@ -71,7 +73,7 @@ class CalendarFragment : Fragment() {
         sharedprefs = PreferenceData()
         mContext = requireContext()
         initializeUI()
-        callCalendarListApi()
+        //callCalendarListApi()
     }
     private fun initializeUI()
     {
@@ -99,47 +101,48 @@ class CalendarFragment : Fragment() {
         })
     }
 
-    fun callCalendarListApi() {
-        calendarArrayList = ArrayList()
-        progressDialog.visibility = View.VISIBLE
-        val token = sharedprefs.getaccesstoken(mContext)
-        val call: Call<CalendarModel> = ApiClient.getClient.calendarList("Bearer " + token)
-        call.enqueue(object : Callback<CalendarModel> {
-            override fun onFailure(call: Call<CalendarModel>, t: Throwable) {
-                progressDialog.visibility = View.GONE
-            }
-            override fun onResponse(
-                call: Call<CalendarModel>,
-                response: Response<CalendarModel>
-            ) {
-                progressDialog.visibility = View.GONE
-                if (response.body()!!.status == 100) {
-                    calendarArrayList.addAll(response.body()!!.calendarList)
-                    if (calendarArrayList.size>0)
-                    {
-                        calendarRecycler.visibility=View.VISIBLE
-                        val calendarListAdapter = CalendarListRecyclerAdapter(calendarArrayList)
-                        calendarRecycler.adapter = calendarListAdapter
-
-                    }
-                    else
-                    {
-                        calendarRecycler.visibility=View.GONE
-                        showSuccessAlert(mContext,"No data found.","Alert")
-
-                    }
-
-                } else if (response.body()!!.status == 116) {
-                    AccessTokenClass.getAccessToken(mContext)
-                    callCalendarListApi()
-                }
-                else {
-                    InternetCheckClass.checkApiStatusError(response.body()!!.status, mContext)
-                }
-            }
-
-        })
-    }
+//    fun callCalendarListApi()
+//    {
+//        calendarArrayList = ArrayList()
+//        progressDialog.visibility = View.VISIBLE
+//        val token = sharedprefs.getaccesstoken(mContext)
+//        val call: Call<CalendarModel> = ApiClient.getClient.calendarList("Bearer " + token)
+//        call.enqueue(object : Callback<CalendarModel> {
+//            override fun onFailure(call: Call<CalendarModel>, t: Throwable) {
+//                progressDialog.visibility = View.GONE
+//            }
+//            override fun onResponse(
+//                call: Call<CalendarModel>,
+//                response: Response<CalendarModel>
+//            ) {
+//                progressDialog.visibility = View.GONE
+//                if (response.body()!!.status == 100) {
+//                    calendarArrayList.addAll(response.body()!!.calendarList)
+//                    if (calendarArrayList.size>0)
+//                    {
+//                        calendarRecycler.visibility=View.VISIBLE
+//                        val calendarListAdapter = CalendarListRecyclerAdapter(calendarArrayList)
+//                        calendarRecycler.adapter = calendarListAdapter
+//
+//                    }
+//                    else
+//                    {
+//                        calendarRecycler.visibility=View.GONE
+//                        showSuccessAlert(mContext,"No data found.","Alert")
+//
+//                    }
+//
+//                } else if (response.body()!!.status == 116) {
+//                    AccessTokenClass.getAccessToken(mContext)
+//                    callCalendarListApi()
+//                }
+//                else {
+//                    InternetCheckClass.checkApiStatusError(response.body()!!.status, mContext)
+//                }
+//            }
+//
+//        })
+//    }
 
 
     fun showSuccessAlert(context: Context,message : String,msgHead : String)
