@@ -626,6 +626,8 @@ class CalendarFragmentNew : Fragment() {
                                 for (k in 0..totalDates.size){
                                     Log.e("INBETWEENDAYS:", totalDates.toString())
                                     datesArray.add(totalDates.toString())
+                                    mCalendarFinalArrayList[i].startDate=totalDates.toString()
+
 
                                 }
 
