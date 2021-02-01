@@ -3,11 +3,10 @@ package com.mobatia.bisad.fragment.calendar_new
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobatia.bisad.R
 import com.mobatia.bisad.constants.JsonConstants
-import com.mobatia.bisad.fragment.calendar.model.CalendarListResponse
 import com.mobatia.bisad.fragment.calendar_new.model.*
 import com.mobatia.bisad.manager.PreferenceData
 import com.mobatia.bisad.recyclermanager.OnItemClickListener
@@ -33,7 +31,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.DateFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -49,29 +49,33 @@ class CalendarFragmentNew : Fragment() {
     lateinit var previousBtn: ImageView
     lateinit var nextBtn: ImageView
     lateinit var filterLinear: LinearLayout
-    var isPrimarySelected:Boolean=true
-    var isSecondarySeleted:Boolean=true
-    var isWholeSchoolSelected:Boolean=true
-    var isAllSelected:Boolean=true
-    var year:Int=0
-    lateinit var calendarArrayList:ArrayList<CalendarResponseArray>
-    lateinit var primaryArrayList:ArrayList<VEVENT>
-    lateinit var secondaryArrayList:ArrayList<VEVENT>
-    lateinit var wholeSchoolArrayList:ArrayList<VEVENT>
+    var isPrimarySelected: Boolean = true
+    var isSecondarySeleted: Boolean = true
+    var isWholeSchoolSelected: Boolean = true
+    var isAllSelected: Boolean = true
+    var year: Int = 0
+    lateinit var calendarArrayList: ArrayList<CalendarResponseArray>
+    lateinit var primaryArrayList: ArrayList<VEVENT>
+    lateinit var secondaryArrayList: ArrayList<VEVENT>
+    lateinit var wholeSchoolArrayList: ArrayList<VEVENT>
 
-    lateinit var primaryShowArrayList:ArrayList<PrimaryModel>
-    lateinit var secondaryShowArrayList:ArrayList<PrimaryModel>
-    lateinit var wholeSchoolShowArrayList:ArrayList<PrimaryModel>
-    lateinit var calendarShowArrayList:ArrayList<PrimaryModel>
-    lateinit var calendarFilterArrayList:ArrayList<PrimaryModel>
+    lateinit var primaryShowArrayList: ArrayList<PrimaryModel>
+    lateinit var secondaryShowArrayList: ArrayList<PrimaryModel>
+    lateinit var wholeSchoolShowArrayList: ArrayList<PrimaryModel>
+    lateinit var calendarShowArrayList: ArrayList<PrimaryModel>
+    lateinit var calendarFilterArrayList: ArrayList<PrimaryModel>
     lateinit var mTriggerModelArrayList: ArrayList<CategoryModel>
     lateinit var mCalendarFinalArrayList: ArrayList<CalendarDateModel>
+    lateinit var TempCALENDARlIST: ArrayList<CalendarDateModel>
+    val liveArray: ArrayList<CalendarDateModel> = ArrayList()
+    lateinit var difference_In_Days: String
 
-    var currentMonth:Int=-1
-    lateinit var monthTxt:String
-    var primaryColor:String=""
-    var secondaryColor:String=""
-    var wholeSchoole:String=""
+
+    var currentMonth: Int = -1
+    lateinit var monthTxt: String
+    var primaryColor: String = ""
+    var secondaryColor: String = ""
+    var wholeSchoole: String = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -87,6 +91,7 @@ class CalendarFragmentNew : Fragment() {
         initializeUI()
         callCalendarApi()
     }
+
     private fun initializeUI() {
         calendarRecycler = view!!.findViewById(R.id.calendarRecycler) as RecyclerView
         progressDialog = view!!.findViewById(R.id.progressDialog) as RelativeLayout
@@ -99,18 +104,17 @@ class CalendarFragmentNew : Fragment() {
         val aniRotate: Animation =
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
         progressDialog.startAnimation(aniRotate)
-        monthYearTxt=view!!.findViewById(R.id.monthYearTxt)
-        previousBtn=view!!.findViewById(R.id.previousBtn)
-        nextBtn=view!!.findViewById(R.id.nextBtn)
-        filterLinear=view!!.findViewById(R.id.filterLinear)
-        year= Calendar.getInstance().get(Calendar.YEAR)
-        currentMonth= Calendar.getInstance().get(Calendar.MONTH)
-        month(currentMonth,year)
+        monthYearTxt = view!!.findViewById(R.id.monthYearTxt)
+        previousBtn = view!!.findViewById(R.id.previousBtn)
+        nextBtn = view!!.findViewById(R.id.nextBtn)
+        filterLinear = view!!.findViewById(R.id.filterLinear)
+        year = Calendar.getInstance().get(Calendar.YEAR)
+        currentMonth = Calendar.getInstance().get(Calendar.MONTH)
+        month(currentMonth, year)
 
         filterLinear.setOnClickListener(View.OnClickListener {
 
-            if(calendarArrayList.size>0)
-            {
+            if (calendarArrayList.size > 0) {
                 showTriggerDataCollection(mContext, R.drawable.questionmark_icon, R.drawable.round)
             }
 
@@ -118,68 +122,76 @@ class CalendarFragmentNew : Fragment() {
         })
 
         nextBtn.setOnClickListener(View.OnClickListener {
-            currentMonth=currentMonth+1
-            if (currentMonth>11)
-            {
-                currentMonth=currentMonth-12
-                year=year+1
+            currentMonth = currentMonth + 1
+            if (currentMonth > 11) {
+                currentMonth = currentMonth - 12
+                year = year + 1
 
             }
-            month(currentMonth,year)
-            showCalendarEvent(isAllSelected,isPrimarySelected,isSecondarySeleted,isWholeSchoolSelected)
+            month(currentMonth, year)
+            showCalendarEvent(
+                isAllSelected,
+                isPrimarySelected,
+                isSecondarySeleted,
+                isWholeSchoolSelected
+            )
 
         })
 
         previousBtn.setOnClickListener(View.OnClickListener {
 
-            if (currentMonth==0)
-            {
-                currentMonth= 11-currentMonth
-                year=year-1
+            if (currentMonth == 0) {
+                currentMonth = 11 - currentMonth
+                year = year - 1
+            } else {
+                currentMonth = currentMonth - 1
             }
-            else
-            {
-                currentMonth=currentMonth-1
-            }
-            month(currentMonth,year)
-            showCalendarEvent(isAllSelected,isPrimarySelected,isSecondarySeleted,isWholeSchoolSelected)
+            month(currentMonth, year)
+            showCalendarEvent(
+                isAllSelected,
+                isPrimarySelected,
+                isSecondarySeleted,
+                isWholeSchoolSelected
+            )
 
         })
 
     }
 
-        fun showSuccessAlert(context: Context, message: String, msgHead: String) {
-            val dialog = Dialog(context)
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.setCancelable(false)
-            dialog.setContentView(R.layout.alert_dialogue_ok_layout)
-            var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
-            var alertHead = dialog.findViewById(R.id.alertHead) as TextView
-            var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
-            var btn_Ok = dialog.findViewById(R.id.btn_Ok) as Button
-            text_dialog.text = message
-            alertHead.text = msgHead
-            iconImageView.setImageResource(R.drawable.exclamationicon)
-            btn_Ok?.setOnClickListener()
-            {
-                dialog.dismiss()
+    fun showSuccessAlert(context: Context, message: String, msgHead: String) {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.alert_dialogue_ok_layout)
+        var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
+        var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+        var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
+        var btn_Ok = dialog.findViewById(R.id.btn_Ok) as Button
+        text_dialog.text = message
+        alertHead.text = msgHead
+        iconImageView.setImageResource(R.drawable.exclamationicon)
+        btn_Ok?.setOnClickListener()
+        {
+            dialog.dismiss()
 
-            }
-            dialog.show()
         }
-    fun callCalendarApi()
-    {
-        calendarArrayList= ArrayList()
-        primaryArrayList=ArrayList()
-        secondaryArrayList=ArrayList()
-        wholeSchoolArrayList=ArrayList()
+        dialog.show()
+    }
+
+    fun callCalendarApi() {
+        calendarArrayList = ArrayList()
+        primaryArrayList = ArrayList()
+        secondaryArrayList = ArrayList()
+        wholeSchoolArrayList = ArrayList()
         progressDialog.visibility = View.VISIBLE
-        val call: Call<CalendarModel> = ApiClient.getClient.calendarList("Bearer " + "bdfbuddjajmnsdbcjf")
+        val call: Call<CalendarModel> =
+            ApiClient.getClient.calendarList()
         call.enqueue(object : Callback<CalendarModel> {
             override fun onFailure(call: Call<CalendarModel>, t: Throwable) {
                 progressDialog.visibility = View.GONE
             }
+
             override fun onResponse(
                 call: Call<CalendarModel>,
                 response: Response<CalendarModel>
@@ -187,44 +199,39 @@ class CalendarFragmentNew : Fragment() {
                 progressDialog.visibility = View.GONE
                 if (response.body()!!.status == 100) {
                     calendarArrayList.addAll(response.body()!!.calendarList)
-                    if (calendarArrayList.size>0)
-                    {
-                        for (i in 0..calendarArrayList.size-1)
-                        {
-                            if (calendarArrayList.get(i).title.equals("Primary"))
-                            {
-                                if(calendarArrayList.get(i).calendarDetail.cal.VEVENT.size>0)
-                                {
+                    if (calendarArrayList.size > 0) {
+                        for (i in 0..calendarArrayList.size - 1) {
+                            if (calendarArrayList.get(i).title.equals("Primary")) {
+                                if (calendarArrayList.get(i).calendarDetail.cal.VEVENT.size > 0) {
                                     primaryArrayList.addAll(calendarArrayList.get(i).calendarDetail.cal.VEVENT)
-                                    primaryColor=calendarArrayList.get(i).color
+                                    primaryColor = calendarArrayList.get(i).color
                                 }
 
-                            }
-                            else if (calendarArrayList.get(i).title.equals("Secondary"))
-                            {
-                                if (calendarArrayList.get(i).calendarDetail.cal.VEVENT.size>0)
-                                {
+                            } else if (calendarArrayList.get(i).title.equals("Secondary")) {
+                                if (calendarArrayList.get(i).calendarDetail.cal.VEVENT.size > 0) {
 
                                     secondaryArrayList.addAll(calendarArrayList.get(i).calendarDetail.cal.VEVENT)
-                                    secondaryColor=calendarArrayList.get(i).color
+                                    secondaryColor = calendarArrayList.get(i).color
                                 }
 
-                            }
-                            else if (calendarArrayList.get(i).title.equals("Whole School"))
-                            {
-                                if (calendarArrayList.get(i).calendarDetail.cal.VEVENT.size>0)
-                                {
+                            } else if (calendarArrayList.get(i).title.equals("Whole School")) {
+                                if (calendarArrayList.get(i).calendarDetail.cal.VEVENT.size > 0) {
                                     wholeSchoolArrayList.addAll(calendarArrayList.get(i).calendarDetail.cal.VEVENT)
-                                    wholeSchoole=calendarArrayList.get(i).color
+                                    wholeSchoole = calendarArrayList.get(i).color
                                 }
 
                             }
 
-                            isAllSelected=true
-                            isPrimarySelected=true
-                            isSecondarySeleted=true
-                            isWholeSchoolSelected=true
-                            showCalendarEvent(isAllSelected,isPrimarySelected,isSecondarySeleted,isWholeSchoolSelected)
+                            isAllSelected = true
+                            isPrimarySelected = true
+                            isSecondarySeleted = true
+                            isWholeSchoolSelected = true
+                            showCalendarEvent(
+                                isAllSelected,
+                                isPrimarySelected,
+                                isSecondarySeleted,
+                                isWholeSchoolSelected
+                            )
                         }
                         var categoryList = ArrayList<String>()
                         categoryList.add("Select all/none")
@@ -256,185 +263,191 @@ class CalendarFragmentNew : Fragment() {
                             mTriggerModelArrayList.add(model)
 
                         }
-                    }
-                    else
-                    {
+                    } else {
 
 
                     }
 
-                } else if (response.body()!!.status == 116) {
-                    callCalendarApi()
-                }
-                else {
+                }  else {
 
                 }
             }
 
         })
     }
-    fun showCalendarEvent(allSeleted:Boolean,primarySelected:Boolean,secondarySelected:Boolean,wholeSchoolSelected:Boolean)
-    {
-        primaryShowArrayList= ArrayList()
-        secondaryShowArrayList= ArrayList()
-        wholeSchoolShowArrayList=ArrayList()
-        calendarFilterArrayList=ArrayList()
-        if (primaryArrayList.size>0)
-        {
-            for (i in 0..primaryArrayList.size-1)
-            {
-                var pModel=PrimaryModel()
-                if (primaryArrayList.get(i).DTSTART.toString().length==16)
-                {
+
+    @SuppressLint("SimpleDateFormat")
+    fun showCalendarEvent(
+        allSeleted: Boolean,
+        primarySelected: Boolean,
+        secondarySelected: Boolean,
+        wholeSchoolSelected: Boolean
+    ) {
+        primaryShowArrayList = ArrayList()
+        secondaryShowArrayList = ArrayList()
+        wholeSchoolShowArrayList = ArrayList()
+        calendarFilterArrayList = ArrayList()
+        if (primaryArrayList.size > 0) {
+            for (i in 0..primaryArrayList.size - 1) {
+                var pModel = PrimaryModel()
+                if (primaryArrayList.get(i).DTSTART.toString().length == 16) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
                     val startdate: Date = inputFormat.parse(primaryArrayList.get(i).DTSTART)
-                    var outputDateStrstart:String= outputFormat.format(startdate)
-                    pModel.DTSTART=outputDateStrstart
+                    var outputDateStrstart: String = outputFormat.format(startdate)
 
-                }
-                else if (primaryArrayList.get(i).DTSTART.toString().length==8)
-                {
+                    val enddate: Date = inputFormat.parse(primaryArrayList.get(i).DTEND)
+                    var outputDateStrend: String = outputFormat.format(enddate)
+
+
+//
+//                val difference_In_Time: Long = outputDateStrstart - outputDateStrend
+//
+//
+//                val difference_In_Seconds = ((difference_In_Time
+//                        / 1000)
+//                        % 60)
+//
+//                val difference_In_Minutes = ((difference_In_Time
+//                        / (1000 * 60))
+//                        % 60)
+//
+//                val difference_In_Hours = ((difference_In_Time
+//                        / (1000 * 60 * 60))
+//                        % 24)
+//
+//                val difference_In_Years = (difference_In_Time
+//                        / (1000L * 60 * 60 * 24 * 365))
+//
+//                val difference_In_Days = ((difference_In_Time
+//                        / (1000 * 60 * 60 * 24))
+//                        % 365)
+//
+//                println("DIFFERENCE IN DATES:$difference_In_Days")
+
+
+                    pModel.DTSTART = outputDateStrstart
+
+                } else if (primaryArrayList.get(i).DTSTART.toString().length == 8) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
                     val startdate: Date = inputFormat.parse(primaryArrayList.get(i).DTSTART)
-                    var outputDateStrstart:String= outputFormat.format(startdate)
-                    pModel.DTSTART=outputDateStrstart
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    pModel.DTSTART = outputDateStrstart
 
                 }
-                if (primaryArrayList.get(i).DTEND.toString().length==16)
-                {
+                if (primaryArrayList.get(i).DTEND.toString().length == 16) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
                     val startdate: Date = inputFormat.parse(primaryArrayList.get(i).DTEND)
-                    var outputDateStrstart:String= outputFormat.format(startdate)
-                    pModel.DTEND=outputDateStrstart
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    pModel.DTEND = outputDateStrstart
 
-                }
-                else if (primaryArrayList.get(i).DTEND.toString().length==8)
-                {
+                } else if (primaryArrayList.get(i).DTEND.toString().length == 8) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
                     val startdate: Date = inputFormat.parse(primaryArrayList.get(i).DTEND)
-                    var outputDateStrstart:String= outputFormat.format(startdate)
-                    pModel.DTEND=outputDateStrstart
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    pModel.DTEND = outputDateStrstart
 
                 }
 
-                pModel.SUMMARY=primaryArrayList.get(i).SUMMARY
-                pModel.DESCRIPTION=primaryArrayList.get(i).DESCRIPTION
-                pModel.LOCATION=primaryArrayList.get(i).LOCATION
-                pModel.color=primaryColor
-                pModel.type=1
+                pModel.SUMMARY = primaryArrayList.get(i).SUMMARY
+                pModel.DESCRIPTION = primaryArrayList.get(i).DESCRIPTION
+                pModel.LOCATION = primaryArrayList.get(i).LOCATION
+                pModel.color = primaryColor
+                pModel.type = 1
                 primaryShowArrayList.add(pModel)
             }
         }
-        if (secondaryArrayList.size>0)
-        {
-            for (i in 0..secondaryArrayList.size-1)
-            {
-                var sModel=PrimaryModel()
-                if (secondaryArrayList.get(i).DTSTART.toString().length==16)
-                {
+        if (secondaryArrayList.size > 0) {
+            for (i in 0..secondaryArrayList.size - 1) {
+                var sModel = PrimaryModel()
+                if (secondaryArrayList.get(i).DTSTART.toString().length == 16) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
                     val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).DTSTART)
-                    var outputDateStrstart:String= outputFormat.format(startdate)
-                    sModel.DTSTART=outputDateStrstart
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    sModel.DTSTART = outputDateStrstart
 
-                }
-                else if (secondaryArrayList.get(i).DTSTART.toString().length==8)
-                {
+                } else if (secondaryArrayList.get(i).DTSTART.toString().length == 8) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
                     val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).DTSTART)
-                    var outputDateStrstart:String= outputFormat.format(startdate)
-                    sModel.DTSTART=outputDateStrstart
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    sModel.DTSTART = outputDateStrstart
 
                 }
-                if (secondaryArrayList.get(i).DTEND.equals("null") )
-                {
-                    sModel.DTEND=""
-                }
-                else if (secondaryArrayList.get(i).DTEND.toString().length==16)
-                {
+                if (secondaryArrayList.get(i).DTEND.equals("null")) {
+                    sModel.DTEND = ""
+                } else if (secondaryArrayList.get(i).DTEND.toString().length == 16) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
                     val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).DTEND)
-                    var outputDateStrstart:String= outputFormat.format(startdate)
-                    sModel.DTEND=outputDateStrstart
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    sModel.DTEND = outputDateStrstart
 
-                }
-                else if (secondaryArrayList.get(i).DTEND.toString().length==8)
-                {
+                } else if (secondaryArrayList.get(i).DTEND.toString().length == 8) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
                     val startdate: Date = inputFormat.parse(secondaryArrayList.get(i).DTEND)
-                    var outputDateStrstart:String= outputFormat.format(startdate)
-                    sModel.DTEND=outputDateStrstart
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    sModel.DTEND = outputDateStrstart
 
                 }
-                sModel.SUMMARY=secondaryArrayList.get(i).SUMMARY
-                sModel.DESCRIPTION=secondaryArrayList.get(i).DESCRIPTION
-                sModel.LOCATION=secondaryArrayList.get(i).LOCATION
-                sModel.color=secondaryColor
-                sModel.type=2
+                sModel.SUMMARY = secondaryArrayList.get(i).SUMMARY
+                sModel.DESCRIPTION = secondaryArrayList.get(i).DESCRIPTION
+                sModel.LOCATION = secondaryArrayList.get(i).LOCATION
+                sModel.color = secondaryColor
+                sModel.type = 2
                 secondaryShowArrayList.add(sModel)
             }
         }
-        if (wholeSchoolArrayList.size>0)
-        {
-            for (i in 0..wholeSchoolArrayList.size-1)
-            {
-                var wModel=PrimaryModel()
-                if (wholeSchoolArrayList.get(i).DTSTART.toString().length==16)
-                {
+        if (wholeSchoolArrayList.size > 0) {
+            for (i in 0..wholeSchoolArrayList.size - 1) {
+                var wModel = PrimaryModel()
+                if (wholeSchoolArrayList.get(i).DTSTART.toString().length == 16) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
                     val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).DTSTART)
-                    var outputDateStrstart:String= outputFormat.format(startdate)
-                    wModel.DTSTART=outputDateStrstart
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    wModel.DTSTART = outputDateStrstart
 
-                }
-                else if (wholeSchoolArrayList.get(i).DTSTART.toString().length==8)
-                {
+                } else if (wholeSchoolArrayList.get(i).DTSTART.toString().length == 8) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
                     val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).DTSTART)
-                    var outputDateStrstart:String= outputFormat.format(startdate)
-                    wModel.DTSTART=outputDateStrstart
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    wModel.DTSTART = outputDateStrstart
 
                 }
-                if (wholeSchoolArrayList.get(i).DTEND.toString().length==16)
-                {
+                if (wholeSchoolArrayList.get(i).DTEND.toString().length == 16) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
                     val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).DTEND)
-                    var outputDateStrstart:String= outputFormat.format(startdate)
-                    wModel.DTEND=outputDateStrstart
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    wModel.DTEND = outputDateStrstart
 
-                }
-                else if (wholeSchoolArrayList.get(i).DTEND.toString().length==8)
-                {
+                } else if (wholeSchoolArrayList.get(i).DTEND.toString().length == 8) {
                     val inputFormat: DateFormat = SimpleDateFormat("yyyyMMdd")
                     val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
                     val startdate: Date = inputFormat.parse(wholeSchoolArrayList.get(i).DTEND)
-                    var outputDateStrstart:String= outputFormat.format(startdate)
-                    wModel.DTEND=outputDateStrstart
+                    var outputDateStrstart: String = outputFormat.format(startdate)
+                    wModel.DTEND = outputDateStrstart
 
                 }
 
-                wModel.SUMMARY=wholeSchoolArrayList.get(i).SUMMARY
-                wModel.DESCRIPTION=wholeSchoolArrayList.get(i).DESCRIPTION
-                wModel.LOCATION=wholeSchoolArrayList.get(i).LOCATION
-                wModel.color=wholeSchoole
-                wModel.type=3
+                wModel.SUMMARY = wholeSchoolArrayList.get(i).SUMMARY
+                wModel.DESCRIPTION = wholeSchoolArrayList.get(i).DESCRIPTION
+                wModel.LOCATION = wholeSchoolArrayList.get(i).LOCATION
+                wModel.color = wholeSchoole
+                wModel.type = 3
                 wholeSchoolShowArrayList.add(wModel)
             }
         }
 
         if (allSeleted) {
-            calendarShowArrayList=ArrayList()
+            calendarShowArrayList = ArrayList()
             if (primaryShowArrayList.size > 0) {
                 calendarShowArrayList.addAll(primaryShowArrayList)
             }
@@ -445,86 +458,58 @@ class CalendarFragmentNew : Fragment() {
                 calendarShowArrayList.addAll(wholeSchoolShowArrayList)
             }
 
-        }
-
-        else if (!allSeleted && !primarySelected && !secondarySelected && !wholeSchoolSelected)
-        {
-            calendarShowArrayList=ArrayList()
-            var dummy=ArrayList<PrimaryModel>()
-            calendarShowArrayList=dummy
-        }
-
-        else if (!allSeleted && !primarySelected && !secondarySelected && wholeSchoolSelected )
-        {
-            calendarShowArrayList=ArrayList()
-            if (wholeSchoolShowArrayList.size>0)
-            {
+        } else if (!allSeleted && !primarySelected && !secondarySelected && !wholeSchoolSelected) {
+            calendarShowArrayList = ArrayList()
+            var dummy = ArrayList<PrimaryModel>()
+            calendarShowArrayList = dummy
+        } else if (!allSeleted && !primarySelected && !secondarySelected && wholeSchoolSelected) {
+            calendarShowArrayList = ArrayList()
+            if (wholeSchoolShowArrayList.size > 0) {
                 calendarShowArrayList.addAll(wholeSchoolShowArrayList)
             }
 
-        }
-        else if (!allSeleted && !primarySelected && secondarySelected && !wholeSchoolSelected )
-        {
-            calendarShowArrayList=ArrayList()
-            if (secondaryShowArrayList.size>0)
-            {
+        } else if (!allSeleted && !primarySelected && secondarySelected && !wholeSchoolSelected) {
+            calendarShowArrayList = ArrayList()
+            if (secondaryShowArrayList.size > 0) {
                 calendarShowArrayList.addAll(secondaryShowArrayList)
             }
 
-        }
-        else if (!allSeleted && !primarySelected && secondarySelected && wholeSchoolSelected )
-        {
-            calendarShowArrayList=ArrayList()
-            if (secondaryShowArrayList.size>0)
-            {
+        } else if (!allSeleted && !primarySelected && secondarySelected && wholeSchoolSelected) {
+            calendarShowArrayList = ArrayList()
+            if (secondaryShowArrayList.size > 0) {
                 calendarShowArrayList.addAll(secondaryShowArrayList)
             }
-            if(wholeSchoolShowArrayList.size>0)
-            {
+            if (wholeSchoolShowArrayList.size > 0) {
                 calendarShowArrayList.addAll(wholeSchoolShowArrayList)
             }
 
-        }
-        else if (!allSeleted && primarySelected && !secondarySelected && !wholeSchoolSelected )
-        {
-            calendarShowArrayList=ArrayList()
-            if (primaryShowArrayList.size>0)
-            {
+        } else if (!allSeleted && primarySelected && !secondarySelected && !wholeSchoolSelected) {
+            calendarShowArrayList = ArrayList()
+            if (primaryShowArrayList.size > 0) {
                 calendarShowArrayList.addAll(primaryShowArrayList)
             }
 
-        }
-
-        else if (!allSeleted && primarySelected && !secondarySelected && wholeSchoolSelected )
-        {
-            calendarShowArrayList=ArrayList()
-            if (primaryShowArrayList.size>0)
-            {
+        } else if (!allSeleted && primarySelected && !secondarySelected && wholeSchoolSelected) {
+            calendarShowArrayList = ArrayList()
+            if (primaryShowArrayList.size > 0) {
                 calendarShowArrayList.addAll(primaryShowArrayList)
             }
-            if(wholeSchoolShowArrayList.size>0)
-            {
+            if (wholeSchoolShowArrayList.size > 0) {
                 calendarShowArrayList.addAll(wholeSchoolShowArrayList)
             }
 
-        }
-
-        else if (!allSeleted && primarySelected && secondarySelected && !wholeSchoolSelected )
-        {
-            calendarShowArrayList=ArrayList()
-            if (primaryShowArrayList.size>0)
-            {
+        } else if (!allSeleted && primarySelected && secondarySelected && !wholeSchoolSelected) {
+            calendarShowArrayList = ArrayList()
+            if (primaryShowArrayList.size > 0) {
                 calendarShowArrayList.addAll(primaryShowArrayList)
             }
-            if(secondaryShowArrayList.size>0)
-            {
+            if (secondaryShowArrayList.size > 0) {
                 calendarShowArrayList.addAll(secondaryShowArrayList)
             }
 
         }
 
-        if (calendarShowArrayList.size>0)
-        {
+        if (calendarShowArrayList.size > 0) {
             var listMonth: String = ""
             var listYear: String = ""
             for (i in 0..calendarShowArrayList.size - 1) {
@@ -552,8 +537,7 @@ class CalendarFragmentNew : Fragment() {
                     listMonth = outputDateMonth
                     listYear = outputDateYear
                 }
-                if (listYear.equals(year.toString()))
-                {
+                if (listYear.equals(year.toString())) {
                     if (monthTxt.equals(listMonth)) {
                         var model = PrimaryModel()
                         model.DTSTART = calendarShowArrayList.get(i).DTSTART
@@ -567,123 +551,230 @@ class CalendarFragmentNew : Fragment() {
                     }
                 }
 
-                if (calendarFilterArrayList.size>0)
-                {
-                    calendarRecycler.visibility=View.VISIBLE
-                    calendarFilterArrayList.sortByDescending { calendarFilterArrayList->calendarFilterArrayList.DTSTART }
+                if (calendarFilterArrayList.size > 0) {
+                    calendarRecycler.visibility = View.VISIBLE
+                    calendarFilterArrayList.sortByDescending { calendarFilterArrayList -> calendarFilterArrayList.DTSTART }
                     calendarFilterArrayList.reverse()
-                    mCalendarFinalArrayList=ArrayList()
-                    for (i in 0..calendarFilterArrayList.size-1)
-                    {
-                        var cModel=CalendarDateModel()
-                        cModel.startDate=calendarFilterArrayList.get(i).DTSTART
-                        var calendarDetaiArray=ArrayList<CalendarDetailModel>()
-                        var dModel=CalendarDetailModel()
-                        dModel.DTSTART=calendarFilterArrayList.get(i).DTSTART
-                        dModel.DTEND=calendarFilterArrayList.get(i).DTEND
-                        dModel.SUMMARY=calendarFilterArrayList.get(i).SUMMARY
-                        dModel.DESCRIPTION=calendarFilterArrayList.get(i).DESCRIPTION
-                        dModel.LOCATION=calendarFilterArrayList.get(i).LOCATION
-                        dModel.color=calendarFilterArrayList.get(i).color
-                        dModel.type=calendarFilterArrayList.get(i).type
+                    mCalendarFinalArrayList = ArrayList()
+                    TempCALENDARlIST = ArrayList()
+
+                    for (i in 0..calendarFilterArrayList.size - 1) {
+                        var cModel = CalendarDateModel()
+                        cModel.startDate = calendarFilterArrayList.get(i).DTSTART
+                        cModel.endDate = calendarFilterArrayList.get(i).DTEND
+                        var calendarDetaiArray = ArrayList<CalendarDetailModel>()
+                        var dModel = CalendarDetailModel()
+                        dModel.DTSTART = calendarFilterArrayList.get(i).DTSTART
+                        dModel.DTEND = calendarFilterArrayList.get(i).DTEND
+                        dModel.SUMMARY = calendarFilterArrayList.get(i).SUMMARY
+                        dModel.DESCRIPTION = calendarFilterArrayList.get(i).DESCRIPTION
+                        dModel.LOCATION = calendarFilterArrayList.get(i).LOCATION
+                        dModel.color = calendarFilterArrayList.get(i).color
+                        dModel.type = calendarFilterArrayList.get(i).type
                         calendarDetaiArray.add(dModel)
-                        cModel.detailList=calendarDetaiArray
+                        cModel.detailList = calendarDetaiArray
                         mCalendarFinalArrayList.add(cModel)
+
+                        Log.e("calendarstart:", dModel.DTSTART)
+                        Log.e("calendarend:", dModel.DTEND)
+
                     }
 
-                    val calendarListAdapter = CalendarDateAdapter(mContext,mCalendarFinalArrayList)
+                    for (i in mCalendarFinalArrayList.indices) {
+                        val sdf = SimpleDateFormat("MMM dd,yyyy")
+                        try {
+
+                            val d1 = sdf.parse(mCalendarFinalArrayList[i].startDate)
+                            val d2 = sdf.parse(mCalendarFinalArrayList[i].endDate)
+
+                            val difference_In_Time = d2.time - d1.time
+
+                            difference_In_Days =
+                                (((difference_In_Time / (1000 * 60 * 60 * 24)) % 365).toString())
+                            Log.e("CALENDARFINALSIZE:", mCalendarFinalArrayList.size.toString())
+                            Log.e("DATESDIFFERENCEUPDATE:", difference_In_Days)
+                        } catch (e: ParseException) {
+                            e.printStackTrace()
+                        }
+                        if (difference_In_Days.toInt() > 1) {
+                            // var tempArray: ArrayList<CalendarDateModel> = ArrayList()
+
+
+                            for (j in 0 until difference_In_Days.toInt()) {
+
+
+                                val originalFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy", Locale.ENGLISH)
+                                val targetFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+                                val datestart = originalFormat.parse(mCalendarFinalArrayList[i].startDate)
+                                val formattedDatestart = targetFormat.format(datestart)
+
+                                val dateend = originalFormat.parse(mCalendarFinalArrayList[i].endDate)
+                                val formattedDateend = targetFormat.format(dateend)
+
+                                var start: LocalDate = LocalDate.parse(formattedDatestart)
+                                val end: LocalDate = LocalDate.parse(formattedDateend)
+
+                                val totalDates: ArrayList<LocalDate> = ArrayList()
+                                while (!start.isAfter(end)) {
+                                    totalDates.add(start);
+                                    start = start.plusDays(1);
+                                    Log.e("TOTALDAYS:",totalDates.toString())
+                                }
+
+                                val datesArray: ArrayList<String> = ArrayList()
+
+                                for (k in 0..totalDates.size){
+                                    Log.e("INBETWEENDAYS:", totalDates.toString())
+                                    datesArray.add(totalDates.toString())
+//                                    TempCALENDARlIST.add(liveArray[i])
+//                                    TempCALENDARlIST.add(mCalendarFinalArrayList[i])
+
+//                                    for (m in 0..mCalendarFinalArrayList.size - 1) {
+//                                        var cModel = CalendarDateModel()
+//                                        cModel.startDate = totalDates.toString()
+//                                        cModel.endDate = calendarFilterArrayList.get(m).DTEND
+//                                        var calendarDetaiArray = ArrayList<CalendarDetailModel>()
+//                                        var dModel = CalendarDetailModel()
+//                                        dModel.DTSTART = calendarFilterArrayList.get(m).DTSTART
+//                                        dModel.DTEND = calendarFilterArrayList.get(m).DTEND
+//                                        dModel.SUMMARY = calendarFilterArrayList.get(m).SUMMARY
+//                                        dModel.DESCRIPTION = calendarFilterArrayList.get(m).DESCRIPTION
+//                                        dModel.LOCATION = calendarFilterArrayList.get(m).LOCATION
+//                                        dModel.color = calendarFilterArrayList.get(m).color
+//                                        dModel.type = calendarFilterArrayList.get(m).type
+//                                        calendarDetaiArray.add(dModel)
+//                                        cModel.detailList = calendarDetaiArray
+//                                        mCalendarFinalArrayList.add(cModel)
+//
+//                                        Log.e("calendarstart:", dModel.DTSTART)
+//                                        Log.e("calendarend:", dModel.DTEND)
+//
+//                                    }
+
+                                }
+
+                                TempCALENDARlIST.add(mCalendarFinalArrayList[i])
+
+                            }
+
+
+
+                        } else {
+                            TempCALENDARlIST.add(mCalendarFinalArrayList[i])
+                        }
+                    }
+
+                    val calendarListAdapter = CalendarDateAdapter(mContext, TempCALENDARlIST)
                     calendarRecycler.adapter = calendarListAdapter
-                }
-                else
-                {
-                    calendarRecycler.visibility=View.GONE
+                } else {
+                    calendarRecycler.visibility = View.GONE
                 }
             }
 
 
-        }
-        else
-        {
-            calendarRecycler.visibility=View.GONE
+        } else {
+            calendarRecycler.visibility = View.GONE
         }
 
     }
 
-    fun month(month:Int,year:Int)
-    {
-        when(month)
-        {
-            0->
-            {
-                monthTxt="January"
-                monthYearTxt.setText(monthTxt +year.toString())
+//    private fun getDatesnew(startDate: String, endDate: String): Any {
+//        val dates: List<Date> = ArrayList()
+//        val formatter: DateFormat
+//
+//        formatter = SimpleDateFormat("dd/MM/yyyy")
+//        var startDate: Date? = null
+//        try {
+//            startDate = formatter.parse(startDate.toString())
+//        } catch (e: ParseException) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace()
+//        }
+//        var endDate: Date? = null
+//        try {
+//            endDate = formatter.parse(endDate.toString())
+//        } catch (e: ParseException) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace()
+//        }
+//        val interval = 24 * 1000 * 60 * 60.toLong() // 1 hour in millis
+//
+//        val endTime =
+//            endDate!!.time // create your endtime here, possibly using Calendar or Date
+//
+//        var curTime = startDate!!.time
+//        while (curTime <= endTime) {
+//            dates.add(Date(curTime))
+//            curTime += interval
+//        }
+//        for (i in dates.indices) {
+//            val ds = formatter.format(dates[i])
+//            println(" Date is ...$ds")
+//        }
+//        return dates
+//    }
+
+    fun month(month: Int, year: Int) {
+        when (month) {
+            0 -> {
+                monthTxt = "January"
+                monthYearTxt.setText(monthTxt + year.toString())
 
             }
 
-            1->
-            {
-                monthTxt="February"
-                monthYearTxt.setText(monthTxt+year.toString())
+            1 -> {
+                monthTxt = "February"
+                monthYearTxt.setText(monthTxt + year.toString())
             }
 
-            2->
-            {
-                monthTxt="March"
-                monthYearTxt.setText(monthTxt+year.toString())
+            2 -> {
+                monthTxt = "March"
+                monthYearTxt.setText(monthTxt + year.toString())
             }
 
-            3->
-            {
-                monthTxt="April"
-                monthYearTxt.setText(monthTxt+year.toString())
+            3 -> {
+                monthTxt = "April"
+                monthYearTxt.setText(monthTxt + year.toString())
             }
 
-            4->
-            {
-                monthTxt="May"
-                monthYearTxt.setText(monthTxt+year.toString())
+            4 -> {
+                monthTxt = "May"
+                monthYearTxt.setText(monthTxt + year.toString())
             }
 
-            5->
-            {
-                monthTxt="June"
-                monthYearTxt.setText(monthTxt+year.toString())
+            5 -> {
+                monthTxt = "June"
+                monthYearTxt.setText(monthTxt + year.toString())
             }
 
-            6->
-            {
-                monthTxt="July"
-                monthYearTxt.setText(monthTxt+year.toString())
+            6 -> {
+                monthTxt = "July"
+                monthYearTxt.setText(monthTxt + year.toString())
             }
 
-            7->
-            {
-                monthTxt="August"
-                monthYearTxt.setText(monthTxt+year.toString())
+            7 -> {
+                monthTxt = "August"
+                monthYearTxt.setText(monthTxt + year.toString())
             }
 
-            8->
-            {
-                monthTxt="September"
-                monthYearTxt.setText(monthTxt+year.toString())
+            8 -> {
+                monthTxt = "September"
+                monthYearTxt.setText(monthTxt + year.toString())
             }
 
-            9->
-            {
-                monthTxt="October"
-                monthYearTxt.setText(monthTxt+year.toString())
+            9 -> {
+                monthTxt = "October"
+                monthYearTxt.setText(monthTxt + year.toString())
             }
 
-            10->
-            {
-                monthTxt="November"
-                monthYearTxt.setText(monthTxt+year.toString())
+            10 -> {
+                monthTxt = "November"
+                monthYearTxt.setText(monthTxt + year.toString())
             }
 
-            11->
-            {
-                monthTxt="December"
-                monthYearTxt.setText(monthTxt+year.toString())
+            11 -> {
+                monthTxt = "December"
+                monthYearTxt.setText(monthTxt + year.toString())
             }
 
         }
@@ -712,7 +803,12 @@ class CalendarFragmentNew : Fragment() {
             dialog.dismiss()
         })
         btn_Ok.setOnClickListener(View.OnClickListener {
-            showCalendarEvent(isAllSelected,isPrimarySelected,isSecondarySeleted,isWholeSchoolSelected)
+            showCalendarEvent(
+                isAllSelected,
+                isPrimarySelected,
+                isSecondarySeleted,
+                isWholeSchoolSelected
+            )
             dialog.dismiss()
         })
         checkRecycler.addOnItemClickListener(object : OnItemClickListener {
@@ -1033,5 +1129,31 @@ class CalendarFragmentNew : Fragment() {
             }
         })
         dialog.show()
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun getDates(
+        dateString1: String,
+        dateString2: String
+    ): ArrayList<String>? {
+        val dates = java.util.ArrayList<String>()
+        val df1: DateFormat = SimpleDateFormat("MMM dd,yyyy")
+        var date1: Date? = null
+        var date2: Date? = null
+        try {
+            date1 = df1.parse(dateString1)
+            date2 = df1.parse(dateString2)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        val cal1 = Calendar.getInstance()
+        cal1.time = date1
+        val cal2 = Calendar.getInstance()
+        cal2.time = date2
+        while (!cal1.after(cal2)) {
+            dates.add(cal1.time.toString())
+            cal1.add(Calendar.DAY_OF_MONTH, 1)
+        }
+        return dates
     }
 }
