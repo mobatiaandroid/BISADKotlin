@@ -247,7 +247,7 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
                                     else
                                     {
                                         //check status code checks
-                                        Log.e("Login Status","Code entered")
+                                      //  Log.e("Login Status","Code entered")
                                         InternetCheckClass.checkApiStatusError(status,mContext)
                                     }
                                 }

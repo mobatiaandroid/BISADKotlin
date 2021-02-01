@@ -54,6 +54,7 @@ class AttendanceFragment : Fragment() {
     lateinit var studentImg: String
     lateinit var studentClass: String
     lateinit var studentSpinner: LinearLayout
+    lateinit var calendarViewbg:LinearLayout
     lateinit var studImg: ImageView
     lateinit var studentNameTxt: TextView
     lateinit var calendarView: CalendarView
@@ -167,6 +168,10 @@ class AttendanceFragment : Fragment() {
     private fun initializeUI() {
         progressDialog = view!!.findViewById(R.id.progressDialog) as RelativeLayout
         studentSpinner = view!!.findViewById(R.id.studentSpinner) as LinearLayout
+        calendarViewbg = view!!.findViewById(R.id.calendarViewbg) as LinearLayout
+
+        calendarViewbg.isClickable  = false
+
         studImg = view!!.findViewById(R.id.studImg) as ImageView
         studentNameTxt = view!!.findViewById(R.id.studentName) as TextView
         titleTextView = view!!.findViewById(R.id.titleTextView) as TextView

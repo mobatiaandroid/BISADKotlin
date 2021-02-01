@@ -626,30 +626,6 @@ class CalendarFragmentNew : Fragment() {
                                 for (k in 0..totalDates.size){
                                     Log.e("INBETWEENDAYS:", totalDates.toString())
                                     datesArray.add(totalDates.toString())
-//                                    TempCALENDARlIST.add(liveArray[i])
-//                                    TempCALENDARlIST.add(mCalendarFinalArrayList[i])
-
-//                                    for (m in 0..mCalendarFinalArrayList.size - 1) {
-//                                        var cModel = CalendarDateModel()
-//                                        cModel.startDate = totalDates.toString()
-//                                        cModel.endDate = calendarFilterArrayList.get(m).DTEND
-//                                        var calendarDetaiArray = ArrayList<CalendarDetailModel>()
-//                                        var dModel = CalendarDetailModel()
-//                                        dModel.DTSTART = calendarFilterArrayList.get(m).DTSTART
-//                                        dModel.DTEND = calendarFilterArrayList.get(m).DTEND
-//                                        dModel.SUMMARY = calendarFilterArrayList.get(m).SUMMARY
-//                                        dModel.DESCRIPTION = calendarFilterArrayList.get(m).DESCRIPTION
-//                                        dModel.LOCATION = calendarFilterArrayList.get(m).LOCATION
-//                                        dModel.color = calendarFilterArrayList.get(m).color
-//                                        dModel.type = calendarFilterArrayList.get(m).type
-//                                        calendarDetaiArray.add(dModel)
-//                                        cModel.detailList = calendarDetaiArray
-//                                        mCalendarFinalArrayList.add(cModel)
-//
-//                                        Log.e("calendarstart:", dModel.DTSTART)
-//                                        Log.e("calendarend:", dModel.DTEND)
-//
-//                                    }
 
                                 }
 
@@ -678,41 +654,7 @@ class CalendarFragmentNew : Fragment() {
 
     }
 
-//    private fun getDatesnew(startDate: String, endDate: String): Any {
-//        val dates: List<Date> = ArrayList()
-//        val formatter: DateFormat
-//
-//        formatter = SimpleDateFormat("dd/MM/yyyy")
-//        var startDate: Date? = null
-//        try {
-//            startDate = formatter.parse(startDate.toString())
-//        } catch (e: ParseException) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace()
-//        }
-//        var endDate: Date? = null
-//        try {
-//            endDate = formatter.parse(endDate.toString())
-//        } catch (e: ParseException) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace()
-//        }
-//        val interval = 24 * 1000 * 60 * 60.toLong() // 1 hour in millis
-//
-//        val endTime =
-//            endDate!!.time // create your endtime here, possibly using Calendar or Date
-//
-//        var curTime = startDate!!.time
-//        while (curTime <= endTime) {
-//            dates.add(Date(curTime))
-//            curTime += interval
-//        }
-//        for (i in dates.indices) {
-//            val ds = formatter.format(dates[i])
-//            println(" Date is ...$ds")
-//        }
-//        return dates
-//    }
+
 
     fun month(month: Int, year: Int) {
         when (month) {
@@ -1129,31 +1071,5 @@ class CalendarFragmentNew : Fragment() {
             }
         })
         dialog.show()
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private fun getDates(
-        dateString1: String,
-        dateString2: String
-    ): ArrayList<String>? {
-        val dates = java.util.ArrayList<String>()
-        val df1: DateFormat = SimpleDateFormat("MMM dd,yyyy")
-        var date1: Date? = null
-        var date2: Date? = null
-        try {
-            date1 = df1.parse(dateString1)
-            date2 = df1.parse(dateString2)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-        val cal1 = Calendar.getInstance()
-        cal1.time = date1
-        val cal2 = Calendar.getInstance()
-        cal2.time = date2
-        while (!cal1.after(cal2)) {
-            dates.add(cal1.time.toString())
-            cal1.add(Calendar.DAY_OF_MONTH, 1)
-        }
-        return dates
     }
 }

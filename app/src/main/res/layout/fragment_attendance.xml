@@ -84,21 +84,34 @@
 
     </LinearLayout>
 
-    <com.applandeo.materialcalendarview.CalendarView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_below="@+id/studentSpinner"
-        android:layout_marginLeft="10dp"
-        android:id="@+id/calendarView"
-        app:selectionColor="#4dc4cf"
-        app:abbreviationsLabelsColor="@color/black"
-        app:abbreviationsBarColor="@color/white"
-        app:daysLabelsColor="@color/black"
-        android:layout_marginTop="20dp"
-        app:headerColor="#4dc4cf"
-        android:layout_above="@+id/hintAttendance"
-        android:layout_marginRight="10dp"
-        app:type="many_days_picker"/>
+        android:id="@+id/calendarViewbg">
+
+
+        <com.applandeo.materialcalendarview.CalendarView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/calendarView"
+            app:selectionColor="#4dc4cf"
+            app:abbreviationsLabelsColor="@color/black"
+            app:abbreviationsBarColor="@color/white"
+            app:daysLabelsColor="@color/black"
+            android:layout_marginTop="20dp"
+            app:headerColor="#4dc4cf"
+            android:layout_above="@+id/hintAttendance"
+            android:layout_marginRight="10dp"
+            app:type="many_days_picker"/>
+    </LinearLayout>
+
+
+
+
+
     <LinearLayout
         android:id="@+id/hintAttendance"
         android:layout_width="match_parent"

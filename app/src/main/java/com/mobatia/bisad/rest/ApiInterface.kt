@@ -142,9 +142,7 @@ interface ApiInterface {
       /*************Calendar List****************/
     @POST("api/v1/calendar")
     @Headers("Content-Type: application/json")
-    fun calendarList(
-        @Header("Authorization") token:String
-    ): Call<CalendarModel>
+    fun calendarList(): Call<CalendarModel>
     /*************ABSENCE List****************/
     @POST("api/v1/getcalendar_detail")
     @Headers("Content-Type: application/json")
