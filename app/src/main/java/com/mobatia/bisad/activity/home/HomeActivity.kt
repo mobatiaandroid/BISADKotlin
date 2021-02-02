@@ -96,7 +96,6 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
         val transaction = manager.beginTransaction()
         val fragment = HomescreenFragment()
         transaction.replace(R.id.fragment_holder, fragment)
-//        transaction.addToBackStack(null)
         transaction.commit()
     }
 
@@ -123,10 +122,6 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
             .getLayoutParams() as DrawerLayout.LayoutParams
         params.width = width
         linear_layout.setLayoutParams(params)
-
-        println("ARRAYLISTSIZE:" + mListItemArray.size)
-        println("ARRAYLISTICONSIZE:" + mListImgArray!!.length())
-
         val myListAdapter = HomeListAdapter(this, mListItemArray, mListImgArray!!)
         homelist.adapter = myListAdapter
         homelist.onItemLongClickListener = this
@@ -135,7 +130,6 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
         homelist.setOnItemClickListener() { adapterView, view, position, id ->
             val itemAtPos = adapterView.getItemAtPosition(position)
             val itemIdAtPos = adapterView.getItemIdAtPosition(position)
-            //Toast.makeText(this, "Clicked on $itemAtPos ", Toast.LENGTH_SHORT).show()
             if (sharedprefs.getUserCode(context).equals("")) {
                 if (position == 0) {
                     mFragment = HomescreenFragment()
@@ -373,9 +367,6 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
         })
         mListItemArray = context.resources.getStringArray(R.array.navigation_items_guest)
         mListImgArray = context.resources.obtainTypedArray(R.array.navigation_icons_guest)
-
-        println("HOMELISTSIZE:" + mListItemArray.size + "HOMEICONSIZE:" + mListImgArray!!.length())
-
         navigation_menu.setOnClickListener {
             if (drawer_layout.isDrawerOpen(linear_layout)) {
                 drawer_layout.closeDrawer(linear_layout)
@@ -385,8 +376,6 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
         }
 
         logoClickImgView.setOnClickListener(View.OnClickListener {
-//            val fragmentManager =getSupportFragmentManager()
-//            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             settings_icon.visibility = View.VISIBLE
             if (drawer_layout.isDrawerOpen(linear_layout)) {
                 drawer_layout.closeDrawer(linear_layout)
@@ -394,14 +383,9 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
             Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             mFragment = HomescreenFragment()
             supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            //replaceFragmentsSelected(0)
         })
 
         settings_icon.setOnClickListener {
-
-            //     Toast.makeText(applicationContext, "Settings", Toast.LENGTH_SHORT).show()
-
-//                Toast.makeText(getApplicationContext(), "Forward Button is clicked", Toast.LENGTH_LONG).show();
             val fm = supportFragmentManager
             val currentFragment =
                 fm.findFragmentById(R.id.fragment_holder)
@@ -435,14 +419,11 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
         shadowBuilder = MyDragShadowBuilder(view)
         sPosition = position
         val selecteditem = parent?.getItemIdAtPosition(position)
-
-        // Toast.makeTet(this, "Longclicked on $selecteditem", Toast.LENGTH_SHORT).show()
         view?.setBackgroundColor(Color.parseColor("#47C2D1"))
         val data = ClipData.newPlainText("", "")
         view?.startDrag(data, shadowBuilder, view, 0)
         view!!.visibility = View.VISIBLE
         drawer_layout.closeDrawer(linear_layout)
-//            imageButton2.setVisibility(View.VISIBLE);
         return false
     }
 
@@ -476,7 +457,6 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
 
     fun fragmentIntent(mFragment: Fragment?) {
         if (mFragment != null) {
-            System.out.println("title:" + appController.mTitles)
             val fragmentManager = getSupportFragmentManager()
             fragmentManager.beginTransaction()
                 .add(R.id.fragment_holder, mFragment, appController.mTitles)

@@ -87,7 +87,14 @@ class RequestabsenceActivity : AppCompatActivity(){
         sharedprefs = PreferenceData()
         jsonConstans = JsonConstants()
 
-        callStudentListApi()
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+        if (internetCheck)
+        {
+            callStudentListApi()
+        }
+        else{
+            InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+        }
         initUI()
 
     }
@@ -151,6 +158,14 @@ class RequestabsenceActivity : AppCompatActivity(){
                             progressDialog.startAnimation(aniRotate)
                                 reasonAPI=enterMessage.text.toString().trim()
                                Log.e("Pass Value",fromDate+"  "+toDate+"   "+reasonAPI)
+                            var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+                            if (internetCheck)
+                            {
+                                callAbsenceSubmitApi(fromDate,toDate,reasonAPI)
+                            }
+                            else{
+                                InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+                            }
                               callAbsenceSubmitApi(fromDate,toDate,reasonAPI)
                         }
                     }

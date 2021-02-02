@@ -77,7 +77,15 @@ class TermDatesFragment : Fragment(){
         sharedprefs = PreferenceData()
         mContext = requireContext()
         initializeUI()
-        callTermDatesListAPI()
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+        if (internetCheck)
+        {
+            callTermDatesListAPI()
+        }
+        else{
+            InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+        }
+
         getSettings()
 
     }

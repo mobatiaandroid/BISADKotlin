@@ -108,7 +108,6 @@ class HealthScreen(studentID:String,studentImage:String,studentName:String,uniqu
             }
 
             override fun afterTextChanged(s: Editable) {
-                Log.e("EDITABLE","IT WORKS")
                 var passportID=healthArrayList.get(foundPosition).id
                 var model= HealthInsuranceDetailAPIModel()
                 model.id=healthArrayList.get(foundPosition).id
@@ -124,7 +123,6 @@ class HealthScreen(studentID:String,studentImage:String,studentName:String,uniqu
 
                 healthArrayList.removeAt(foundPosition)
                 healthArrayList.add(foundPosition,model)
-                Log.e("passport number",healthArrayList.get(foundPosition).health_detail)
                 sharedprefs.getHealthDetailArrayList(mContext)!!.clear()
                 var passportDummy=ArrayList<HealthInsuranceDetailAPIModel>()
                 sharedprefs.setHealthDetailArrayList(mContext,passportDummy)

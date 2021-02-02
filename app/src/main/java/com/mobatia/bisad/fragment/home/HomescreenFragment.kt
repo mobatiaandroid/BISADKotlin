@@ -56,6 +56,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.Duration
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.abs
@@ -164,18 +165,33 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
         listitems = resources.getStringArray(R.array.navigation_items_guest)
         mListImgArrays = context!!.resources.obtainTypedArray(R.array.navigation_icons_guest)
         previousTriggerType= sharedprefs.getTriggerType(mContext)
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
         initializeUI()
-        getbannerimages()
+        if(internetCheck)
+        {
+            getbannerimages()
+        }
+       else{
+            InternetCheckClass.showSuccessInternetAlert(mContext)
+        }
         if (sharedprefs.getUserCode(mContext).equals(""))
         {
 
         }
         else{
-            callStudentListApi()
-            callTilesListApi()
-            callCountryListApi()
-            callRelationshipApi()
-            callSettingsUserDetail()
+            if(internetCheck)
+            {
+                callStudentListApi()
+                callTilesListApi()
+                callCountryListApi()
+                callRelationshipApi()
+                callSettingsUserDetail()
+            }
+            else
+            {
+                InternetCheckClass.showSuccessInternetAlert(mContext)
+            }
+
         }
 
         setListeners()
@@ -1366,6 +1382,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
         btn_Ok.setOnClickListener()
         {
             dialog.dismiss()
+
 
         }
         dialog.show()

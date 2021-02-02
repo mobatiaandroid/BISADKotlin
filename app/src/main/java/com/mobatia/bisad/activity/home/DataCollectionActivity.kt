@@ -27,6 +27,7 @@ import com.mobatia.bisad.activity.home.model.DataCollectionSubmissionModel
 import com.mobatia.bisad.activity.home.model.HealthInsuranceDetailAPIModel
 import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
+import com.mobatia.bisad.fragment.home.mContext
 import com.mobatia.bisad.fragment.home.model.StudentListDataCollection
 import com.mobatia.bisad.fragment.home.model.datacollection.HealthInsuranceDetailModel
 import com.mobatia.bisad.fragment.home.model.datacollection.KinDetailApiModel
@@ -153,21 +154,16 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
                 if (sharedprefs.getTriggerType(context)==1)
                 {
 
-                    Log.e("CHECKING","1")
                     if (position==1)
                     {
-                        Log.e("CHECKING","2")
                         if (!sharedprefs.getOwnContactDetailArrayList(context)!!.get(0).isConfirmed)
                         {
-                            Log.e("CHECKING","3")
                             showSuccessAlert(context,"Please confirm all mandator fields in Own Details","Alert")
                         }
                         else
                         {
-                            Log.e("CHECKING","4")
                           if (sharedprefs.getKinDetailArrayList(context)!!.size>0)
                           {
-                              Log.e("CHECKING","5")
                               var isFound:Boolean=false
                               for (i in 0..sharedprefs.getKinDetailArrayList(context)!!.size-1)
                               {
@@ -192,32 +188,25 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
             }
 
             override fun onPageScrollStateChanged(state: Int) {
-                //       Log.e("onPageState: ", String.valueOf(state));
             }
         })
         submitBtn.setOnClickListener(View.OnClickListener {
 
-            Log.e("CHECKING","42")
             if (sharedprefs.getTriggerType(context)==1)
             {
-                Log.e("CHECKING","4w")
                var currrentPage=pager.currentItem
 
                 if (currrentPage==0)
                 {
-                    Log.e("CHECKING","4e")
                     if (!sharedprefs.getOwnContactDetailArrayList(context)!!.get(0).isConfirmed)
                     {
                        //Alert
-                        Log.e("CHECKING","4d")
                         showSuccessAlert(context,"Please confirm all mandator fields in Own Details","Alert")
                     }
                     else
                     {
-                        Log.e("CHECKING","4")
                         if (sharedprefs.getKinDetailArrayList(context)!!.size>0)
                         {
-                            Log.e("CHECKING","5")
                             var isFound:Boolean=false
                             for (i in 0..sharedprefs.getKinDetailArrayList(context)!!.size-1)
                             {
@@ -274,15 +263,12 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
                     if (!sharedprefs.getOwnContactDetailArrayList(context)!!.get(0).isConfirmed)
                     {
                         //Alert
-                        Log.e("CHECKING","4d")
                         showSuccessAlert(context,"Please confirm all mandator fields in Own Details","Alert")
                     }
                     else
                     {
-                        Log.e("CHECKING","4")
                         if (sharedprefs.getKinDetailArrayList(context)!!.size>0)
                         {
-                            Log.e("CHECKING","5")
                             var isFound:Boolean=false
                             for (i in 0..sharedprefs.getKinDetailArrayList(context)!!.size-1)
                             {
@@ -326,7 +312,6 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
                     {
                         var triggerType = 1
                         var overallStatus =2
-                        Log.e("SUBMITS WORKS","OVERALL")
                         callSubmitAPI(triggerType, overallStatus)
                     }
                 }
@@ -657,24 +642,20 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
             var state=ownArray.get(0).state
             var status=ownArray.get(0).status
             OWNDATA="\"own_details\":{\"id\":"+id+",\"user_id\":"+user_id+",\"title\":\""+title+"\",\"name\":\""+name+"\",\"last_name\":\""+last_name+"\",\"relationship\":\""+relationship+"\",\"email\":\""+email+"\",\"phone\":\""+phone+"\",\"code\":\""+code+"\",\"user_mobile\":\""+user_mobile+"\",\"address1\":\""+address1+"\",\"address2\":\""+address2+"\",\"address3\":\""+address3+"\",\"town\":\""+town+"\",\"state\":\""+state+"\",\"status\":"+status+"}"
-            Log.e("OWNDATA",OWNDATA)
         }
 
 
         kinArray=sharedprefs.getKinDetailPassArrayList(context)!!
         var FirstArray=ArrayList<KinDetailApiModel>()
         FirstArray=kinArray
-        Log.e("Array KIHN",kinArray.size.toString())
         var newGson=Gson()
         var FIRSTDATA:String=newGson.toJson(FirstArray)
-        Log.e("FIRSTDATA",FIRSTDATA)
         var healthArray=ArrayList<HealthInsuranceDetailAPIModel>()
         healthArray=sharedprefs.getHealthDetailArrayList(context)!!
         var HEALTHARRAY=ArrayList<HealthInsuranceDetailAPIModel>()
         HEALTHARRAY=healthArray
         var newHGson=Gson()
         var HEALTHDATA:String=newHGson.toJson(HEALTHARRAY)
-        Log.e("HEALTHDATA",HEALTHDATA)
 
         var passportArrayCheck=ArrayList<PassportApiModel>()
         passportArrayCheck=sharedprefs.getPassportDetailArrayList(context)!!
@@ -690,57 +671,56 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
                 passportArrayCheck.get(i).status=1
                 passportArrayCheck.get(i).request=0
             }
-            Log.e("IMAGE PATH PASS",passportArrayCheck.get(i).passport_image_path)
-            Log.e("IMAGE PATH PASS IMAGE",passportArrayCheck.get(i).passport_image)
         }
         var PASSPORTARRAY=ArrayList<PassportApiModel>()
         PASSPORTARRAY=passportArrayCheck
         var newPGson=Gson()
         var PASSPORTDATA:String=newPGson.toJson(PASSPORTARRAY)
-        Log.e("PASSPORTDATA",PASSPORTDATA)
         var JSONSTRING:String=""
 
         if (sharedprefs.getTriggerType(context)==1)
         {
-            Log.e("DATA","TRIGGER 1")
             if (triggertype==4 && overallStatus==1)
             {
-                Log.e("DATA","TRIGGER 13")
                 JSONSTRING="{"+OWNDATA+","+"\"kin_details\""+":"+FIRSTDATA+" }"
             }
             else if(triggertype==3 && overallStatus==1)
             {
-                Log.e("DATA","TRIGGER 13")
                 JSONSTRING="{"+OWNDATA+","+"\"kin_details\""+":"+FIRSTDATA+" }"
             }
             else
             {
-                Log.e("DATA","TRIGGER 11")
                 //1
                 JSONSTRING="{"+OWNDATA+","+"\"kin_details\""+":"+FIRSTDATA+","+"\"health_details\""+":"+HEALTHDATA+","+"\"passport_details\""+":"+PASSPORTDATA+" }"
             }
         }
         else
         {
-            Log.e("DATA","TRIGGER 2 &3")
             if (sharedprefs.getTriggerType(context)==2)
             {
-                Log.e("DATA","TRIGGER 2")
                 JSONSTRING="{"+OWNDATA+","+"\"kin_details\""+":"+FIRSTDATA+" }"
             }
             else{
-                Log.e("DATA","TRIGGER !2"+sharedprefs.getTriggerType(context))
 
                 if (sharedprefs.getTriggerType(context)==4 ||sharedprefs.getTriggerType(context)==3)
                 {
-                    Log.e("DATA","TRIGGER 3")
                     JSONSTRING="{"+"\"health_details\""+":"+HEALTHDATA+","+"\"passport_details\""+":"+PASSPORTDATA+" }"
                 }
             }
         }
 
       JSONSTRING= JSONSTRING.replace("\\", "")
-       callSubmitionAPI(triggertype,overallStatus,JSONSTRING)
+
+        var internetCheck = InternetCheckClass.isInternetAvailable(context)
+        if (internetCheck)
+        {
+            callSubmitionAPI(triggertype,overallStatus,JSONSTRING)
+        }
+        else{
+            InternetCheckClass.showSuccessInternetAlert(mContext)
+        }
+
+
 
 
 
@@ -751,7 +731,6 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
     {
         val token = sharedprefs.getaccesstoken(context)
         val requestLeaveBody= DataCollectionSubmissionModel(overallStatus,JSONSTRING,triggertype)
-        Log.e("DATACOLLECTION:", requestLeaveBody.toString())
         val call: Call<ResponseBody> = ApiClient.getClient.dataCollectionSubmittion(requestLeaveBody,"Bearer "+token)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

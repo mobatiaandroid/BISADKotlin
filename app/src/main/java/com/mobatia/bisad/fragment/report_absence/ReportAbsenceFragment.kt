@@ -25,6 +25,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.mobatia.bisad.R
 import com.mobatia.bisad.activity.absence.AbsenceDetailActivity
 import com.mobatia.bisad.activity.absence.RequestabsenceActivity
+import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
 import com.mobatia.bisad.fragment.home.mContext
 import com.mobatia.bisad.fragment.report_absence.adapter.RequestAbsenceRecyclerAdapter
@@ -73,7 +74,15 @@ class ReportAbsenceFragment : Fragment(){
         sharedprefs = PreferenceData()
         mContext = requireContext()
         initializeUI()
-        callStudentListApi()
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+        if (internetCheck)
+        {
+            callStudentListApi()
+        }
+        else{
+            InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+        }
+
     }
 
     private fun initializeUI() {
@@ -187,7 +196,15 @@ class ReportAbsenceFragment : Fragment(){
                             studImg.setImageResource(R.drawable.student)
                         }
                     }
-                    callStudentLeaveInfo()
+                    var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+                    if (internetCheck)
+                    {
+                        callStudentLeaveInfo()
+                    }
+                    else{
+                        InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+                    }
+
                     //callStudentInfoApi()
                 }
 

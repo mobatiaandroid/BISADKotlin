@@ -110,7 +110,15 @@ class TimeTableFragment : Fragment(){
         weekListArrayString.add("WEDNESDAY")
         weekListArrayString.add("THURSDAY")
         initializeUI()
-        callStudentListApi()
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+        if (internetCheck)
+        {
+            callStudentListApi()
+        }
+        else{
+            InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+        }
+
     }
 
     private fun initializeUI() {
@@ -668,7 +676,16 @@ class TimeTableFragment : Fragment(){
 
 
                     }
-                    callTimeTableApi()
+                    var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+                    if (internetCheck)
+                    {
+                        callTimeTableApi()
+                    }
+                    else{
+                        InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+                    }
+
+
                 }
                 else
                 {

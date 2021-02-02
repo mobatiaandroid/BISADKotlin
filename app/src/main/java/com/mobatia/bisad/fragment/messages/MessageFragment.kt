@@ -71,7 +71,15 @@ class MessageFragment : Fragment(){
         initializeUI()
         startValue=0
         limit=20
-        callMessageListApi(startValue,limit)
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+        if (internetCheck)
+        {
+            callMessageListApi(startValue,limit)
+        }
+        else{
+            InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+        }
+
     }
 
     private fun initializeUI() {
@@ -193,8 +201,16 @@ class MessageFragment : Fragment(){
                 }
                 else if(response.body()!!.status==116)
                 {
-                    AccessTokenClass.getAccessToken(mContext)
-                    callMessageListApi(start,limit)
+                    var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+                    if (internetCheck)
+                    {
+                        AccessTokenClass.getAccessToken(mContext)
+                        callMessageListApi(start,limit)
+                    }
+                    else{
+                        InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+                    }
+
                 }
                 else
                 {

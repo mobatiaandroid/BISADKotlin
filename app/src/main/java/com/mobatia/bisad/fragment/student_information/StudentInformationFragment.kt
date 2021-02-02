@@ -70,7 +70,14 @@ class StudentInformationFragment : Fragment(){
         sharedprefs.setStudentName(mContext,"")
         sharedprefs.setStudentPhoto(mContext,"")
         initializeUI()
-        callStudentListApi()
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+        if (internetCheck)
+        {
+            callStudentListApi()
+        }
+        else{
+            InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+        }
     }
 
     private fun initializeUI() {
@@ -173,12 +180,27 @@ class StudentInformationFragment : Fragment(){
                             studImg.setImageResource(R.drawable.student)
                         }
                     }
-                   callStudentInfoApi()
+                    var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+                    if (internetCheck)
+                    {
+                        callStudentInfoApi()
+                    }
+                    else{
+                        InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+                    }
                 }
                 else if(response.body()!!.status==116)
                 {
-                    AccessTokenClass.getAccessToken(mContext)
-                    callStudentListApi()
+                    var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+                    if (internetCheck)
+                    {
+                        AccessTokenClass.getAccessToken(mContext)
+                        callStudentListApi()
+                    }
+                    else{
+                        InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+                    }
+
                 }
                 else
                 {

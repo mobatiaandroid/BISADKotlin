@@ -73,7 +73,15 @@ class TeacherContactFragment : Fragment(){
         sharedprefs = PreferenceData()
         mContext = requireContext()
         initializeUI()
-        callStudentListApi()
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+        if (internetCheck)
+        {
+            callStudentListApi()
+        }
+        else{
+            InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+        }
+
     }
 
     private fun initializeUI() {
@@ -168,8 +176,15 @@ class TeacherContactFragment : Fragment(){
                       val aniRotate: Animation =
                           AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
                       progressDialog.startAnimation(aniRotate)
+                      var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+                      if (internetCheck)
+                      {
+                          callSendEmailToStaffApi(text_dialog.text.toString().trim(),text_content.text.toString().trim(),studentId,staffEmail,dialog,progressDialog)
 
-                      callSendEmailToStaffApi(text_dialog.text.toString().trim(),text_content.text.toString().trim(),studentId,staffEmail,dialog,progressDialog)
+                      }
+                      else{
+                          InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+                      }
                   }
               }
           }
@@ -285,7 +300,15 @@ class TeacherContactFragment : Fragment(){
                     selectStudentImgView.setImageResource(R.drawable.student)
                 }
                 staffRelative.visibility=View.VISIBLE
-               callStaffListApi(studentId)
+                var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+                if (internetCheck)
+                {
+                    callStaffListApi(studentId)
+                }
+                else{
+                    InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+                }
+
                // callStudentInfoApi()
               //  Toast.makeText(activity, mStudentList.get(position).name, Toast.LENGTH_SHORT).show()
                 dialog.dismiss()

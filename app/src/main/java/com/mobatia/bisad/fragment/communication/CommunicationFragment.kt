@@ -88,6 +88,14 @@ class CommunicationFragment : Fragment(){
         sharedprefs = PreferenceData()
         mContext = requireContext()
         initializeUI()
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+        if (internetCheck)
+        {
+            callNewLetterListAPI()
+        }
+        else{
+            InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+        }
         callNewLetterListAPI()
     }
 

@@ -106,6 +106,11 @@ class InternetCheckClass {
                 showErrorAlert(context,"Already exists","Alert")
 
             }
+            else if (statusCode==103)
+            {
+                showErrorAlert(context,"Some error occur.","Alert")
+
+            }
             else if (statusCode==106)
             {
                 showErrorAlert(context,Resources.getSystem().getString(R.string.status_106),"Alert")
@@ -136,17 +141,18 @@ class InternetCheckClass {
 
             } else if (statusCode==120)
             {
-                showErrorAlert(context,Resources.getSystem().getString(R.string.status_120),"Alert")
+                showErrorAlert(context,"Please enter a valid email address.","Alert")
 
             } else if (statusCode==121)
             {
-                showErrorAlert(context,Resources.getSystem().getString(R.string.status_121),"Alert")
+                showErrorAlert(context,"The e-mail has already registered.","Alert")
 
             } else if (statusCode==122)
             {
-                showErrorAlert(context,Resources.getSystem().getString(R.string.status_122),"Alert")
+                showErrorAlert(context,"Not a valid JSON","Alert")
 
-            } else if (statusCode==126)
+            }
+            else if (statusCode==126)
             {
                 showErrorAlert(context,Resources.getSystem().getString(R.string.status_126),"Alert")
 
@@ -172,6 +178,51 @@ class InternetCheckClass {
             }
           dialog.show()
         }
+
+        fun showSuccessInternetAlert(context: Context)
+        {
+            val dialog = Dialog(context)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.alert_dialogue_ok_layout)
+            var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
+            var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+            var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
+            var btn_Ok = dialog.findViewById(R.id.btn_Ok) as Button
+            text_dialog.text = "Network error occurred. Please check your internet connection and try again later"
+            alertHead.text = "Alert"
+            iconImageView.setBackgroundResource(R.drawable.roundred)
+            iconImageView.setImageResource(R.drawable.nonetworkicon)
+            btn_Ok?.setOnClickListener()
+            {
+                dialog.dismiss()
+
+            }
+            dialog.show()
+        }
+
+        fun showSuccessAlert(context: Context,message : String,msgHead : String)
+        {
+            val dialog = Dialog(context)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.alert_dialogue_ok_layout)
+            var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
+            var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+            var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
+            var btn_Ok = dialog.findViewById(R.id.btn_Ok) as Button
+            text_dialog.text = message
+            alertHead.text = msgHead
+            iconImageView.setImageResource(R.drawable.exclamationicon)
+            btn_Ok?.setOnClickListener()
+            {
+                dialog.dismiss()
+
+            }
+            dialog.show()
+        }
     }
 
     var COMMUNICATIONS = "Communications"
@@ -185,6 +236,7 @@ class InternetCheckClass {
     var NAE_PROGRAMMES = "NAE Programmes"
     var ABOUT_US = "About Us"
     var CONTACT_US = "Contact Us"
+
 
 }
 
