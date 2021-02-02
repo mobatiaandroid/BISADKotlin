@@ -8,6 +8,6 @@ class ReportResponseArray (
     @SerializedName("Acyear") val Acyear: String,
     //    @SerializedName("data") val data: ReportListDetailModel
 
-    @SerializedName("data") val data: List<ReportListDetailModel>
+    @SerializedName("data") val data: ArrayList<ReportListDetailModel>
 
 )

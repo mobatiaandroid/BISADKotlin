@@ -159,8 +159,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
         homeActivity = activity as HomeActivity
         appController = AppController()
         CLICKED = homeActivity.sPosition.toString()
-        Log.e("POSITIONFRAGMENT", CLICKED)
-
         naisTabConstants = NaisTabConstants()
         classNameConstants = NaisClassNameConstants()
         listitems = resources.getStringArray(R.array.navigation_items_guest)
@@ -200,8 +198,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-
-        Log.e("SHAREDPREFSTABID", INTENT_TAB_ID)
         if (v == relone) {
 
             INTENT_TAB_ID = sharedprefs.getbuttononetabid(mContext).toString()
@@ -609,25 +605,17 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     mSectionText[8] = reltxtnine.text.toString().toUpperCase(Locale.ENGLISH)
 
                     for (i in mSectionText.indices) {
-                        println("Workingtestnew")
-
                         isDraggable = true
-                        println("LISTSIZEDATA:" + mSectionText.size)
-                        println("LISTITEMSIZEDATA:" + listitems.size)
-
                         if (mSectionText[i].equals(
                                 listitems[homeActivity.sPosition],
                                 ignoreCase = true
                             )
                         ) {
                             isDraggable = false
-                            println("Workingtestnew1")
                             break
                         }
                     }
                     if (isDraggable) {
-                        println("Workingtestnew2")
-                        println("TESTDATA:" + "TOUCHED:" + TouchedView + "Position:" + homeActivity.sPosition)
                         getButtonDrawablesAndText(TouchedView, homeActivity.sPosition)
 
                     } else {
@@ -684,7 +672,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     relTxttwo.text = relstring
                     getTabId(listitems[sPosition])
                     sharedprefs.setbuttontwotabid(mContext, TAB_ID)
-                    //  setBackgroundColorForView(appController.listitemArrays[sPosition], reltwo)
                     setBackgroundColorForView(listitems[sPosition], reltwo)
                     sharedprefs.setbuttontwotextimage(mContext, sPosition.toString())
                 } else if (touchedView == relthree) {
@@ -704,7 +691,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     getTabId(listitems[sPosition])
                     sharedprefs.setbuttonthreetabid(mContext, TAB_ID)
                     setBackgroundColorForView(listitems[sPosition], relthree)
-                    //setBackgroundColorForView(appController.listitemArrays[sPosition], relthree)
                     sharedprefs.setbuttonthreetextimage(mContext, sPosition.toString())
                 } else if (touchedView == relfour) {
                     relImgfour.setImageDrawable(mListImgArrays.getDrawable(sPosition))
@@ -722,7 +708,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     getTabId(listitems[sPosition])
                     sharedprefs.setbuttonfourtabid(mContext, TAB_ID)
                     setBackgroundColorForView(listitems[sPosition], relfour)
-                    //setBackgroundColorForView(appController.listitemArrays[sPosition], relfour)
                     sharedprefs.setbuttonfourtextimage(mContext, sPosition.toString())
                 } else if (touchedView == relfive) {
                     relImgfive.setImageDrawable(mListImgArrays.getDrawable(sPosition))
@@ -741,7 +726,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     getTabId(listitems[sPosition])
                     sharedprefs.setbuttonfivetabid(mContext, TAB_ID)
                     setBackgroundColorForView(listitems[sPosition], relfive)
-                    // setBackgroundColorForView(appController.listitemArrays[sPosition], relfive)
                     sharedprefs.setbuttonfivetextimage(mContext, sPosition.toString())
                 } else if (touchedView == relsix) {
                     relImgsix.setImageDrawable(mListImgArrays.getDrawable(sPosition))
@@ -760,7 +744,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     getTabId(listitems[sPosition])
                     sharedprefs.setbuttonsixtabid(mContext, TAB_ID)
                     setBackgroundColorForView(listitems[sPosition], relsix)
-                    // setBackgroundColorForView(appController.listitemArrays[sPosition], relsix)
                     sharedprefs.setbuttonsixtextimage(mContext, sPosition.toString())
                 } else if (touchedView == relseven) {
                     relImgseven.setImageDrawable(mListImgArrays.getDrawable(sPosition))
@@ -778,7 +761,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     relTxtseven.text = relstring
                     getTabId(listitems[sPosition])
                     sharedprefs.setbuttonseventabid(mContext, TAB_ID)
-                    //setBackgroundColorForView(appController.listitemArrays[sPosition], relseven)
                     setBackgroundColorForView(listitems[sPosition], relseven)
                     sharedprefs.setbuttonseventextimage(mContext, sPosition.toString())
                 } else if (touchedView == releight) {
@@ -798,10 +780,8 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     getTabId(listitems[sPosition])
                     sharedprefs.setbuttoneighttabid(mContext, TAB_ID)
                     setBackgroundColorForView(listitems[sPosition], releight)
-                    //setBackgroundColorForView(appController.listitemArrays[sPosition], releight)
                     sharedprefs.setbuttoneighttextimage(mContext, sPosition.toString())
                 } else if (touchedView == relnine) {
-                    //relImgeight.setImageDrawable(appController.mListImgArrays?.getDrawable(sPosition))
                     relImgnine.setImageDrawable(mListImgArrays.getDrawable(sPosition))
                     val relstring: String
                     if (listitems[sPosition] == "CCAs") {
@@ -818,7 +798,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     getTabId(listitems[sPosition])
                     sharedprefs.setbuttonninetabid(mContext, TAB_ID)
                     setBackgroundColorForView(listitems[sPosition], relnine)
-                    //setBackgroundColorForView(appController.listitemArrays[sPosition], relnine)
                     sharedprefs.setbuttonninetextimage(mContext, sPosition.toString())
                 }
 
@@ -880,7 +859,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
         }
 
         private fun getTabId(textdata: String) {
-            Log.e("TEXT DATA",textdata)
             when {
 
                 textdata.equals(classNameConstants.STUDENT_INFORMATION) -> {
@@ -1032,35 +1010,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
     @SuppressLint("UseRequireInsteadOfGet")
     private fun initializeUI() {
          pager = view!!.findViewById<ViewPager>(R.id.bannerImagePager)
-
-
-//        pager.setPageTransformer(false
-//        ) { page, _ ->
-//            val pageWidth: Int =
-//                pager.measuredWidth - pager.paddingLeft - pager.paddingRight
-//            val pageHeight: Int = pager.height
-//            val paddingLeft: Int = pager.paddingLeft
-//            val transformPos =
-//                (page.left - (pager.scrollX + paddingLeft)) as Int / pageWidth
-//            val normalizedposition =
-//                abs(abs(transformPos) - 1)
-//            page.alpha = normalizedposition + 0.5f
-//            val max = -pageHeight / 10
-//            when {
-//                transformPos < -1 -> { // [-Infinity,-1)
-//                    // This page is way off-screen to the left.
-//                    page.translationY = 0F
-//                }
-//                transformPos <= 1 -> { // [-1,1]
-//                    page.translationY = max * (1 - abs(transformPos))
-//                }
-//                else -> { // (1,+Infinity]
-//                    // This page is way off-screen to the right.
-//                    page.translationY = 0F
-//                }
-//            }
-//        }
-
         relone = view!!.findViewById(R.id.relOne) as RelativeLayout
         reltwo = view!!.findViewById(R.id.relTwo) as RelativeLayout
         relthree = view!!.findViewById(R.id.relThree) as RelativeLayout
@@ -1091,18 +1040,8 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
         relImgeight = view!!.findViewById(R.id.relImgEight) as ImageView
         relImgnine = view!!.findViewById(R.id.relImgNine) as ImageView
         mSectionText = arrayOfNulls(9)
-        // mListImgArrays = appController.mListImgArrays!!
-
-
-      //  accesstoken()
         updatedata()
 
-//        if (this::pager.isInitialized) {
-//            Log.e("PAGER", "INITILIZED")
-//        } else {
-//            Log.e("PAGER", "INITILIZEDERROR")
-//
-//        }
         pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
 
@@ -1122,8 +1061,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
         })
 
     }
-
-
 
     fun updatedata() {
         val handler = Handler()
@@ -1403,7 +1340,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
 
     fun fragmentIntent(mFragment: Fragment?) {
         if (mFragment != null) {
-            println("title:" + appController.mTitles)
             val fragmentManager = activity!!.supportFragmentManager
             fragmentManager.beginTransaction()
                 .add(R.id.fragment_holder, mFragment, appController.mTitles)
@@ -1478,7 +1414,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                                         {
                                             if (previousTriggerType== sharedprefs.getTriggerType(mContext))
                                             {
-//                                                callDataCollectionAPI()
                                                 if(!sharedprefs.getSuspendTrigger(mContext).equals("1"))
                                                 {
                                                     val intent =Intent(activity, DataCollectionActivity::class.java)
@@ -1698,7 +1633,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                 {
                     relationshipArrayList.addAll(response.body()!!.responseArray.contactTypesList)
                     sharedprefs.setRelationShipArrayList(mContext, relationshipArrayList)
-                   // Log.e("Country List Size", sharedprefs.getCountryArrayList(mContext).size.toString() )
 
                 }
                 else{
@@ -1751,7 +1685,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                 if (response.body()!!.status==100)
                 {
 
-                    Log.e("DATA COLLECTION","ENTERS")
                     sharedprefs.setDisplayMessage(mContext,response.body()!!.responseArray.display_message)
                     ownContactArrayList=response.body()!!.responseArray.ownDetailsList
                     kinDetailArrayList=response.body()!!.responseArray.kinDetailsList
@@ -1761,7 +1694,6 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     {
                         for (i in 0..ownContactArrayList.size-1)
                         {
-                            Log.e("DATA COLLECTION","ENTERS1")
                             var model=OwnContactModel()
                             model.id= ownContactArrayList.get(i).id
                             model.user_id= ownContactArrayList.get(i).user_id
@@ -1791,15 +1723,12 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
 
                        if( sharedprefs.getOwnContactDetailArrayList(mContext)==null|| sharedprefs.getOwnContactDetailArrayList(mContext)!!.size==0)
                        {
-                           Log.e("DATA COLLECTION","ENTERS2")
                            sharedprefs.setIsAlreadyEnteredOwn(mContext,true)
                            sharedprefs.setOwnContactDetailArrayList(mContext, ownContactDetailSaveArrayList)
                        }
                         else{
-                           Log.e("DATA COLLECTION","ENTERS3")
                            if (!sharedprefs.getIsAlreadyEnteredOwn(mContext))
                            {
-                               Log.e("DATA COLLECTION","ENTERS4")
                                sharedprefs.setIsAlreadyEnteredOwn(mContext,true)
                                sharedprefs.setOwnContactDetailArrayList(mContext, ownContactDetailSaveArrayList)
                            }

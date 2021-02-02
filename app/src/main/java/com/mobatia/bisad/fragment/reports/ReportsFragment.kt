@@ -282,7 +282,7 @@ class ReportsFragment : Fragment() {
                          if (datas.size>0)
                          {
                              reportsRecycler.visibility=View.VISIBLE
-                             val rAdapter: ReportListRecyclerAdapter = ReportListRecyclerAdapter(datas)
+                             val rAdapter: ReportListRecyclerAdapter = ReportListRecyclerAdapter(mContext,datas)
                              reportsRecycler.adapter = rAdapter
                          }
                         else{
