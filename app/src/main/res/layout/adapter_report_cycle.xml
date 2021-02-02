@@ -13,11 +13,11 @@
             android:id="@+id/report_cycle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="asdeew"
             android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
             android:layout_toStartOf="@+id/arrowImg"
             android:maxLines="2"
+            android:paddingLeft="10dp"
             android:textColor="@color/black"
             android:textSize="16sp"
             tools:ignore="UnknownIdInLayout" />

@@ -68,4 +68,8 @@ dependencies {
     implementation project(':ijkplayer-java')
     implementation project(':giraffeplayer')
     implementation 'com.applandeo:material-calendar-view:1.7.0'
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+    implementation 'com.mindorks.android:prdownloader:0.6.0'
+
+
 }

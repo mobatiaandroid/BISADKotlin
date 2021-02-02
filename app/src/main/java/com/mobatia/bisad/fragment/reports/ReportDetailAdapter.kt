@@ -18,6 +18,7 @@ import com.mobatia.bisad.R
 import com.mobatia.bisad.WebviewLoad
 import com.mobatia.bisad.fragment.calendar_new.model.CalendarDetailModel
 import com.mobatia.bisad.fragment.reports.model.ReportListDetailModel
+import com.mobatia.bisad.pdfviewer.PdfViewer
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -49,7 +50,9 @@ class ReportDetailAdapter(private var mContext:Context, private var repoetDetail
             clickedurl = repoetDetailArray[position].file
 
 
-           mContext.startActivity(Intent(mContext, WebviewLoad::class.java).putExtra("Url",repoetDetailArray[position].file))
+          // mContext.startActivity(Intent(mContext, WebviewLoad::class.java).putExtra("Url",repoetDetailArray[position].file))
+            mContext.startActivity(Intent(mContext, PdfViewer::class.java).putExtra("Url",repoetDetailArray[position].file))
+
         }
     }
     override fun getItemCount(): Int {
