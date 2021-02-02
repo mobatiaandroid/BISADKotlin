@@ -23,6 +23,7 @@ import com.mobatia.bisad.activity.communication.newsletter.model.NewsLetterDetai
 import com.mobatia.bisad.activity.communication.newsletter.model.NewsLetterListAPiModel
 import com.mobatia.bisad.activity.communication.newsletter.model.NewsLetterListModel
 import com.mobatia.bisad.activity.home.HomeActivity
+import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
 import com.mobatia.bisad.manager.PreferenceData
 import com.mobatia.bisad.rest.ApiClient
@@ -55,7 +56,15 @@ class NewsLetterDetailActivity : AppCompatActivity(){
         sharedprefs = PreferenceData()
         jsonConstans = JsonConstants()
         initUI()
-        callNewLetterListAPI()
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+        if (internetCheck)
+        {
+            callNewLetterListAPI()
+        }
+        else{
+            InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+        }
+
         getSettings()
 
     }

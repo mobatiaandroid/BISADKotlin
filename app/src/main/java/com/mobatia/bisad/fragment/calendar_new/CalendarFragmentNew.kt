@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobatia.bisad.R
+import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
 import com.mobatia.bisad.fragment.calendar_new.model.*
 import com.mobatia.bisad.manager.PreferenceData
@@ -99,7 +100,15 @@ class CalendarFragmentNew : Fragment() {
         sharedprefs = PreferenceData()
         mContext = requireContext()
         initializeUI()
-        callCalendarApi()
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+        if (internetCheck)
+        {
+            callCalendarApi()
+        }
+        else{
+            InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+        }
+
     }
 
     private fun initializeUI() {

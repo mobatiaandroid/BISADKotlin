@@ -121,7 +121,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         myCalendar= Calendar.getInstance()
         passportDetailArrayList=sharedprefs.getPassportDetailArrayList(mContext)!!
         if (EasyPermissions.hasPermissions(mContext, galleryPermissions.toString())) {
-//            Toast.makeText(mContext, "permisssion granted", Toast.LENGTH_SHORT).show();
         } else {
             EasyPermissions.requestPermissions(this,"Access for storage",101,galleryPermissions.toString())
 
@@ -192,7 +191,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         }
         if (passportDetailArrayList.get(foundPosition).emirates_id_image_path.equals("")) {
 
-            //ViewSelectedVisa.setText(passportDetailArrayList.get(foundPosition).emirates_id_image_name)
         }
         else {
             ViewSelectedVisa.setImageBitmap(BitmapFactory.decodeFile(passportDetailArrayList.get(foundPosition).emirates_id_image_path))
@@ -209,7 +207,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         } else {
             imagicon.setImageResource(R.drawable.boy)
         }
-      //  studentNameTxt.setText(studentName)
         studentNameTxt.text = passportDetailArrayList.get(foundPosition).student_name
         countryArrayList= ArrayList()
         countryArrayList=sharedprefs.getCountryArrayList(mContext)
@@ -225,7 +222,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
        }
         else
        {
-           Log.e("Nationality",passportDetailArrayList.get(foundPosition).nationality)
            passportNationalityTxt.text = passportDetailArrayList.get(foundPosition).nationality
        }
         spinnerDialog = SpinnerDialog(activity, countryData, "Select Country", "Close") // With No Animation
@@ -252,9 +248,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
                 }
                 else{
                     val fromdate=passportExpiryTxt.text.toString().trim()
-                    //  val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
                     val inputFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
-                    //  val outputFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
                     val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
                     val inputDateStr = fromdate
                     val date: Date = inputFormat.parse(inputDateStr)
@@ -323,7 +317,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
             }
 
             override fun afterTextChanged(s: Editable) {
-                Log.e("EDITABLE","IT WORKS")
                 var passportID=passportDetailArrayList.get(foundPosition).id
                 var model=PassportApiModel()
                 model.id=passportDetailArrayList.get(foundPosition).id
@@ -341,9 +334,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
                 }
                 else{
                     val fromdate=passportExpiryTxt.text.toString().trim()
-                    //  val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
                     val inputFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
-                    //  val outputFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
                     val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
                     val inputDateStr = fromdate
                     val date: Date = inputFormat.parse(inputDateStr)
@@ -370,7 +361,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
                 model.updated_at= passportDetailArrayList.get(foundPosition).updated_at
                 passportDetailArrayList.removeAt(foundPosition)
                 passportDetailArrayList.add(foundPosition,model)
-                Log.e("passport number",passportDetailArrayList.get(foundPosition).passport_number)
                 sharedprefs.getPassportDetailArrayList(mContext)!!.clear()
                 var passportDummy=ArrayList<PassportApiModel>()
                 sharedprefs.setPassportDetailArrayList(mContext,passportDummy)
@@ -378,9 +368,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
             }
         })
 
-//        passportExpiryTxt.setImeOptions(EditorInfo.IME_ACTION_DONE)
-//        passportExpiryTxt.isFocusable=true
-//        passportExpiryTxt.isFocusableInTouchMode=true
         if(passportDetailArrayList.get(foundPosition).expiry_date.equals(""))
         {
 
@@ -393,7 +380,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
             val date: Date = inputFormat.parse(inputDateStr)
             val outputDateStr: String = outputFormat.format(date)
             passportExpiryTxt.setText(outputDateStr)
-            //passportExpiryTxt.setText(passportDetailArrayList.get(foundPosition).expiry_date)
         }
         passportExpiryTxt.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int)
@@ -407,7 +393,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
             }
 
             override fun afterTextChanged(s: Editable) {
-                Log.e("EDITABLE","IT WORKS")
                 var passportID=passportDetailArrayList.get(foundPosition).id
                 var model=PassportApiModel()
                 model.id=passportDetailArrayList.get(foundPosition).id
@@ -425,9 +410,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
                 }
                 else{
                     val fromdate=passportExpiryTxt.text.toString().trim()
-                    //  val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
                     val inputFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
-                    //  val outputFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
                     val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
                     val inputDateStr = fromdate
                     val date: Date = inputFormat.parse(inputDateStr)
@@ -454,7 +437,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
                 model.updated_at= passportDetailArrayList.get(foundPosition).updated_at
                 passportDetailArrayList.removeAt(foundPosition)
                 passportDetailArrayList.add(foundPosition,model)
-                Log.e("passport number",passportDetailArrayList.get(foundPosition).passport_number)
                 sharedprefs.getPassportDetailArrayList(mContext)!!.clear()
                 var passportDummy=ArrayList<PassportApiModel>()
                 sharedprefs.setPassportDetailArrayList(mContext,passportDummy)
@@ -484,7 +466,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
             }
 
             override fun afterTextChanged(s: Editable) {
-                Log.e("EDITABLE","IT WORKS")
                 var passportID=passportDetailArrayList.get(foundPosition).id
                 var model=PassportApiModel()
                 model.id=passportDetailArrayList.get(foundPosition).id
@@ -501,9 +482,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
                 }
                 else{
                     val fromdate=passportExpiryTxt.text.toString().trim()
-                    //  val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
                     val inputFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
-                    //  val outputFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
                     val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
                     val inputDateStr = fromdate
                     val date: Date = inputFormat.parse(inputDateStr)
@@ -531,7 +510,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
                 model.updated_at= passportDetailArrayList.get(foundPosition).updated_at
                 passportDetailArrayList.removeAt(foundPosition)
                 passportDetailArrayList.add(foundPosition,model)
-                Log.e("passport number",passportDetailArrayList.get(foundPosition).passport_number)
                 sharedprefs.getPassportDetailArrayList(mContext)!!.clear()
                 var passportDummy=ArrayList<PassportApiModel>()
                 sharedprefs.setPassportDetailArrayList(mContext,passportDummy)
@@ -596,8 +574,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
     fun chooseImage()
     {
         val array = arrayOf("Open Camera", "Choose from Gallery", "Cancel")
-     //   var options= arrayOf("Open Camera", "Choose from Gallery", "Cancel")
-       // final CharSequence[] options = {"Open Camera", "Choose from Gallery", "Cancel"};
         var builder=AlertDialog.Builder(mContext)
         builder.setTitle("Add Photo!")
 
@@ -672,8 +648,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
                     }
                 }
             }catch (e:IllegalArgumentException){
-                // Catch the color string parse exception
-                // toast("$selected Color not supported.")
             }
         }
         val dialog = builder.create()
@@ -810,7 +784,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
             "Compressed image save in " + compressedImage.path,
             Toast.LENGTH_LONG
         ).show()
-        Log.d("Compressor", "Compressed image save in " + compressedImage.path)
 
         val bitmap: Bitmap
         val options = BitmapFactory.Options()
@@ -821,29 +794,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         passport_image_name_path = compressedImage.name
         var bytes=File(compressedImage.path).readBytes()
         var encode= Base64.encodeToString(bytes, 2)
-//        var inputStream: InputStream? = null // You can get an inputStream using any I/O API
-//
-//        try {
-//            inputStream = FileInputStream(compressedImage.path)
-//        } catch (e: FileNotFoundException) {
-//            e.printStackTrace()
-//        }
-//        val bytes: ByteArray
-//        val buffer = ByteArray(8192)
-//        var bytesRead: Int
-//        val output = ByteArrayOutputStream()
-//
-//        try {
-//            while (inputStream!!.read(buffer).also { bytesRead = it } != -1) {
-//                output.write(buffer, 0, bytesRead)
-//            }
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//        }
-//
-//        bytes = output.toByteArray()
-//        val encodedString =
-//            Base64.encodeToString(bytes, Base64.DEFAULT)
         passportImageData = encode
         var passportID=passportDetailArrayList.get(foundPosition).id
         var model=PassportApiModel()
@@ -892,7 +842,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         model.updated_at= passportDetailArrayList.get(foundPosition).updated_at
         passportDetailArrayList.removeAt(foundPosition)
         passportDetailArrayList.add(foundPosition,model)
-        Log.e("passport number",passportDetailArrayList.get(foundPosition).passport_number)
         sharedprefs.getPassportDetailArrayList(mContext)!!.clear()
         var passportDummy=ArrayList<PassportApiModel>()
         sharedprefs.setPassportDetailArrayList(mContext,passportDummy)
@@ -913,29 +862,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         passport_image_name_path = CompressPassportCamera.name
         var bytes=File(CompressPassportCamera.path).readBytes()
         var encode= Base64.encodeToString(bytes, 2)
-//        var inputStream: InputStream? = null // You can get an inputStream using any I/O API
-//
-//        try {
-//            inputStream = FileInputStream(CompressPassportCamera.path)
-//        } catch (e: FileNotFoundException) {
-//            e.printStackTrace()
-//        }
-//        val bytes: ByteArray
-//        val buffer = ByteArray(8192)
-//        var bytesRead: Int
-//        val output = ByteArrayOutputStream()
-//
-//        try {
-//            while (inputStream!!.read(buffer).also { bytesRead = it } != -1) {
-//                output.write(buffer, 0, bytesRead)
-//            }
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//        }
-//
-//        bytes = output.toByteArray()
-//        val encodedString =
-//            Base64.encodeToString(bytes, Base64.DEFAULT)
+
         passportImageData = encode
         var passportID=passportDetailArrayList.get(foundPosition).id
         var model=PassportApiModel()
@@ -952,9 +879,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         }
         else{
             val fromdate=passportExpiryTxt.text.toString().trim()
-            //  val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
             val inputFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
-            //  val outputFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
             val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
             val inputDateStr = fromdate
             val date: Date = inputFormat.parse(inputDateStr)
@@ -1003,29 +928,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         visa_image_name_path = CompressVisaCamera1.name
         var bytes=File(CompressVisaCamera1.path).readBytes()
         var encode= Base64.encodeToString(bytes, 2)
-//        var inputStream: InputStream? = null // You can get an inputStream using any I/O API
-//
-//        try {
-//            inputStream = FileInputStream(CompressVisaCamera1.path)
-//        } catch (e: FileNotFoundException) {
-//            e.printStackTrace()
-//        }
-//        val bytes: ByteArray
-//        val buffer = ByteArray(8192)
-//        var bytesRead: Int
-//        val output = ByteArrayOutputStream()
-//
-//        try {
-//            while (inputStream!!.read(buffer).also { bytesRead = it } != -1) {
-//                output.write(buffer, 0, bytesRead)
-//            }
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//        }
-//
-//        bytes = output.toByteArray()
-//        val encodedString =
-//            Base64.encodeToString(bytes, Base64.DEFAULT)
         visaImageData = encode
         var passportID=passportDetailArrayList.get(foundPosition).id
         var model=PassportApiModel()
@@ -1042,9 +944,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         }
         else{
             val fromdate=passportExpiryTxt.text.toString().trim()
-            //  val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
             val inputFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
-            //  val outputFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
             val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
             val inputDateStr = fromdate
             val date: Date = inputFormat.parse(inputDateStr)
@@ -1074,7 +974,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         model.updated_at= passportDetailArrayList.get(foundPosition).updated_at
         passportDetailArrayList.removeAt(foundPosition)
         passportDetailArrayList.add(foundPosition,model)
-        Log.e("passport number",passportDetailArrayList.get(foundPosition).passport_number)
         sharedprefs.getPassportDetailArrayList(mContext)!!.clear()
         var passportDummy=ArrayList<PassportApiModel>()
         sharedprefs.setPassportDetailArrayList(mContext,passportDummy)
@@ -1087,11 +986,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
             "Compressed image save in " + VisacompressedImage.path,
             Toast.LENGTH_LONG
         ).show()
-        Log.d(
-            "Compressor",
-            "Compressed image save in " + VisacompressedImage.path
-        )
-
         val bitmap: Bitmap
         val options = BitmapFactory.Options()
 
@@ -1102,30 +996,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         visa_image_name_path = VisacompressedImage.name
         var bytes=File(VisacompressedImage.path).readBytes()
         var encode= android.util.Base64.encodeToString(bytes, 2)
-
-//        var inputStream: InputStream? = null // You can get an inputStream using any I/O API
-//
-//        try {
-//            inputStream = FileInputStream(VisacompressedImage.path)
-//        } catch (e: FileNotFoundException) {
-//            e.printStackTrace()
-//        }
-//        val bytes: ByteArray
-//        val buffer = ByteArray(8192)
-//        var bytesRead: Int
-//        val output = ByteArrayOutputStream()
-//
-//        try {
-//            while (inputStream!!.read(buffer).also { bytesRead = it } != -1) {
-//                output.write(buffer, 0, bytesRead)
-//            }
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//        }
-//
-//        bytes = output.toByteArray()
-//        val encodedString =
-//            Base64.encodeToString(bytes, Base64.DEFAULT)
         visaImageData = encode
         var passportID=passportDetailArrayList.get(foundPosition).id
         var model=PassportApiModel()
@@ -1142,9 +1012,7 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         }
         else{
             val fromdate=passportExpiryTxt.text.toString().trim()
-            //  val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
             val inputFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
-            //  val outputFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
             val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
             val inputDateStr = fromdate
             val date: Date = inputFormat.parse(inputDateStr)
@@ -1161,9 +1029,6 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
         model.emirates_id_image_path=visa_image_path
         model.emirates_id_image=visaImageData
         model.emirates_id_image_name=visa_image_name_path
-        Log.e("VISA path",visa_image_path)
-        Log.e("VISA name",visa_image_name_path)
-        Log.e("VISA image",visaImageData)
         if (passportID==0)
         {
             model.status= 0
@@ -1173,14 +1038,10 @@ class PassportEmiratesScreen(studentID:String,studentImage:String,studentName:St
             model.status= 1
             model.request= 0
         }
-        Log.e("VISA path",visa_image_path)
-        Log.e("VISA name",visa_image_name_path)
-        Log.e("VISA image",visaImageData)
         model.created_at= passportDetailArrayList.get(foundPosition).created_at
         model.updated_at= passportDetailArrayList.get(foundPosition).updated_at
         passportDetailArrayList.removeAt(foundPosition)
         passportDetailArrayList.add(foundPosition,model)
-        Log.e("passport number",passportDetailArrayList.get(foundPosition).passport_number)
         sharedprefs.getPassportDetailArrayList(mContext)!!.clear()
         var passportDummy=ArrayList<PassportApiModel>()
         sharedprefs.setPassportDetailArrayList(mContext,passportDummy)

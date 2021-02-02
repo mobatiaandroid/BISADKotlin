@@ -122,21 +122,21 @@ class FirstScreenNewData:Fragment() {
 
         if (sharedprefs.getDisplayMessage(mContext).equals(""))
         {
-          //  messageTxt.visibility=View.GONE
+
         }
         else{
             messageTxt.visibility=View.VISIBLE
-          //  messageTxt.setText(sharedprefs.getDisplayMessage(mContext))
+
         }
         helpView.setOnClickListener(View.OnClickListener {
             ShowHelpDialog(activity!!, "Help", R.drawable.questionmark_icon, R.drawable.round)
         })
 
-        Log.e("KINARRAY",kinDetailArrayList.size.toString())
+
 
         if (kinDetailArrayList.size>0)
         {
-            Log.e("KINARRAY INSIDE",kinDetailArrayList.size.toString())
+
             RecyclerLinearLayout.visibility=View.VISIBLE
             NoDataLinearLayout.visibility=View.GONE
             familyKinRecyclerAdapter= FamilyContactRecyclerAdapter(sharedprefs.getKinDetailArrayList(mContext)!!)
@@ -218,7 +218,6 @@ class FirstScreenNewData:Fragment() {
         dialog.setContentView(R.layout.data_collection_confirm)
 
         var DropEdt=dialog.findViewById(R.id.DropEdt)as AutoCompleteTextView
-      //  var relationshipSpinner=dialog.findViewById(R.id.relationshipSpinner)as AutoCompleteTextView
         var firstNameTxt=dialog.findViewById(R.id.firstNameTxt)as EditText
         var lastNameTxt=dialog.findViewById(R.id.lastNameTxt)as EditText
         var dataCollect_Code=dialog.findViewById(R.id.dataCollect_Code)as EditText
@@ -300,9 +299,9 @@ class FirstScreenNewData:Fragment() {
             val activityList = pm.queryIntentActivities(
                 emailIntent, 0
             )
-            println("packge size" + activityList.size)
+
             for (app in activityList) {
-                println("packge name" + app.activityInfo.name)
+
                 if (app.activityInfo.name.contains("com.google.android.gm")) {
                     val activity = app.activityInfo
                     val name = ComponentName(
@@ -417,28 +416,28 @@ class FirstScreenNewData:Fragment() {
         }
         if (ownconatctArrayList.get(0).address1.equals(""))
         {
-//            addressLine1.setText(resources.getString(R.string.AST_ADD_1))
+
         }
         else{
             addressLine1.setText(ownconatctArrayList.get(0).address1)
         }
         if (ownconatctArrayList.get(0).address2.equals(""))
         {
-            //addressLine1.setText(resources.getString(R.string.AST_ADD_1))
+
         }
         else{
             addressLine2.setText(ownconatctArrayList.get(0).address2)
         }
         if (ownconatctArrayList.get(0).address3.equals(""))
         {
-            //addressLine1.setText(resources.getString(R.string.AST_ADD_1))
+
         }
         else{
             addressLine3.setText(ownconatctArrayList.get(0).address3)
         }
         if (ownconatctArrayList.get(0).code.equals(""))
         {
-          //  pinTxt.setHint(resources.getString(R.string.AST_POST))
+
         }
         else{
             pinTxt.setText(ownconatctArrayList.get(0).code)
@@ -452,7 +451,7 @@ class FirstScreenNewData:Fragment() {
         }
         if (ownconatctArrayList.get(0).state.equals(""))
         {
-            //stateTxt.setHint(resources.getString(R.string.AST_STATE))
+
         }
         else
         {
@@ -460,7 +459,7 @@ class FirstScreenNewData:Fragment() {
         }
         if (ownconatctArrayList.get(0).town.equals(""))
         {
-            //stateTxt.setHint(resources.getString(R.string.AST_STATE))
+
         }
         else
         {
@@ -468,7 +467,7 @@ class FirstScreenNewData:Fragment() {
         }
         if (ownconatctArrayList.get(0).address2.equals(""))
         {
-            //stateTxt.setHint(resources.getString(R.string.AST_STATE))
+
         }
         else
         {
@@ -681,7 +680,7 @@ class FirstScreenNewData:Fragment() {
 
             if (isChanged)
             {
-                Log.e("Changed","not works")
+
                 sharedprefs.getOwnContactDetailArrayList(context)!!.clear()
                 var mDataArrayList=ArrayList<OwnContactModel>()
                 var model=OwnContactModel()
@@ -690,7 +689,6 @@ class FirstScreenNewData:Fragment() {
                 model.title=DropEdt.text.toString().trim()
                 model.name=firstNameTxt.text.toString().trim()
                 model.last_name=lastNameTxt.text.toString().trim()
-                Log.e("RELATIONSHIP",relationshipTxt.text.toString().trim())
                 model.relationship=relationshipTxt.text.toString().trim()
                 model.email=emailTxt.text.toString().trim()
                 model.phone=dataCollect_Code.text.toString().trim()+dataCollect_Phone.text.toString().trim()
@@ -726,7 +724,7 @@ class FirstScreenNewData:Fragment() {
 
             }
             else{
-                Log.e("Changed","not works")
+
                 dialog.dismiss()
             }
         })
@@ -952,9 +950,9 @@ class FirstScreenNewData:Fragment() {
             val activityList = pm.queryIntentActivities(
                 emailIntent, 0
             )
-            println("packge size" + activityList.size)
+
             for (app in activityList) {
-                println("packge name" + app.activityInfo.name)
+
                 if (app.activityInfo.name.contains("com.google.android.gm")) {
                     val activity = app.activityInfo
                     val name = ComponentName(

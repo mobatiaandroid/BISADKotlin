@@ -65,10 +65,6 @@ class SecondScreenNew :Fragment() {
         }
         studentInfoRecycler.addOnItemClickListener(object: OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-
-                /* String studentId="";
-                                       String studentImage="";
-                                       String studentName="";*/
                 val intent = Intent(activity, SecondScreenDataCollection::class.java)
                 intent.putExtra("studentId", sharedprefs.getStudentArrayList(mContext).get(position).id)
                 intent.putExtra("uniqueID", sharedprefs.getStudentArrayList(mContext).get(position).unique_id)

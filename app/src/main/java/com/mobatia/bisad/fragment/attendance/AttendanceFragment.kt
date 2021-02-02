@@ -85,7 +85,15 @@ class AttendanceFragment : Fragment() {
         mContext = requireContext()
         sharedprefs = PreferenceData()
         initializeUI()
-        callStudentListApi()
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+        if (internetCheck)
+        {
+            callStudentListApi()
+        }
+        else{
+            InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+        }
+
     }
 
     fun callStudentListApi() {
@@ -149,7 +157,15 @@ class AttendanceFragment : Fragment() {
 
 
                     }
-                    getattendancedetails()
+                    var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+                    if (internetCheck)
+                    {
+                        getattendancedetails()
+                    }
+                    else{
+                        InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+                    }
+
                 }
 
                 if (response.body()!!.status == 116) {

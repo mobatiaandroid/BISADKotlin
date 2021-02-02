@@ -80,7 +80,15 @@ class ReportsFragment : Fragment() {
         mContext = requireContext()
         sharedprefs = PreferenceData()
         initializeUI()
-        callStudentListApi()
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+        if (internetCheck)
+        {
+            callStudentListApi()
+        }
+        else{
+            InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+        }
+
     }
 
     fun callStudentListApi() {
@@ -144,7 +152,15 @@ class ReportsFragment : Fragment() {
 
 
                     }
-                    getreportsdetails()
+                    var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+                    if (internetCheck)
+                    {
+                        getreportsdetails()
+                    }
+                    else{
+                        InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+                    }
+
 
                 }
 

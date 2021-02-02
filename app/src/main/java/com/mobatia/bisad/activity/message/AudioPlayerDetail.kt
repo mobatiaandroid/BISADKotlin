@@ -65,7 +65,14 @@ class AudioPlayerDetail : AppCompatActivity() {
         val aniRotate: Animation =
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
         progressDialog.startAnimation(aniRotate)
-        audiodetails()
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+        if (internetCheck)
+        {
+            audiodetails()
+        }
+        else{
+            InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+        }
         player.onComplete {
             Toast.makeText(applicationContext, "Play completed", Toast.LENGTH_SHORT).show()
         }.onInfo { what, extra ->

@@ -20,8 +20,10 @@ import com.mobatia.bisad.R
 import com.mobatia.bisad.activity.home.HomeActivity
 import com.mobatia.bisad.activity.message.model.MessageDetailApiModel
 import com.mobatia.bisad.activity.message.model.MessageDetailModel
+import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
 import com.mobatia.bisad.manager.PreferenceData
+import com.mobatia.bisad.rest.AccessTokenClass
 import com.mobatia.bisad.rest.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -58,7 +60,14 @@ class TextMessageActivity : AppCompatActivity(){
         id=intent.getStringExtra("id")
         title=intent.getStringExtra("title")
         initUI()
-        callMessageDetailAPI()
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+        if (internetCheck)
+        {
+            callMessageDetailAPI()
+        }
+        else{
+            InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+        }
         getSettings()
 
     }
@@ -159,7 +168,14 @@ class TextMessageActivity : AppCompatActivity(){
 
                 }
 
-
+                else if (response.body()!!.status == 116) {
+                    AccessTokenClass.getAccessToken(mContext)
+                    callMessageDetailAPI()
+                } else {
+                    InternetCheckClass.checkApiStatusError(
+                        response.body()!!.status,mContext
+                    )
+                }
             }
 
         })
