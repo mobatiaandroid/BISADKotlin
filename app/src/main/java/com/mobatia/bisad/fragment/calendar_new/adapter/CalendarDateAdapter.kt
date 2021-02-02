@@ -70,7 +70,6 @@ class CalendarDateAdapter(
     @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val summary = calendarArrayList[position]
-        Log.e("CALENDARPOSITION",position.toString())
 
 
 
@@ -78,6 +77,7 @@ class CalendarDateAdapter(
 
 
             if (summary.startDate.length == 20) {
+
                 val inputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
                 val outputFormat: DateFormat = SimpleDateFormat("EEEE dd MMMM")
                 val startdate: Date = inputFormat.parse(summary.startDate)
@@ -85,60 +85,33 @@ class CalendarDateAdapter(
                 holder.dateTxt.text = outputDateStrstart
 
 
-            } else if (summary.startDate.length == 11) {
+            }
+            else if (summary.startDate.length == 11)
+            {
                 val inputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
                 val outputFormat: DateFormat = SimpleDateFormat("EEEE dd MMMM")
                 val startdate: Date? = inputFormat.parse(summary.startDate)
-                val enddate: Date = inputFormat.parse(summary.endDate)
+             //   val enddate: Date = inputFormat.parse(summary.endDate)
                 var outputDateStrstart: String = outputFormat.format(startdate)
-                var outputDateStrend: String = outputFormat.format(enddate)
-
-                var outputDateStrstartupdated: String = inputFormat.format(startdate)
-                var outputDateStrendupdated: String = inputFormat.format(enddate)
-
 
                 holder.dateTxt.text = outputDateStrstart
-//                Log.e("CALENDARDATESTART:", outputDateStrstartupdated)
-//                Log.e("CALENDARDATEEND:", outputDateStrendupdated)
-//
-//                val sdf = SimpleDateFormat("MMM dd,yyyy")
-//                try {
-//                    val d1 = sdf.parse(outputDateStrstartupdated)
-//                    val d2 = sdf.parse(outputDateStrendupdated)
-//
-//                    val difference_In_Time = d2.time - d1.time
-//
-//                    difference_In_Days = (((difference_In_Time / (1000 * 60 * 60 * 24)) % 365).toString())
-//
-//                    Log.e("DATESDIFFERENCEUPDATE:", difference_In_Days)
-//                }
-//
-//                catch (e:ParseException){
-//                    e.printStackTrace()
-//                }
-//                val dates = getDates(outputDateStrstartupdated, outputDateStrendupdated)
-//                val calendarArrayListUpdated = ArrayList<String>()
 
+            }
+            else if (summary.startDate.length==10)
+            {
+                val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+                val inputFormatend: DateFormat = SimpleDateFormat("MMM dd,yyyy")
+                val outputFormat: DateFormat = SimpleDateFormat("EEEE dd MMMM")
+                val startdate: Date? = inputFormat.parse(summary.startDate)
+                //val enddate: Date = inputFormatend.parse(summary.endDate)
+                var outputDateStrstart: String = outputFormat.format(startdate)
+              //  var outputDateStrend: String = outputFormat.format(enddate)
+                var outputDateStrstartupdated: String = inputFormat.format(startdate)
+             //   var outputDateStrendupdated: String = inputFormat.format(enddate)
+                holder.dateTxt.text = outputDateStrstart
+            }
+            else {
 
-//                if (difference_In_Days > 1.toString()){
-//                    println("CALENADARDATES: " +"START: "+outputDateStrstart+"END: "+outputDateStrend+"ITEMPOS: "+position.toString())
-//                    for (date in dates!!)
-//                        println("NEwDARA: $date")
-//
-//
-//                    calendarArrayListUpdated.addAll(dates)
-//                    Log.e("ARRAYLISTSIZE:", calendarArrayListUpdated.size.toString())
-//                  // setListViewHeightBasedOnChildren(holder.detailRecycler)
-//
-//                }
-
-//                for (i in calendarArrayListUpdated.indices){
-//
-//                    print("Added Data:->  ${calendarArrayListUpdated[i]}")
-//                }
-
-
-            } else {
                 holder.dateTxt.text = summary.startDate
 
 
@@ -157,161 +130,8 @@ class CalendarDateAdapter(
             holder.detailRecycler.adapter = calendarListAdapter
         }
 
-//        holder.detailRecycler.addOnItemClickListener(object : OnItemClickListener {
-//            @SuppressLint("SimpleDateFormat", "SetTextI18n")
-//            @RequiresApi(Build.VERSION_CODES.O)
-//            override fun onItemClicked(position: Int, view: View) {
-//                dialogcalendar = Dialog(mContext)
-//                dialogcalendar.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//                dialogcalendar.setCancelable(false)
-//                // dialog.window!!.setLayout(1200,1400)
-//                dialogcalendar.setContentView(R.layout.calendar_popup)
-//                val summary = dialogcalendar.findViewById(R.id.summary) as TextView
-//                val close_popup = dialogcalendar.findViewById(R.id.close_popup) as ImageView
-//                val description = dialogcalendar.findViewById(R.id.description) as TextView
-//                val startcalendar = dialogcalendar.findViewById(R.id.start_date) as TextView
-//                val endcalendar = dialogcalendar.findViewById(R.id.end_date) as TextView
-//                val start_text = dialogcalendar.findViewById(R.id.start_text) as TextView
-//                val end_text = dialogcalendar.findViewById(R.id.end_text) as TextView
-//                val save_calendar = dialogcalendar.findViewById(R.id.save_calendar) as Button
-//                SummaryCalendar = detailArray[position].SUMMARY
-//                DescriptionCalendar = detailArray[position].DESCRIPTION
-//                StartCalendar = detailArray[position].DTSTART
-//                EndCalendar = detailArray[position].DTEND
-//                summary.text = SummaryCalendar
-//                description.visibility = View.GONE
-//                description.text = DescriptionCalendar
-//                start_text.setTextColor(mContext.let {
-//                    ContextCompat.getColor(
-//                        it,
-//                        R.color.rel_one
-//                    )
-//                })
-//                end_text.setTextColor(mContext.let {
-//                    ContextCompat.getColor(
-//                        it,
-//                        R.color.rel_one
-//                    )
-//                })
-//
-//                if (StartCalendar.length == 20) {
-//
-//
-//                    startcalendar.text = detailArray[position].DTSTART
-//                    endcalendar.text = detailArray[position].DTEND
-//
-//
-//
-//                }
-//
-//                if (StartCalendar.length == 11) {
-//                    val inputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
-//                    val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
-//
-//                    val startdate: Date = inputFormat.parse(detailArray[position].DTSTART)
-//                    val enddate: Date = inputFormat.parse(detailArray[position].DTEND)
-//
-//                    outputDateStrstart = outputFormat.format(startdate)
-//                    outputDateStrend = outputFormat.format(enddate)
-//
-//                    startcalendar.text = detailArray[position].DTSTART
-//                    endcalendar.text = detailArray[position].DTEND
-//                }
-//                save_calendar.setOnClickListener {
-//
-//                    val calendar = Calendar.getInstance()
-//                    calendar.timeZone = TimeZone.getDefault()
-//
-//                    if (StartCalendar.length == 16) {
-//                        try {
-//                            val startdatehelper =
-//                                SimpleDateFormat("MMM dd,yyyy hh:mm a").parse(detailArray[position].DTSTART)
-//                            val stopdatehelper =
-//                                SimpleDateFormat("MMM dd,yyyy hh:mm a").parse(detailArray[position].DTEND)
-//
-//                            startTime16format = startdatehelper.time
-//                            endTime16format = stopdatehelper.time
-//
-//
-//
-//                        } catch (e: Exception) {
-//                        }
-//
-//                        val intent = Intent(Intent.ACTION_EDIT)
-//                        intent.type = "vnd.android.cursor.item/event"
-//                        intent.putExtra("beginTime", startTime16format)
-//                        intent.putExtra("allDay", false)
-//                        intent.putExtra("rule", "FREQ=YEARLY")
-//                        intent.putExtra("endTime", endTime16format)
-//                        intent.putExtra("title", SummaryCalendar)
-//                        mContext.startActivity(intent)
-//                        dialogcalendar.dismiss()
-//                    }
-//
-//                    if (StartCalendar.length == 8) {
-//                        try {
-//                            val startdatehelper =
-//                                SimpleDateFormat("MMM dd,yyyy").parse(outputDateStrstart)
-//                            val stopdatehelper =
-//                                SimpleDateFormat("MMM dd,yyyy").parse(outputDateStrend)
-//
-//                            startTime8format = startdatehelper.time
-//                            endTime8format = stopdatehelper.time
-//                        } catch (e: Exception) {
-//                        }
-//
-//                        val intent = Intent(Intent.ACTION_EDIT)
-//                        intent.type = "vnd.android.cursor.item/event"
-//                        intent.putExtra("beginTime", startTime8format)
-//                        intent.putExtra("allDay", false)
-//                        intent.putExtra("rule", "FREQ=YEARLY")
-//                        intent.putExtra("endTime", endTime8format)
-//                        intent.putExtra("title", SummaryCalendar)
-//                        mContext.startActivity(intent)
-//                        dialogcalendar.dismiss()
-//                    }
-//
-//                }
-//
-//                if (DescriptionCalendar.length < 5) {
-//                    description.visibility = View.GONE
-//
-//                }
-//
-//                dialogcalendar.show()
-//
-//                close_popup.setOnClickListener {
-//                    dialogcalendar.dismiss()
-//                }
-//            }
-//
-//
-//        })
     }
-//
-//    private fun setListViewHeightBasedOnChildren(detailRecycler: RecyclerView) {
-//
-//        val listAdapter: ListAdapter = detailRecycler.adapter
-//            ?: // pre-condition
-//            return
-//
-//        var totalHeight = 0
-//        val desiredWidth = View.MeasureSpec.makeMeasureSpec(
-//            detailRecycler.width,
-//            View.MeasureSpec.UNSPECIFIED
-//        )
-//        for (i in 0 until listAdapter.count) {
-//            val listItem = listAdapter.getView(i, null, detailRecycler)
-//            //            listItem.measure(0, 0);
-//            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED)
-//            totalHeight += listItem.measuredHeight
-//        }
-//        val params: ViewGroup.LayoutParams = detailRecycler.layoutParams
-//        params.height = totalHeight + detailRecycler.height * (listAdapter.count - 1)
-//        detailRecycler.layoutParams = params
-//        detailRecycler.requestLayout()
-//
-//    }
+
 
     override fun getItemCount(): Int {
 

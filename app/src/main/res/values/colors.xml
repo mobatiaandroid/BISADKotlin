@@ -33,6 +33,7 @@
     <color name="ttpop">#043255</color>
     <color name="grey_checked">#CFD1D1</color>
     <color name="grey_unchecked">#ACADAC</color>
+    <color name="grey_unchecked1">#80ACADAC</color>
 
     <color name="action_bar_title">#FFFFFF</color>
 </resources>

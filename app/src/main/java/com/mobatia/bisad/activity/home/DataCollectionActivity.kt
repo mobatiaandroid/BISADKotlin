@@ -784,7 +784,6 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
                                         //validation check error
                                     } else {
                                         //check status code checks
-                                        Log.e("Login Status", "Code entered")
                                         InternetCheckClass.checkApiStatusError(status, context)
                                     }
                                 }

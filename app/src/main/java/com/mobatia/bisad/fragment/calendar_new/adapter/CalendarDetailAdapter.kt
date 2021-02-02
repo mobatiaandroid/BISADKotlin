@@ -42,7 +42,6 @@ class CalendarDetailAdapter(private var mContext:Context,private var calendarArr
     @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val summary = calendarArrayList[position]
-        Log.e("POSITONVDALUE : ", position.toString())
 
         holder.title.text = summary.SUMMARY
         if (summary.DTSTART.length!=0)
@@ -52,13 +51,14 @@ class CalendarDetailAdapter(private var mContext:Context,private var calendarArr
                 if (summary.DTSTART.length==20)
                 {
                     val inputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
-                    val outputFormat: DateFormat = SimpleDateFormat("hh:mm a")
+
+                    val outputFormat: DateFormat = SimpleDateFormat("HH:mm")
                     val startdate: Date = inputFormat.parse(summary.DTSTART)
                     var outputDateStrstart:String= outputFormat.format(startdate)
                     if (summary.DTEND.length==20)
                     {
                         val inputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
-                        val outputFormat: DateFormat = SimpleDateFormat("hh:mm a")
+                        val outputFormat: DateFormat = SimpleDateFormat("HH:mm")
                         val endDate: Date = inputFormat.parse(summary.DTEND)
                         var outputDateEND:String= outputFormat.format(endDate)
                         holder.timeTxt.text = outputDateStrstart+" - "+outputDateEND
@@ -81,11 +81,10 @@ class CalendarDetailAdapter(private var mContext:Context,private var calendarArr
                 if (summary.DTSTART.length==20)
                 {
                     val inputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy hh:mm a")
-                    val outputFormat: DateFormat = SimpleDateFormat("hh:mm a")
+                    val outputFormat: DateFormat = SimpleDateFormat("HH:mm")
                     val startdate: Date = inputFormat.parse(summary.DTSTART)
                     var outputDateStrstart:String= outputFormat.format(startdate)
                     holder.timeTxt.text = outputDateStrstart
-                    Log.e("calendardate:",outputDateStrstart)
 
                 }
                 else if (summary.DTSTART.length==11)
@@ -93,7 +92,7 @@ class CalendarDetailAdapter(private var mContext:Context,private var calendarArr
                     holder.timeTxt.text = "All day"
 
                 }
-                else
+                 else
                 {
                     holder.timeTxt.text = summary.DTSTART
                 }
@@ -140,15 +139,12 @@ class CalendarDetailAdapter(private var mContext:Context,private var calendarArr
 
             if (StartCalendar.length == 20) {
 
-
                 startcalendar.text = calendarArrayList[position].DTSTART
                 endcalendar.text = calendarArrayList[position].DTEND
-
-
-
             }
 
-            if (StartCalendar.length == 11) {
+            if (StartCalendar.length == 11)
+            {
                 val inputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
                 val outputFormat: DateFormat = SimpleDateFormat("MMM dd,yyyy")
 
@@ -166,7 +162,7 @@ class CalendarDetailAdapter(private var mContext:Context,private var calendarArr
                 val calendar = Calendar.getInstance()
                 calendar.timeZone = TimeZone.getDefault()
 
-                if (StartCalendar.length == 16) {
+                if (StartCalendar.length == 20) {
                     try {
                         val startdatehelper =
                             SimpleDateFormat("MMM dd,yyyy hh:mm a").parse(calendarArrayList[position].DTSTART)
@@ -192,12 +188,34 @@ class CalendarDetailAdapter(private var mContext:Context,private var calendarArr
                     dialogcalendar.dismiss()
                 }
 
-                if (StartCalendar.length == 8) {
+                if (StartCalendar.length == 11) {
                     try {
                         val startdatehelper =
                             SimpleDateFormat("MMM dd,yyyy").parse(outputDateStrstart)
                         val stopdatehelper =
                             SimpleDateFormat("MMM dd,yyyy").parse(outputDateStrend)
+
+                        startTime8format = startdatehelper.time
+                        endTime8format = stopdatehelper.time
+                    } catch (e: Exception) {
+                    }
+
+                    val intent = Intent(Intent.ACTION_EDIT)
+                    intent.type = "vnd.android.cursor.item/event"
+                    intent.putExtra("beginTime", startTime8format)
+                    intent.putExtra("allDay", false)
+                    intent.putExtra("rule", "FREQ=YEARLY")
+                    intent.putExtra("endTime", endTime8format)
+                    intent.putExtra("title", SummaryCalendar)
+                    mContext.startActivity(intent)
+                    dialogcalendar.dismiss()
+                }
+                if (StartCalendar.length == 10) {
+                    try {
+                        val startdatehelper =
+                            SimpleDateFormat("yyyy-MM-dd").parse(outputDateStrstart)
+                        val stopdatehelper =
+                            SimpleDateFormat("yyyy-MM-dd").parse(outputDateStrend)
 
                         startTime8format = startdatehelper.time
                         endTime8format = stopdatehelper.time

@@ -1500,7 +1500,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                                 {
                                     //call Token Expired
                                     AccessTokenClass.getAccessToken(mContext)
-                                    getbannerimages()
+                                    callSettingsUserDetail()
 
                                 }
                                 else

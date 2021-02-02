@@ -38,7 +38,7 @@
         android:layout_below="@+id/titleTextView"
         android:id="@+id/hidePast"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:orientation="horizontal"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
@@ -46,25 +46,29 @@
         android:visibility="gone"
         android:layout_marginTop="10dp"
         android:gravity="center_vertical">
-        <TextView
+        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/logout_user"
             android:text="Past Events: "/>
-        <Button
+        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
             android:id="@+id/hideBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="55dp"
+            android:layout_height="30dp"
             android:gravity="center"
+            android:textColor="@color/black"
             android:text="Hide"/>
-        <TextView
+        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/grey"
             android:text="| "/>
-        <Button
+        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
             android:id="@+id/showBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="55dp"
+            android:layout_height="30dp"
             android:gravity="center"
+            android:textColor="@color/black"
             android:text="Show"/>
     </LinearLayout>
 
@@ -76,10 +80,10 @@
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
         android:layout_below="@+id/hidePast"
         android:background="@drawable/event_spinnerbg"
         android:gravity="center"
+        android:visibility="gone"
         android:orientation="horizontal"
         android:weightSum="100">
 
@@ -112,43 +116,68 @@
     <LinearLayout
         android:id="@+id/monthLinear"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_below="@+id/filterLinear"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:visibility="gone"
+        android:weightSum="100"
+        >
         <ImageView
             android:id="@+id/previousBtn"
-            android:layout_width="50dp"
+            android:layout_width="0dp"
+            android:layout_weight="25"
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"
            android:src="@drawable/back"/>
         <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_width="0dp"
+            android:layout_weight="50"
+            android:layout_height="40dp"
             android:id="@+id/monthYearTxt"
-            android:textColor="@color/black"
+            android:textColor="@color/split_bg"
             android:textSize="16sp"
             android:text="Januray 2021"
             android:gravity="center"/>
         <ImageView
             android:id="@+id/nextBtn"
-            android:layout_width="50dp"
+            android:layout_width="0dp"
+            android:layout_weight="25"
             android:layout_marginLeft="5dp"
             android:layout_height="match_parent"
             android:src="@drawable/arrow"/>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendarRecycler"
-
         android:layout_below="@+id/monthLinear"
         android:layout_width="match_parent"
         style="@style/ListStyleBlackTextTransparentSelector"
         android:scrollbars="vertical"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
+        android:visibility="gone"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
+    <ImageView
+        android:id="@+id/noEventImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/no_events"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+    <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="16sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@+id/noEventImage"
+        android:id="@+id/noEventTxt"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="Currently you have no events in this month"/>
 
 
 

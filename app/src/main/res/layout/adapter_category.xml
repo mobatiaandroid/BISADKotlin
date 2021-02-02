@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_height="45dp"
+<RelativeLayout android:layout_height="42dp"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:layout_marginLeft="2dp"
-    android:layout_marginRight="2dp"
-    android:layout_marginTop="2dp"
-    android:layout_marginBottom="2dp"
-    android:gravity="center"
     xmlns:android="http://schemas.android.com/apk/res/android" >
-    <ImageView
-        android:id="@+id/checkBoxImg"
-        android:layout_width="35dp"
-        android:layout_height="45dp"
-        android:src="@drawable/check_box_header"
-        />
-    <com.mobatia.bisad.manager.CustomFontSansProTextBlack
-        android:id="@+id/categoryTypeTxt"
+    <LinearLayout
+        android:layout_height="38dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:paddingLeft="5dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"/>
-</LinearLayout>
+        android:orientation="horizontal"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="2dp"
+        android:gravity="center"
+        android:id="@+id/main">
+        <ImageView
+            android:id="@+id/checkBoxImg"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/check_box_header"
+            />
+        <com.mobatia.bisad.manager.CustomFontSansProTextBlack
+            android:id="@+id/categoryTypeTxt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:paddingLeft="5dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/main"
+        android:background="@color/rel_eight"/>
+</RelativeLayout>

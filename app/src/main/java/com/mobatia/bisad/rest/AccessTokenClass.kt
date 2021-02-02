@@ -74,7 +74,6 @@ class AccessTokenClass {
                                         else
                                         {
                                             //check status code checks
-                                            Log.e("Login Status","Code entered")
                                             InternetCheckClass.checkApiStatusError(status,mContext)
                                         }
                                     }

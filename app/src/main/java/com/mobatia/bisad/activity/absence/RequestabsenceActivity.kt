@@ -419,7 +419,6 @@ class RequestabsenceActivity : AppCompatActivity(){
                                         //validation check error
                                     } else {
                                         //check status code checks
-                                        Log.e("Login Status", "Code entered")
                                         InternetCheckClass.checkApiStatusError(status, mContext)
                                     }
                                 }
