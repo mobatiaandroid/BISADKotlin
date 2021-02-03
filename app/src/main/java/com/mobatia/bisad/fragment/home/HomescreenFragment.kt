@@ -1665,7 +1665,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                         if (response.body()!!.status==103)
                         {
                             //validation check error
-
+                            InternetCheckClass.checkApiStatusError(response.body()!!.status,mContext)
                         }
                         else
                         {

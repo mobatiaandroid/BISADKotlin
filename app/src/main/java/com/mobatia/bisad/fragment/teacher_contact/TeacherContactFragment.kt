@@ -60,6 +60,9 @@ class TeacherContactFragment : Fragment(){
     lateinit var contactStaffBtn: Button
     lateinit var staffRelative: RelativeLayout
     lateinit var mContext: Context
+
+    var apiCall:Int=0
+    var apiCallDetail:Int=0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -212,6 +215,28 @@ class TeacherContactFragment : Fragment(){
                         studentListArrayList.addAll(response.body()!!.responseArray!!.studentList)
                     }
                 }
+                else if (response.body()!!.status==116)
+                {
+                    if(apiCall!=4)
+                    {
+                        apiCall=apiCall+1
+                        AccessTokenClass.getAccessToken(mContext)
+                        callStudentListApi()
+                    }
+                    else{
+
+                        showSuccessAlertnew(mContext,"Something went wrong.Please try again later","Alert")
+
+                    }
+                }
+                else {
+                    if (response.body()!!.status == 103) {
+                        //validation check error
+                    } else {
+                        //check status code checks
+                        InternetCheckClass.checkApiStatusError(response.body()!!.status, mContext)
+                    }
+                }
             }
         })
     }
@@ -239,6 +264,27 @@ class TeacherContactFragment : Fragment(){
                     else
                     {
                         Toast.makeText(activity,"No Staffs Found", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                else if (response.body()!!.status==116)
+                {
+                    if (apiCallDetail!=4)
+                    {
+                        apiCallDetail=apiCallDetail+1
+                        AccessTokenClass.getAccessToken(mContext)
+                        callStaffListApi(studentID)
+                    }
+                    else{
+
+                        showSuccessAlertnew(mContext,"Something went wrong.Please try again later","Alert")
+                    }
+                }
+                else {
+                    if (response.body()!!.status == 103) {
+                        //validation check error
+                    } else {
+                        //check status code checks
+                        InternetCheckClass.checkApiStatusError(response.body()!!.status, mContext)
                     }
                 }
             }
@@ -447,6 +493,26 @@ class TeacherContactFragment : Fragment(){
         {
             dialog.dismiss()
             mdialog.dismiss()
+        }
+        dialog.show()
+    }
+    fun showSuccessAlertnew(context: Context,message : String,msgHead : String)
+    {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.alert_dialogue_ok_layout)
+        var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
+        var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+        var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
+        var btn_Ok = dialog.findViewById(R.id.btn_Ok) as Button
+        text_dialog.text = message
+        alertHead.text = msgHead
+        iconImageView.setImageResource(R.drawable.exclamationicon)
+        btn_Ok?.setOnClickListener()
+        {
+            dialog.dismiss()
         }
         dialog.show()
     }

@@ -84,6 +84,7 @@ class AppsFragment  : Fragment() {
     var stopLoading:Boolean=false
     var isLoading:Boolean=false
     var apiCall:Int=0
+    var apiCallDetail:Int=0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -97,7 +98,15 @@ class AppsFragment  : Fragment() {
         sharedprefs = PreferenceData()
         mContext = requireContext()
         initializeUI()
-        callStudentListApi()
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+        if (internetCheck)
+        {
+            callStudentListApi()
+        }
+        else{
+            InternetCheckClass.showSuccessInternetAlert(mContext)
+        }
+
 
     }
 
@@ -165,14 +174,33 @@ class AppsFragment  : Fragment() {
                     start=0
                     limit=20
                     calendarArrayList = ArrayList()
-                    callAppsList(start,limit)
+                    var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+                    if (internetCheck)
+                    {
+                        callAppsList(start,limit)
+                    }
+                    else{
+                        InternetCheckClass.showSuccessInternetAlert(mContext)
+                    }
+
                 }
                 else
                 {
                     if(response.body()!!.status == 116)
                     {
-                        AccessTokenClass.getAccessToken(mContext)
-                        callStudentListApi()
+                        if(apiCall!=4)
+                        {
+                            apiCall=apiCall+1
+                            AccessTokenClass.getAccessToken(mContext)
+                            callStudentListApi()
+                        }
+                        else{
+                            progressDialog.visibility=View.GONE
+                            showSuccessAlert(mContext,"Something went wrong.Please try again later","Alert")
+
+                        }
+
+
                     }
                 }
 
@@ -358,9 +386,19 @@ class AppsFragment  : Fragment() {
 
                     }
 
-                } else if (response.body()!!.status == 116) {
-                    AccessTokenClass.getAccessToken(mContext)
-                    callAppsList(start,limit)
+                } else if (response.body()!!.status == 116)
+                {
+                    if (apiCallDetail!=4)
+                    {
+                        apiCallDetail=apiCallDetail+1
+                        AccessTokenClass.getAccessToken(mContext)
+                        callAppsList(start,limit)
+                    }
+                    else{
+                        progressDialog.visibility=View.GONE
+                        showSuccessAlert(mContext,"Something went wrong.Please try again later","Alert")
+                    }
+
                 }
                 else {
                     InternetCheckClass.checkApiStatusError(response.body()!!.status, mContext)

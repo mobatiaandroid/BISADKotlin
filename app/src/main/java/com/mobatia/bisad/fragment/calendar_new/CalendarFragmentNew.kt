@@ -106,7 +106,7 @@ class CalendarFragmentNew : Fragment() {
             callCalendarApi()
         }
         else{
-            InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+            InternetCheckClass.showSuccessInternetAlert(mContext)
         }
 
     }

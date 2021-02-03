@@ -103,17 +103,17 @@ class ContactUsFragment : Fragment(), LocationListener,
 
         initializeUI()
        // permissioncheck()
-        fetchlatitudelongitude()
-        getcontactdetails()
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+        if (internetCheck)
+        {
+            fetchlatitudelongitude()
+            getcontactdetails()
+        }
+        else{
+            InternetCheckClass.showSuccessInternetAlert(mContext)
+        }
+
     }
-
-//    private fun permissioncheck() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            checkpermission()
-//        }
-//    }
-
-
     private fun fetchlatitudelongitude() {
         var location: Location
         locationManager = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager

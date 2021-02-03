@@ -64,7 +64,8 @@ class AttendanceFragment : Fragment() {
     var dateList = ArrayList<String>()
     var calendarlist = ArrayList<AttendanceListDetailModel>()
     var calendarplot = ArrayList<Calendar>()
-
+    var apiCall:Int=0
+    var apiCallDetail:Int=0
     private lateinit var linearLayoutManager: LinearLayoutManager
 
 
@@ -169,8 +170,17 @@ class AttendanceFragment : Fragment() {
                 }
 
                 if (response.body()!!.status == 116) {
-                    AccessTokenClass.getAccessToken(mContext)
-                    callStudentListApi()
+                    if(apiCall!=4)
+                    {
+                        apiCall=apiCall+1
+                        AccessTokenClass.getAccessToken(mContext)
+                        callStudentListApi()
+                    }
+                    else{
+                        progressDialog.visibility=View.GONE
+                        showSuccessAlert(mContext,"Something went wrong.Please try again later","Alert")
+
+                    }
                 } else {
                     InternetCheckClass.checkApiStatusError(response.body()!!.status, mContext)
 
@@ -308,8 +318,17 @@ class AttendanceFragment : Fragment() {
 
                     }
                     116 -> {
-                        AccessTokenClass.getAccessToken(mContext)
-                        getattendancedetails()
+                        if (apiCallDetail!=4)
+                        {
+                            apiCallDetail=apiCallDetail+1
+                            AccessTokenClass.getAccessToken(mContext)
+                            getattendancedetails()
+                        }
+                        else{
+                            progressDialog.visibility=View.GONE
+                            showSuccessAlert(mContext,"Something went wrong.Please try again later","Alert")
+                        }
+
                     }
                     else -> {
                         InternetCheckClass.checkApiStatusError(response.body()!!.status, mContext)
@@ -349,5 +368,25 @@ class AttendanceFragment : Fragment() {
         return calendars
 
     }
+    fun showSuccessAlert(context: Context, message : String, msgHead : String)
+    {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.alert_dialogue_ok_layout)
+        var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
+        var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+        var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
+        var btn_Ok = dialog.findViewById(R.id.btn_Ok) as Button
+        text_dialog.text = message
+        alertHead.text = msgHead
+        iconImageView.setImageResource(R.drawable.exclamationicon)
+        btn_Ok?.setOnClickListener()
+        {
+            dialog.dismiss()
 
+        }
+        dialog.show()
+    }
 }

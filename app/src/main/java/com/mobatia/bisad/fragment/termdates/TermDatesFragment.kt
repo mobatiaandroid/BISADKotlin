@@ -64,6 +64,7 @@ class TermDatesFragment : Fragment(){
     lateinit var progressDialog: RelativeLayout
     lateinit var mContext: Context
      lateinit var webView: WebView
+    var apiCall:Int=0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -176,8 +177,18 @@ class TermDatesFragment : Fragment(){
                 }
                 else if(response.body()!!.status==116)
                 {
-                    AccessTokenClass.getAccessToken(mContext)
-                    callTermDatesListAPI()
+                    if (apiCall!=4)
+                    {
+                        apiCall=apiCall+1
+                        AccessTokenClass.getAccessToken(mContext)
+                        callTermDatesListAPI()
+                    }
+                    else{
+                        progressDialog.visibility = View.GONE
+                        showSuccessAlert(mContext,"Something went wrong.Please try again later","Alert")
+                    }
+
+
                 }
                 else
                 {

@@ -91,6 +91,9 @@ class TimeTableFragment : Fragment(){
     lateinit var timeTableAllRecycler: RecyclerView
     lateinit var card_viewAll: CardView
     lateinit var progressDialog: RelativeLayout
+
+    var apiCall:Int=0
+    var apiCallDetail:Int=0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -538,8 +541,18 @@ class TimeTableFragment : Fragment(){
 
 
                 } else if (response.body()!!.status == 116) {
-                    AccessTokenClass.getAccessToken(mContext)
-                    callTimeTableApi()
+                    if (apiCallDetail!=4)
+                    {
+                        apiCallDetail=apiCallDetail+1
+                        AccessTokenClass.getAccessToken(mContext)
+                        callTimeTableApi()
+                    }
+                    else{
+                        progressDialog.visibility=View.GONE
+                        showSuccessAlert(mContext,"Something went wrong.Please try again later","Alert")
+                    }
+//                    AccessTokenClass.getAccessToken(mContext)
+//                    callTimeTableApi()
                 }
                 else {
                     InternetCheckClass.checkApiStatusError(response.body()!!.status, mContext)
@@ -691,8 +704,19 @@ class TimeTableFragment : Fragment(){
                 {
                     if(response.body()!!.status == 116)
                     {
-                        AccessTokenClass.getAccessToken(mContext)
-                        callStudentListApi()
+                        if(apiCall!=4)
+                        {
+                            apiCall=apiCall+1
+                            AccessTokenClass.getAccessToken(mContext)
+                            callStudentListApi()
+                        }
+                        else{
+                            progressDialog.visibility=View.GONE
+                            showSuccessAlert(mContext,"Something went wrong.Please try again later","Alert")
+
+                        }
+//                        AccessTokenClass.getAccessToken(mContext)
+//                        callStudentListApi()
                     }
                 }
 

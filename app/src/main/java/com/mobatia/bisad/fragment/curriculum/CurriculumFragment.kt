@@ -60,7 +60,8 @@ class CurriculumFragment : Fragment() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     var studentListArrayList = ArrayList<StudentList>()
     var reportArrayList = ArrayList<ReportListDetailModel>()
-
+    var apiCall:Int=0
+    var apiCallDetail:Int=0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,7 +81,15 @@ class CurriculumFragment : Fragment() {
         mContext = requireContext()
         sharedprefs = PreferenceData()
         initializeUI()
-        callStudentListApi()
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+        if (internetCheck)
+        {
+            callStudentListApi()
+        }
+        else{
+            InternetCheckClass.showSuccessInternetAlert(mContext)
+        }
+
     }
 
     fun callStudentListApi() {
@@ -149,8 +158,16 @@ class CurriculumFragment : Fragment() {
                 }
 
                 if (response.body()!!.status == 116) {
-                    AccessTokenClass.getAccessToken(mContext)
-                    callStudentListApi()
+                    if (apiCall!=4)
+                    {
+                        apiCall=apiCall+1
+                        AccessTokenClass.getAccessToken(mContext)
+                        callStudentListApi()
+                    }
+                    else{
+                        showSuccessAlert(mContext,"Something went wrong.Please try again later","Alert")
+                    }
+
                 } else {
                     InternetCheckClass.checkApiStatusError(response.body()!!.status, mContext)
 
@@ -288,8 +305,17 @@ class CurriculumFragment : Fragment() {
 
                     }
                     116 -> {
-                        AccessTokenClass.getAccessToken(mContext)
-                        getreportsdetails()
+                        if (apiCallDetail!=4)
+                        {
+                            apiCallDetail=apiCallDetail+1
+                            AccessTokenClass.getAccessToken(mContext)
+                            getreportsdetails()
+                        }
+                        else{
+                            progressDialog.visibility = View.GONE
+                            showSuccessAlert(mContext,"Something went wrong.Please try again later","Alert")
+                        }
+
                     }
                     else -> {
                         InternetCheckClass.checkApiStatusError(response.body()!!.status, mContext)
