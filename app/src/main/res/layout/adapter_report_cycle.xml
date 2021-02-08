@@ -6,7 +6,6 @@
     <RelativeLayout
         android:id="@+id/relativeclick"
         android:layout_width="fill_parent"
-        android:layout_below="@+id/titlelinear"
         android:layout_height="45dp"
         >
         <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor

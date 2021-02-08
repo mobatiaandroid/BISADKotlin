@@ -204,6 +204,7 @@ class AttendanceFragment : Fragment() {
         calendarView = view!!.findViewById(R.id.calendarView) as CalendarView
         calendarView.isClickable=false
         titleTextView.text = "Attendance"
+
         val aniRotate: Animation =
             AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
         progressDialog.startAnimation(aniRotate)
