@@ -7,10 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
@@ -28,7 +25,6 @@ import com.mobatia.bisad.recyclermanager.addOnItemClickListener
 import com.mobatia.bisad.rest.ApiClient
 import com.mobatia.calendardemopro.adapter.CalendarDateAdapter
 import com.mobatia.calendardemopro.adapter.CategoryAdapter
-import kotlinx.android.synthetic.main.fragment_passport_detail.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -53,6 +49,7 @@ class CalendarFragmentNew : Fragment() {
     lateinit var hideBtn: TextView
     lateinit var showBtn: TextView
     lateinit var previousBtn: ImageView
+    lateinit var calendar_relative:RelativeLayout
     lateinit var nextBtn: ImageView
     lateinit var filterLinear: LinearLayout
     lateinit var hidePast: LinearLayout
@@ -131,6 +128,7 @@ class CalendarFragmentNew : Fragment() {
         previousBtn = view!!.findViewById(R.id.previousBtn)
         nextBtn = view!!.findViewById(R.id.nextBtn)
         filterLinear = view!!.findViewById(R.id.filterLinear)
+        //calendar_relative = view!!.findViewById(R.id.calendar_relative)
         hidePast = view!!.findViewById(R.id.hidePast)
         monthLinear = view!!.findViewById(R.id.monthLinear)
         year = Calendar.getInstance().get(Calendar.YEAR)
@@ -181,6 +179,7 @@ class CalendarFragmentNew : Fragment() {
             )
 
         })
+
         hideBtn.setOnClickListener(View.OnClickListener {
             hideBtn.setTextColor(resources.getColor(R.color.split_bg))
             showBtn.setTextColor(resources.getColor(R.color.black))
@@ -335,6 +334,7 @@ class CalendarFragmentNew : Fragment() {
                                 }
                                 if (i == 3) {
                                     model.color = wholeSchoole
+
                                 }
                             }
 

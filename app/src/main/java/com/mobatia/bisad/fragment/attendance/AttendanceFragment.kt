@@ -20,7 +20,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.applandeo.materialcalendarview.CalendarView
-import com.applandeo.materialcalendarview.EventDay
 import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener
 import com.applandeo.materialcalendarview.utils.DateUtils
@@ -46,7 +45,7 @@ import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
 
-class AttendanceFragment : Fragment() {
+class AttendanceFragment : Fragment() ,View.OnClickListener{
     lateinit var progressDialog: RelativeLayout
     lateinit var studentName: String
     lateinit var studentId: String
@@ -215,6 +214,7 @@ class AttendanceFragment : Fragment() {
         }
 
 
+
     }
 
 
@@ -312,10 +312,13 @@ class AttendanceFragment : Fragment() {
 
                         for (i in array.indices) {
                             dateList.add(array[i].date)
+
                             println("DATES: ${dateList[i]}")
                         }
 
                         calendarView.selectedDates = getSelectedDays()
+                        calendarView.setDate(Calendar.getInstance())
+                        calendarView.isClickable=false
 
                     }
                     116 -> {
@@ -344,8 +347,13 @@ class AttendanceFragment : Fragment() {
 
     private fun getSelectedDays(): MutableList<Calendar>? {
         val calendars: MutableList<Calendar> = ArrayList()
+        calendarView.isContextClickable=false
+        calendarView.isLongClickable=false
+        calendarView.isFocusable=false
+        calendarView.isEnabled=false
 
         for (i in dateList.indices) {
+            Log.e("DATELIST",dateList.get(i).toString())
             val FullDate: String = dateList[i]
             val parts = FullDate.split("-".toRegex()).toTypedArray()
             val year = parts[0].toInt()
@@ -353,18 +361,19 @@ class AttendanceFragment : Fragment() {
             val date = parts[2].toInt()
 
             try {
-
                 val calendar = DateUtils.getCalendar()
                 calendar[Calendar.YEAR] = year
                 calendar[Calendar.MONTH] = month-1
                 calendar[Calendar.DAY_OF_MONTH] = date
                 calendarView.setDate(calendar)
+
                 calendars.add(calendar)
             } catch (e: OutOfDateRangeException) {
                 e.printStackTrace()
             }
 
         }
+
 
         return calendars
 
@@ -389,5 +398,9 @@ class AttendanceFragment : Fragment() {
 
         }
         dialog.show()
+    }
+
+    override fun onClick(v: View?) {
+        TODO("Not yet implemented")
     }
 }
