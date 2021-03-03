@@ -66,7 +66,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/relativeHeader"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/downloadpdf"
+                android:src="@drawable/downloadpdf" />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/sharepdf"
+                android:src="@drawable/sharepdf" />
+        </LinearLayout>
+
+
+
+
+
 
         <com.github.barteksc.pdfviewer.PDFView
             android:id="@+id/pdfView"

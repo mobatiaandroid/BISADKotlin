@@ -23,17 +23,12 @@
     <color name="light_grey">#d8d8d8</color>
     <color name="dark_grey1">#908C86</color>
 
-    <color name="cal_row_1">#E67D4C</color>
-    <color name="cal_row_2">#6E2E86</color>
-    <color name="cal_row_3">#E21459</color>
     <color name="cal_row_4">#1B3354</color>
     <color name="logout_user"> #808080</color>
     <color name="btnBackground">#e7e7e7</color>
     <color name="timetableblue">#7AE2ED</color>
     <color name="ttpop">#043255</color>
     <color name="grey_checked">#CFD1D1</color>
-    <color name="grey_unchecked">#ACADAC</color>
     <color name="grey_unchecked1">#80ACADAC</color>
 
-    <color name="action_bar_title">#FFFFFF</color>
 </resources>

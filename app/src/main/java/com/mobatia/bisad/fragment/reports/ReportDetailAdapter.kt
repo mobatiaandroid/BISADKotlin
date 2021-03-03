@@ -51,7 +51,7 @@ class ReportDetailAdapter(private var mContext:Context, private var repoetDetail
 
 
           // mContext.startActivity(Intent(mContext, WebviewLoad::class.java).putExtra("Url",repoetDetailArray[position].file))
-            mContext.startActivity(Intent(mContext, PdfViewer::class.java).putExtra("Url",repoetDetailArray[position].file))
+            mContext.startActivity(Intent(mContext, PdfViewer::class.java).putExtra("Url",repoetDetailArray[position].file).putExtra("title",repoetDetailArray[position].report_cycle))
 
         }
     }
