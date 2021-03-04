@@ -165,8 +165,9 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
         listitems = resources.getStringArray(R.array.navigation_items_guest)
         mListImgArrays = context!!.resources.obtainTypedArray(R.array.navigation_icons_guest)
         previousTriggerType= sharedprefs.getTriggerType(mContext)
-        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+
         initializeUI()
+        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
         if(internetCheck)
         {
             getbannerimages()

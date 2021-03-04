@@ -651,8 +651,6 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
             dialog.dismiss()
             finish()
 
-
-
         }
         dialog.show()
     }
