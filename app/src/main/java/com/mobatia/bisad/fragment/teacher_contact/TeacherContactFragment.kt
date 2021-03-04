@@ -47,6 +47,7 @@ class TeacherContactFragment : Fragment(){
     lateinit var studentId: String
     lateinit var studentImg: String
     lateinit var staffName: String
+    lateinit var staffrole:String
     lateinit var staffId: String
     lateinit var staffImg: String
     lateinit var staffEmail: String
@@ -57,6 +58,7 @@ class TeacherContactFragment : Fragment(){
     lateinit var selectStaffImgView: ImageView
     lateinit var studentNameTV: TextView
     lateinit var staffNameTV: TextView
+    lateinit var staffroleTV:TextView
     lateinit var contactStaffBtn: Button
     lateinit var staffRelative: RelativeLayout
     lateinit var mContext: Context
@@ -96,6 +98,7 @@ class TeacherContactFragment : Fragment(){
         selectStaffImgView=view!!.findViewById(R.id.selectStaffImgView)as ImageView
         studentNameTV=view!!.findViewById(R.id.studentNameTV)as TextView
         staffNameTV=view!!.findViewById(R.id.staffNameTV)as TextView
+        staffroleTV= view!!.findViewById(R.id.staffrole) as TextView
         contactStaffBtn=view!!.findViewById(R.id.contactStaffBtn)as Button
         staffRelative=view!!.findViewById(R.id.staffRelative)as RelativeLayout
         contactStaffBtn.visibility=View.GONE
@@ -397,10 +400,12 @@ class TeacherContactFragment : Fragment(){
             override fun onItemClicked(position: Int, view: View) {
                 // Your logic
                 staffName=mStaffList.get(position).name
+                staffrole = mStaffList.get(position).role
                 staffImg=mStaffList.get(position).staff_photo
                 staffId=mStaffList.get(position).id
                 staffEmail=mStaffList.get(position).email
                 staffNameTV .text=staffName
+                staffroleTV.text=staffrole
                 if(!staffImg.equals(""))
                 {
                     Glide.with(mContext) //1

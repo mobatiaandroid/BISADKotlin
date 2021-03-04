@@ -10,12 +10,12 @@ class CustomFontSansProEditTextBoldWithoutColor :androidx.appcompat.widget.AppCo
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
         // ...
         val type= Typeface.createFromAsset(context.assets,"fonts/SourceSansPro-Bold.otf")
-        this.setTypeface(type)
+        this.typeface = type
     }
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0) {
         val type =
             Typeface.createFromAsset(context.assets, "fonts/SourceSansPro-Bold.otf")
-        this.setTypeface(type)
+        this.typeface = type
     }
 }
