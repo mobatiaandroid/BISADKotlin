@@ -6,4 +6,6 @@
     android:pivotX="50%"
     android:pivotY="50%"
     android:repeatCount="infinite"
-    android:toDegrees="358" />
+    android:toDegrees="358"
+
+    />

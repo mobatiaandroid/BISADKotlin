@@ -18,6 +18,8 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
@@ -27,13 +29,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mobatia.bisad.R
 import com.mobatia.bisad.activity.common.LoginActivity
 import com.mobatia.bisad.activity.home.DataCollectionActivity
-import com.mobatia.bisad.activity.home.model.DataCollectionSubmissionModel
 import com.mobatia.bisad.activity.home.model.HealthInsuranceDetailAPIModel
 import com.mobatia.bisad.activity.settings.termsofservice.TermsOfServiceActivity
 import com.mobatia.bisad.activity.settings.tutorial.TutorialActivity
 import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
-import com.mobatia.bisad.fragment.home.*
 import com.mobatia.bisad.fragment.home.model.BannerModel
 import com.mobatia.bisad.fragment.home.model.StudentListDataCollection
 import com.mobatia.bisad.fragment.home.model.datacollection.*
@@ -90,31 +90,31 @@ class SettingsFragment : Fragment(){
         mSettingsArrayListGuest=ArrayList()
         if(sharedprefs.getUserCode(mContext).equals(""))
         {
-            mSettingsArrayListGuest.add("Change App Settings");
-            mSettingsArrayListGuest.add("Terms of Service");
-            mSettingsArrayListGuest.add("Email Help");
-            mSettingsArrayListGuest.add("Tutorial");
-            mSettingsArrayListGuest.add("Logout");
+            mSettingsArrayListGuest.add("Change App Settings")
+            mSettingsArrayListGuest.add("Terms of Service")
+            mSettingsArrayListGuest.add("Email Help")
+            mSettingsArrayListGuest.add("Tutorial")
+            mSettingsArrayListGuest.add("Logout")
         }
         else{
             if (sharedprefs.getDataCollection(mContext)==1)
             {
-                mSettingsArrayListRegistered.add("Change App Settings");
-                mSettingsArrayListRegistered.add("Terms of Service");
-                mSettingsArrayListRegistered.add("Email Help");
-                mSettingsArrayListRegistered.add("Tutorial");
-                mSettingsArrayListRegistered.add("Change Password");
-                mSettingsArrayListRegistered.add("Logout");
+                mSettingsArrayListRegistered.add("Change App Settings")
+                mSettingsArrayListRegistered.add("Terms of Service")
+                mSettingsArrayListRegistered.add("Email Help")
+                mSettingsArrayListRegistered.add("Tutorial")
+                mSettingsArrayListRegistered.add("Change Password")
+                mSettingsArrayListRegistered.add("Logout")
             }
             else
             {
-                mSettingsArrayListRegistered.add("Change App Settings");
-                mSettingsArrayListRegistered.add("Terms of Service");
-                mSettingsArrayListRegistered.add("Email Help");
-                mSettingsArrayListRegistered.add("Tutorial");
-                mSettingsArrayListRegistered.add("Change Password");
-                mSettingsArrayListRegistered.add("Update Account Details");
-                mSettingsArrayListRegistered.add("Logout");
+                mSettingsArrayListRegistered.add("Change App Settings")
+                mSettingsArrayListRegistered.add("Terms of Service")
+                mSettingsArrayListRegistered.add("Email Help")
+                mSettingsArrayListRegistered.add("Tutorial")
+                mSettingsArrayListRegistered.add("Change Password")
+                mSettingsArrayListRegistered.add("Update Account Details")
+                mSettingsArrayListRegistered.add("Logout")
             }
 
         }
@@ -125,7 +125,7 @@ class SettingsFragment : Fragment(){
 
         mSettingsListView = view!!.findViewById(R.id.mSettingsListView) as RecyclerView
         titleTextView = view!!.findViewById(R.id.titleTextView) as TextView
-        titleTextView.setText("Settings")
+        titleTextView.text = "Settings"
         linearLayoutManager = LinearLayoutManager(mContext)
         mSettingsListView.layoutManager = linearLayoutManager
         mSettingsListView.itemAnimator = DefaultItemAnimator()
@@ -152,9 +152,9 @@ class SettingsFragment : Fragment(){
                              arrayOf("communications@bisaddubai.com")
                          val emailIntent = Intent(Intent.ACTION_SEND)
                          emailIntent.putExtra(Intent.EXTRA_EMAIL, deliveryAddress)
-                         emailIntent.setType("text/plain")
+                         emailIntent.type = "text/plain"
                          emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                         val pm: PackageManager = mContext.getPackageManager()
+                         val pm: PackageManager = mContext.packageManager
                          val activityList = pm.queryIntentActivities(
                              emailIntent, 0
                          )
@@ -216,9 +216,9 @@ class SettingsFragment : Fragment(){
                                  arrayOf("communications@bisaddubai.com")
                              val emailIntent = Intent(Intent.ACTION_SEND)
                              emailIntent.putExtra(Intent.EXTRA_EMAIL, deliveryAddress)
-                             emailIntent.setType("text/plain")
+                             emailIntent.type = "text/plain"
                              emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                             val pm: PackageManager = mContext.getPackageManager()
+                             val pm: PackageManager = mContext.packageManager
                              val activityList = pm.queryIntentActivities(
                                  emailIntent, 0
                              )
@@ -260,7 +260,7 @@ class SettingsFragment : Fragment(){
 //                         }
                          else if (position==5)
                          {
-                             showSuccessAlert(mContext, "Confirm?", "Do you want to Logout?", R.drawable.questionmark_icon, R.drawable.round);
+                             showSuccessAlert(mContext, "Confirm?", "Do you want to Logout?", R.drawable.questionmark_icon, R.drawable.round)
 
                          }
                      }
@@ -284,9 +284,9 @@ class SettingsFragment : Fragment(){
                                  arrayOf("communications@bisaddubai.com")
                              val emailIntent = Intent(Intent.ACTION_SEND)
                              emailIntent.putExtra(Intent.EXTRA_EMAIL, deliveryAddress)
-                             emailIntent.setType("text/plain")
+                             emailIntent.type = "text/plain"
                              emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                             val pm: PackageManager = mContext.getPackageManager()
+                             val pm: PackageManager = mContext.packageManager
                              val activityList = pm.queryIntentActivities(
                                  emailIntent, 0
                              )
@@ -327,7 +327,7 @@ class SettingsFragment : Fragment(){
                          }
                          else if (position==6)
                          {
-                             showSuccessAlert(mContext, "Confirm?", "Do you want to Logout?", R.drawable.questionmark_icon, R.drawable.round);
+                             showSuccessAlert(mContext, "Confirm?", "Do you want to Logout?", R.drawable.questionmark_icon, R.drawable.round)
 
                          }
                      }
@@ -338,11 +338,11 @@ class SettingsFragment : Fragment(){
         if (sharedprefs.getUserCode(mContext).equals(""))
         {
             val settingsAdapter = SettingsRecyclerAdapter(mContext,mSettingsArrayListGuest)
-            mSettingsListView.setAdapter(settingsAdapter)
+            mSettingsListView.adapter = settingsAdapter
         }
         else{
             val settingsAdapter = SettingsRecyclerAdapter(mContext,mSettingsArrayListRegistered)
-            mSettingsListView.setAdapter(settingsAdapter)
+            mSettingsListView.adapter = settingsAdapter
         }
 
     }
@@ -364,14 +364,14 @@ class SettingsFragment : Fragment(){
         var btn_Cancel = dialog.findViewById(R.id.btn_Cancel) as Button
         text_dialog.text = msg
         alertHead.text = msgHead
-        btn_Ok?.setOnClickListener()
+        btn_Ok.setOnClickListener()
         {
 
             dialog.dismiss()
 
 
         }
-        btn_Cancel?.setOnClickListener()
+        btn_Cancel.setOnClickListener()
         {
             dialog.dismiss()
 
@@ -395,23 +395,21 @@ class SettingsFragment : Fragment(){
         var btn_Cancel = dialog.findViewById(R.id.btn_Cancel) as Button
         text_dialog.text = msg
         alertHead.text = msgHead
-        btn_Ok?.setOnClickListener()
+        btn_Ok.setOnClickListener()
         {
-            if (sharedprefs.getUserCode(mContext).equals(""))
-            {
+            if (sharedprefs.getUserCode(mContext).equals("")) {
                 sharedprefs.setUserCode(mContext,"")
                 sharedprefs.setUserID(mContext,"")
                 val mIntent = Intent(activity, LoginActivity::class.java)
                 mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 activity!!.startActivity(mIntent)
 
-            }
-            else{
+            } else{
                 callLogoutApi(dialog)
             }
             dialog.dismiss()
         }
-        btn_Cancel?.setOnClickListener()
+        btn_Cancel.setOnClickListener()
         {
             dialog.dismiss()
         }
@@ -436,10 +434,8 @@ class SettingsFragment : Fragment(){
         var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
         var btn_Ok = dialog.findViewById(R.id.btn_Ok) as Button
         var btn_Cancel = dialog.findViewById(R.id.btn_Cancel) as Button
-        var progressDialog = dialog.findViewById(R.id.progressDialog) as RelativeLayout
-        val aniRotate: Animation =
-            AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
-        progressDialog.startAnimation(aniRotate)
+        var progressDialog = dialog.findViewById(R.id.progress) as ProgressBar
+
         text_dialog.text = msg
         alertHead.text = msgHead
         var categoryList= ArrayList<String>()
@@ -457,7 +453,7 @@ class SettingsFragment : Fragment(){
 
         }
         var triggerAdapter=TriggerAdapter(mTriggerModelArrayList)
-        checkRecycler.setAdapter(triggerAdapter)
+        checkRecycler.adapter = triggerAdapter
         checkRecycler.addOnItemClickListener(object: OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
                 if (position==0)
@@ -479,42 +475,34 @@ class SettingsFragment : Fragment(){
                 }
 
                 var triggerAdapter=TriggerAdapter(mTriggerModelArrayList)
-                checkRecycler.setAdapter(triggerAdapter)
+                checkRecycler.adapter = triggerAdapter
             }
         })
-        btn_Ok?.setOnClickListener()
+        btn_Ok.setOnClickListener()
         {
-             var valueTrigger:String="0"
-            if (mTriggerModelArrayList.get(0).checkedCategory)
-            {
+            var valueTrigger:String="0"
+            if (mTriggerModelArrayList.get(0).checkedCategory) {
                 valueTrigger="1"
-            }
-            else if (mTriggerModelArrayList.get(1).checkedCategory)
-            {
+            } else if (mTriggerModelArrayList.get(1).checkedCategory) {
                 valueTrigger="2"
-            }
-            else if (mTriggerModelArrayList.get(2).checkedCategory)
-            {
+            } else if (mTriggerModelArrayList.get(2).checkedCategory) {
                 valueTrigger="3"
             }
 
-            if (valueTrigger.equals("0"))
-            {
+            if (valueTrigger.equals("0")) {
                 Toast.makeText(
                     mContext,
                     "Please select any trigger type before confiming",
                     Toast.LENGTH_SHORT
                 ).show()
-            }
-            else
-            {
+            } else {
                 progressDialog.visibility=View.VISIBLE
                 //callDataTriggerApi(valueTrigger,dialog,progressDialog)
             }
 
-           // dialog.dismiss()
+            // dialog.dismiss()
         }
-        btn_Cancel?.setOnClickListener()
+        btn_Cancel.setOnClickListener()
         {
             dialog.dismiss()
         }
@@ -601,36 +589,30 @@ class SettingsFragment : Fragment(){
         var btn_changepassword = dialog.findViewById(R.id.btn_changepassword) as Button
         var btn_cancel = dialog.findViewById(R.id.btn_cancel) as Button
         btn_cancel.isClickable=true
-        btn_cancel?.setOnClickListener()
+        btn_cancel.setOnClickListener()
         {
 
-           dialog.dismiss()
+            dialog.dismiss()
         }
 
-        btn_changepassword?.setOnClickListener()
+        btn_changepassword.setOnClickListener()
         {
             val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(text_currentpassword.getWindowToken(), 0)
+            imm.hideSoftInputFromWindow(text_currentpassword.windowToken, 0)
             val imn= context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imn.hideSoftInputFromWindow(text_currentnewpassword.getWindowToken(), 0)
+            imn.hideSoftInputFromWindow(text_currentnewpassword.windowToken, 0)
             val imo= context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imo.hideSoftInputFromWindow(text_confirmpassword.getWindowToken(), 0)
-            if (text_currentpassword.text.toString().trim().equals(""))
-            {
+            imo.hideSoftInputFromWindow(text_confirmpassword.windowToken, 0)
+            if (text_currentpassword.text.toString().trim().equals("")) {
                 InternetCheckClass. showErrorAlert(context,"Please enter Current Password","Alert")
-            }
-            else{
-                if (text_currentnewpassword.text.toString().trim().equals(""))
-                {
+            } else{
+                if (text_currentnewpassword.text.toString().trim().equals("")) {
                     InternetCheckClass. showErrorAlert(context,"Please enter New Password","Alert")
-                }
-                else{
-                    if (text_confirmpassword.text.toString().trim().equals(""))
-                    {
+                } else{
+                    if (text_confirmpassword.text.toString().trim().equals("")) {
                         InternetCheckClass. showErrorAlert(context,"Please enter Confirm Password","Alert")
-                    }
-                    else{
-                               callChangePasswordApi(text_currentpassword.text.toString().trim(),text_currentnewpassword.text.toString().trim(),text_confirmpassword.text.toString(),dialog)
+                    } else{
+                        callChangePasswordApi(text_currentpassword.text.toString().trim(),text_currentnewpassword.text.toString().trim(),text_confirmpassword.text.toString(),dialog)
                     }
                 }
             }

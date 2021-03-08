@@ -31,10 +31,10 @@
             android:layout_height="60dp"
             android:layout_centerInParent="true"
             android:background="@drawable/round"
-            android:src="@drawable/questionmark_icon"
             android:gravity="center"
-            android:scaleType="fitCenter" />
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/questionmark_icon" />
+        android:scaleType="fitCenter" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -52,9 +52,9 @@
             android:layout_height="wrap_content"
 
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
+            android:layout_marginBottom="10dp"
             android:gravity="center_horizontal"
             android:text="Alert"
             android:textColor="#ff000000"
@@ -66,51 +66,56 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/alertHead"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
             android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
             android:layout_marginTop="5dp"
-            android:textSize="18sp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="30dp"
             android:gravity="center_horizontal"
             android:text="Password Missmatch"
-            android:textColor="#ff000000" />
+            android:textColor="#ff000000"
+            android:textSize="18sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/checkRecycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_dialog"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_below="@+id/checkRecycler"
+            android:orientation="horizontal"
 
             android:weightSum="100">
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="20dp"
 
                 android:layout_weight="50">
+
                 <Button
                     android:id="@+id/btn_Cancel"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/buttonred_new"
-                    android:text="Cancel"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
+                    android:background="@drawable/buttonred_new"
+                    android:text="Cancel"
                     android:textColor="#ffffffff" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="20dp"
 
                 android:layout_weight="50">
+
                 <Button
                     android:id="@+id/btn_Ok"
                     android:layout_width="match_parent"
@@ -119,26 +124,21 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/buttonsubmit_new"
-                    android:text="Confirm"
                     android:gravity="center_vertical|center_horizontal"
+                    android:text="Confirm"
 
                     android:textColor="#ffffffff" />
             </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerInParent="true"
-            android:gravity="center">
-            <include
-                android:id="@+id/progressDialog"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                layout="@layout/custom_progress_layout"
-                android:visibility="gone" />
-
-        </LinearLayout>
+            android:indeterminateDrawable="@anim/customspinner"
+            android:visibility="gone" />
     </RelativeLayout>
+
 </RelativeLayout>
