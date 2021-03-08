@@ -9,12 +9,15 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
@@ -23,18 +26,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobatia.bisad.R
 import com.mobatia.bisad.activity.common.LoginActivity
+import com.mobatia.bisad.activity.home.DataCollectionActivity
 import com.mobatia.bisad.activity.home.model.DataCollectionSubmissionModel
 import com.mobatia.bisad.activity.home.model.HealthInsuranceDetailAPIModel
 import com.mobatia.bisad.activity.settings.termsofservice.TermsOfServiceActivity
 import com.mobatia.bisad.activity.settings.tutorial.TutorialActivity
 import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
-import com.mobatia.bisad.fragment.home.mContext
+import com.mobatia.bisad.fragment.home.*
+import com.mobatia.bisad.fragment.home.model.BannerModel
 import com.mobatia.bisad.fragment.home.model.StudentListDataCollection
-import com.mobatia.bisad.fragment.home.model.datacollection.HealthInsuranceDetailModel
-import com.mobatia.bisad.fragment.home.model.datacollection.KinDetailApiModel
-import com.mobatia.bisad.fragment.home.model.datacollection.OwnContactModel
-import com.mobatia.bisad.fragment.home.model.datacollection.PassportApiModel
+import com.mobatia.bisad.fragment.home.model.datacollection.*
 import com.mobatia.bisad.fragment.settings.adapter.SettingsRecyclerAdapter
 import com.mobatia.bisad.fragment.settings.adapter.TriggerAdapter
 import com.mobatia.bisad.fragment.settings.model.ChangePasswordApiModel
@@ -62,6 +64,16 @@ class SettingsFragment : Fragment(){
     lateinit var mSettingsArrayListGuest: ArrayList<String>
     var start:Int=0
     var limit:Int=15
+    lateinit var ownContactArrayList: ArrayList<OwnDetailsModel>
+    lateinit var kinDetailArrayList: ArrayList<KinDetailsModel>
+    lateinit var passportArrayList: ArrayList<PassportDetailModel>
+    lateinit var healthDetailArrayList: ArrayList<HealthInsuranceDetailModel>
+    lateinit var ownContactDetailSaveArrayList: ArrayList<OwnContactModel>
+    lateinit var kinDetailSaveArrayList: ArrayList<KinDetailApiModel>
+    lateinit var passportSaveArrayList: ArrayList<PassportApiModel>
+    lateinit var healthSaveArrayList: ArrayList<HealthInsuranceDetailAPIModel>
+
+    private var previousTriggerType: Int = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -356,10 +368,13 @@ class SettingsFragment : Fragment(){
         {
 
             dialog.dismiss()
+
+
         }
         btn_Cancel?.setOnClickListener()
         {
             dialog.dismiss()
+
         }
         dialog.show()
     }
@@ -421,6 +436,10 @@ class SettingsFragment : Fragment(){
         var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
         var btn_Ok = dialog.findViewById(R.id.btn_Ok) as Button
         var btn_Cancel = dialog.findViewById(R.id.btn_Cancel) as Button
+        var progressDialog = dialog.findViewById(R.id.progressDialog) as RelativeLayout
+        val aniRotate: Animation =
+            AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
+        progressDialog.startAnimation(aniRotate)
         text_dialog.text = msg
         alertHead.text = msgHead
         var categoryList= ArrayList<String>()
@@ -489,10 +508,11 @@ class SettingsFragment : Fragment(){
             }
             else
             {
-                callDataTriggerApi(valueTrigger)
+                progressDialog.visibility=View.VISIBLE
+                callDataTriggerApi(valueTrigger,dialog,progressDialog)
             }
 
-            dialog.dismiss()
+           // dialog.dismiss()
         }
         btn_Cancel?.setOnClickListener()
         {
@@ -534,6 +554,9 @@ class SettingsFragment : Fragment(){
                                 sharedprefs.setPassportDetailArrayList(mContext,dummyPassport)
                                 var dummyStudent=ArrayList<StudentListDataCollection>()
                                 sharedprefs.setStudentArrayList(mContext,dummyStudent)
+                                sharedprefs.setUserEmail(mContext,"")
+                                sharedprefs.setUserCode(mContext,"")
+                                sharedprefs.setUserID(mContext,"")
                                 val mIntent = Intent(activity, LoginActivity::class.java)
                                 mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                 activity!!.startActivity(mIntent)
@@ -665,7 +688,7 @@ class SettingsFragment : Fragment(){
 
         })
     }
-fun callDataTriggerApi(value:String)
+fun callDataTriggerApi(value:String,triggerDialog:Dialog,progress:RelativeLayout)
 {
     val token = sharedprefs.getaccesstoken(mContext)
     val requestLeaveBody= TriggerUSer(value)
@@ -673,11 +696,13 @@ fun callDataTriggerApi(value:String)
     call.enqueue(object : Callback<ResponseBody> {
         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
             Log.e("Failed", t.localizedMessage)
+            progress.visibility=View.GONE
 
         }
         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
             val responsedata = response.body()
             Log.e("Response Signup", responsedata.toString())
+            progress.visibility=View.GONE
             if (responsedata != null) {
                 try {
 
@@ -686,13 +711,16 @@ fun callDataTriggerApi(value:String)
                         val status: Int = jsonObject.optInt(jsonConstans.STATUS)
                         Log.e("STATUS LOGIN", status.toString())
                         if (status == 100) {
-                            showSuccessDataAlert(mContext,"Alert","\"Update Account Details\" will start next time the Parent App is opened.", R.drawable.questionmark_icon, R.drawable.round)
+                            progress.visibility=View.GONE
+                            triggerDialog.dismiss()
+                            callSettingsUserDetail()
+                           // showSuccessDataAlert(mContext,"Alert","\"Update Account Details\" will start next time the Parent App is opened.", R.drawable.questionmark_icon, R.drawable.round)
 
                         } else {
                             if (status == 116) {
                                 //call Token Expired
                                 AccessTokenClass.getAccessToken(com.mobatia.bisad.fragment.home.mContext)
-                                callDataTriggerApi(value)
+                                callDataTriggerApi(value,triggerDialog,progress)
                             } else {
                                 if (status == 103) {
                                     //validation check error
@@ -713,6 +741,343 @@ fun callDataTriggerApi(value:String)
 
     })
 }
+
+    fun callSettingsUserDetail()
+    {
+        val bannerModel= BannerModel("1.0.0",2)
+        val token = sharedprefs.getaccesstoken(mContext)
+        val call: Call<ResponseBody> = ApiClient.getClient.settingsUserDetail(bannerModel,"Bearer "+token)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("Error", t.localizedMessage)
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val bannerresponse = response.body()
+                if (bannerresponse != null) {
+                    try {
+                        val jsonObject = JSONObject(bannerresponse.string())
+                        if(jsonObject.has(jsonConstans.STATUS))
+                        {
+                            val status : Int=jsonObject.optInt(jsonConstans.STATUS)
+                            if (status==100)
+                            {
+                                val responseObj =jsonObject.getJSONObject("responseArray")
+                                val appVersion=responseObj.optString("android_app_version")
+                                val data_collection=responseObj.optInt("data_collection")
+                                val trigger_type=responseObj.optInt("trigger_type")
+                                val already_triggered=responseObj.optInt("already_triggered")
+                                sharedprefs.setAppVersion(mContext,appVersion)
+                                sharedprefs.setDataCollection(mContext,data_collection)
+                               sharedprefs.setTriggerType(mContext,trigger_type)
+                                sharedprefs.setAlreadyTriggered(mContext,already_triggered)
+
+                                if (sharedprefs.getDataCollection(mContext
+                                    )==1)
+                                {
+                                    Handler().postDelayed({
+
+                                        if (sharedprefs.getAlreadyTriggered(
+                                                mContext
+                                            )==0)
+                                        {
+                                            callDataCollectionAPI()
+
+                                        }
+                                        else
+                                        {
+                                            if (previousTriggerType == sharedprefs.getTriggerType(mContext
+                                                ))
+                                            {
+                                                if(!sharedprefs.getSuspendTrigger(
+                                                        mContext
+                                                    ).equals("1"))
+                                                {
+                                                    val intent =Intent(activity, DataCollectionActivity::class.java)
+                                                    activity?.startActivity(intent)
+                                                }
+
+                                            }
+                                            else{
+                                                callDataCollectionAPI()
+                                            }
+                                        }
+                                    }, 3000)
+                                }
+
+                            }
+
+                            else{
+                                if (status==116)
+                                {
+                                    //call Token Expired
+                                    AccessTokenClass.getAccessToken(mContext)
+                                    callSettingsUserDetail()
+
+                                }
+                                else
+                                {
+                                    if (status==103)
+                                    {
+                                        //validation check error
+
+                                    }
+                                    else
+                                    {
+                                        //check status code checks
+                                        InternetCheckClass.checkApiStatusError(status, mContext
+                                        )
+                                    }
+                                }
+
+                            }
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+        })
+    }
+    fun callDataCollectionAPI()
+    {
+        ownContactArrayList= ArrayList()
+        kinDetailArrayList = ArrayList()
+        passportArrayList = ArrayList()
+        healthDetailArrayList = ArrayList()
+        ownContactDetailSaveArrayList = ArrayList()
+        passportSaveArrayList = ArrayList()
+        healthSaveArrayList = ArrayList()
+        kinDetailSaveArrayList = ArrayList()
+        val token = sharedprefs.getaccesstoken(mContext)
+        val call: Call<DataCollectionModel> = ApiClient.getClient.dataCollectionDetail("Bearer "+token)
+        call.enqueue(object : Callback<DataCollectionModel>{
+            override fun onFailure(call: Call<DataCollectionModel>, t: Throwable) {
+                Log.e("Error", t.localizedMessage)
+            }
+            override fun onResponse(call: Call<DataCollectionModel>, response: Response<DataCollectionModel>) {
+                if (response.body()!!.status==100)
+                {
+
+                   sharedprefs.setDisplayMessage(mContext,response.body()!!.responseArray.display_message)
+                    ownContactArrayList =response.body()!!.responseArray.ownDetailsList
+                    kinDetailArrayList =response.body()!!.responseArray.kinDetailsList
+                    passportArrayList =response.body()!!.responseArray.passportDetailsList
+                    healthDetailArrayList =response.body()!!.responseArray.healthInsurenceList
+                    if (ownContactArrayList.size>0)
+                    {
+                        for (i in 0..ownContactArrayList.size-1)
+                        {
+                            var model=OwnContactModel()
+                            model.id= ownContactArrayList.get(i).id
+                            model.user_id= ownContactArrayList.get(i).user_id
+                            model.title= ownContactArrayList.get(i).title
+                            model.name= ownContactArrayList.get(i).name
+                            model.last_name= ownContactArrayList.get(i).last_name
+                            model.relationship= ownContactArrayList.get(i).relationship
+                            model.email= ownContactArrayList.get(i).email
+                            model.phone= ownContactArrayList.get(i).phone
+                            model.code= ownContactArrayList.get(i).code
+                            model.user_mobile= ownContactArrayList.get(i).user_mobile
+                            model.address1= ownContactArrayList.get(i).address1
+                            model.address2= ownContactArrayList.get(i).address2
+                            model.address3= ownContactArrayList.get(i).address3
+                            model.town= ownContactArrayList.get(i).town
+                            model.state= ownContactArrayList.get(i).state
+                            model.country= ownContactArrayList.get(i).country
+                            model.pincode= ownContactArrayList.get(i).pincode
+                            model.status= ownContactArrayList.get(i).status
+                            model.created_at= ownContactArrayList.get(i).created_at
+                            model.updated_at= ownContactArrayList.get(i).updated_at
+                            model.isUpdated= false
+                            model.isConfirmed= false
+                            ownContactDetailSaveArrayList.add(model)
+
+                        }
+
+                        if(sharedprefs.getOwnContactDetailArrayList(mContext
+                            )==null|| sharedprefs.getOwnContactDetailArrayList(mContext
+                            )!!.size==0)
+                        {
+                            sharedprefs.setIsAlreadyEnteredOwn(mContext,true)
+                            sharedprefs.setOwnContactDetailArrayList(
+                                mContext, ownContactDetailSaveArrayList
+                            )
+                        }
+                        else{
+                            if (!sharedprefs.getIsAlreadyEnteredOwn(
+                                    mContext
+                                ))
+                            {
+                               sharedprefs.setIsAlreadyEnteredOwn(
+                                   mContext,true)
+                             sharedprefs.setOwnContactDetailArrayList(
+                                    mContext, ownContactDetailSaveArrayList
+                                )
+                            }
+                        }
+                    }
+
+                    if(passportArrayList.size>0)
+                    {
+                        for (i in 0..passportArrayList.size-1)
+                        {
+                            var mModel=PassportApiModel()
+                            mModel.id= passportArrayList.get(i).id
+                            mModel.student_unique_id= passportArrayList.get(i).student_unique_id
+                            mModel.student_id= passportArrayList.get(i).student_id
+                            mModel.student_name= passportArrayList.get(i).student_name
+                            mModel.passport_number= passportArrayList.get(i).passport_number
+                            mModel.nationality= passportArrayList.get(i).nationality
+                            mModel.passport_image= passportArrayList.get(i).passport_image
+                            mModel.date_of_issue= passportArrayList.get(i).date_of_issue
+                            mModel.expiry_date= passportArrayList.get(i).expiry_date
+                            mModel.passport_expired= passportArrayList.get(i).passport_expired
+                            mModel.emirates_id_no= passportArrayList.get(i).emirates_id_no
+                            mModel.emirates_id_image= passportArrayList.get(i).emirates_id_image
+                            mModel.passport_image_name= ""
+                            mModel.emirates_id_image_path= ""
+                            mModel.emirates_id_image_name=""
+                            mModel.emirates_id_image_path=""
+                            mModel.status= passportArrayList.get(i).status
+                            mModel.request= passportArrayList.get(i).request
+                            mModel.created_at= passportArrayList.get(i).created_at
+                            mModel.updated_at= passportArrayList.get(i).updated_at
+                            mModel.is_date_changed= false
+                            passportSaveArrayList.add(mModel)
+                        }
+                        if (sharedprefs.getPassportDetailArrayList(
+                               mContext
+                            )==null ||sharedprefs.getPassportDetailArrayList(
+                               mContext
+                            )!!.size==0)
+                        {
+                           sharedprefs.setPassportDetailArrayList(
+                               mContext, passportSaveArrayList
+                            )
+                        }
+
+                    }
+
+                    if(healthDetailArrayList.size>0)
+                    {
+                        for (i in 0..healthDetailArrayList.size-1)
+                        {
+                            var hModel=HealthInsuranceDetailAPIModel()
+                            hModel.id= healthDetailArrayList.get(i).id
+                            hModel.student_unique_id= healthDetailArrayList.get(i).student_unique_id
+                            hModel.student_id= healthDetailArrayList.get(i).student_id
+                            hModel.student_name= healthDetailArrayList.get(i).student_name
+                            hModel.health_detail= healthDetailArrayList.get(i).health_detail
+                            hModel.health_form_link= healthDetailArrayList.get(i).health_form_link
+                            hModel.status= healthDetailArrayList.get(i).status
+                            hModel.request= healthDetailArrayList.get(i).request
+                            hModel.created_at= healthDetailArrayList.get(i).created_at
+                            hModel.updated_at= healthDetailArrayList.get(i).updated_at
+                            healthSaveArrayList.add(hModel)
+
+                        }
+                        if (sharedprefs.getHealthDetailArrayList(mContext)==null || sharedprefs.getHealthDetailArrayList(
+                                mContext
+                            )!!.size==0)
+                        {
+                            sharedprefs.setHealthDetailArrayList(mContext, healthSaveArrayList)
+                        }
+                    }
+                    if (kinDetailArrayList.size>0)
+                    {
+                        for(i in 0..kinDetailArrayList.size-1)
+                        {
+                            var mModel=KinDetailApiModel()
+                            mModel.id= kinDetailArrayList.get(i).id
+                            mModel.user_id= kinDetailArrayList.get(i).user_id
+                            mModel.kin_id= kinDetailArrayList.get(i).kin_id
+                            mModel.title= kinDetailArrayList.get(i).title
+                            mModel.name= kinDetailArrayList.get(i).name
+                            mModel.last_name= kinDetailArrayList.get(i).last_name
+                            mModel.relationship= kinDetailArrayList.get(i).relationship
+                            mModel.email= kinDetailArrayList.get(i).email
+                            mModel.phone= kinDetailArrayList.get(i).phone
+                            mModel.code= kinDetailArrayList.get(i).code
+                            mModel.user_mobile= kinDetailArrayList.get(i).user_mobile
+                            mModel.status= kinDetailArrayList.get(i).status
+                            mModel.request= kinDetailArrayList.get(i).request
+                            mModel.created_at= kinDetailArrayList.get(i).created_at
+                            mModel.updated_at= kinDetailArrayList.get(i).updated_at
+                            mModel.NewData=false
+                            mModel.Newdata="NO"
+                            mModel.isConfirmed=false
+                            kinDetailSaveArrayList.add(mModel)
+
+                        }
+                        if(sharedprefs.getKinDetailArrayList(mContext)==null|| sharedprefs.getKinDetailArrayList(
+                                mContext
+                            )!!.size==0)
+                        {
+                            Log.e("DATA COLLECTION","ENTERS2")
+                            sharedprefs.setIsAlreadyEnteredKin(mContext,true)
+                           sharedprefs.setKinDetailArrayList(mContext, kinDetailSaveArrayList)
+                            sharedprefs.setKinDetailPassArrayList(
+                                mContext, kinDetailSaveArrayList
+                            )
+                        }
+                        else{
+                            Log.e("DATA COLLECTION","ENTERS3")
+                            if (!sharedprefs.getIsAlreadyEnteredKin(
+                                   mContext
+                                ))
+                            {
+                                Log.e("DATA COLLECTION","ENTERS4")
+                                sharedprefs.setIsAlreadyEnteredKin(
+                                    mContext,true)
+                                sharedprefs.setKinDetailArrayList(
+                                    mContext, kinDetailSaveArrayList
+                                )
+                                sharedprefs.setKinDetailPassArrayList(mContext, kinDetailSaveArrayList
+                                )
+                            }
+                        }
+                    }
+
+                    //Intent
+                    Log.e("DATA COLLECTION","ENTERS5")
+                    if(!sharedprefs.getSuspendTrigger(mContext).equals("1"))
+                    {
+                        val intent =Intent(mContext, DataCollectionActivity::class.java)
+                        activity?.startActivity(intent)
+                    }
+
+                }
+                else{
+                    if (response.body()!!.status==116)
+                    {
+                        //call Token Expired
+                        AccessTokenClass.getAccessToken(mContext)
+                        callDataCollectionAPI()
+
+                    }
+                    else
+                    {
+                        if (response.body()!!.status==103)
+                        {
+                            //validation check error
+
+                        }
+                        else
+                        {
+                            //check status code checks
+                            InternetCheckClass.checkApiStatusError(response.body()!!.status,
+                                mContext
+                            )
+                        }
+                    }
+
+                }
+            }
+
+        })
+    }
 }
 
 

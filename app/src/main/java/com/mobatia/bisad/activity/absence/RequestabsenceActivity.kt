@@ -166,7 +166,7 @@ class RequestabsenceActivity : AppCompatActivity(){
                             else{
                                 InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
                             }
-                              callAbsenceSubmitApi(fromDate,toDate,reasonAPI)
+
                         }
                     }
                 }

@@ -126,5 +126,19 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center">
+            <include
+                android:id="@+id/progressDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                layout="@layout/custom_progress_layout"
+                android:visibility="gone" />
+
+        </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>
