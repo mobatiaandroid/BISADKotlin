@@ -509,7 +509,7 @@ class SettingsFragment : Fragment(){
             else
             {
                 progressDialog.visibility=View.VISIBLE
-                callDataTriggerApi(valueTrigger,dialog,progressDialog)
+                //callDataTriggerApi(valueTrigger,dialog,progressDialog)
             }
 
            // dialog.dismiss()
@@ -719,7 +719,7 @@ fun callDataTriggerApi(value:String,triggerDialog:Dialog,progress:RelativeLayout
                         } else {
                             if (status == 116) {
                                 //call Token Expired
-                                AccessTokenClass.getAccessToken(com.mobatia.bisad.fragment.home.mContext)
+                                AccessTokenClass.getAccessToken(mContext)
                                 callDataTriggerApi(value,triggerDialog,progress)
                             } else {
                                 if (status == 103) {
