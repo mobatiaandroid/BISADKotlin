@@ -7,8 +7,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
-    var BASE_URL = "http://bisad.mobatia.in:8081/"
-//    var BASE_URL = "https://stagingcms.bisad.ae/"
+//    var BASE_URL = "http://bisad.mobatia.in:8081/"
+    var BASE_URL = "https://stagingcms.bisad.ae/"
    // var BASE_URL ="http://192.168.0.166/bisadv8/"
 
 
