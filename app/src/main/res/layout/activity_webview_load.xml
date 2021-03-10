@@ -83,6 +83,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/relativeHeader"
         android:layout_marginTop="0dp"
+        android:overScrollMode="never"
         android:background="@null"
         android:scrollbars="none" />
 

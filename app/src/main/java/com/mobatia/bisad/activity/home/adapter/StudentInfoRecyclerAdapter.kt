@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.NonNull
@@ -18,7 +19,8 @@ class StudentInfoRecyclerAdapter (private var familyContactArrayList: ArrayList<
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var studentNameTxt: TextView = view.findViewById(R.id.studentNameTxt)
         var classTxt: TextView = view.findViewById(R.id.classTxt)
-        var confirmBtn: Button = view.findViewById(R.id.confirmBtn)
+        var confirmBtn: ImageView = view.findViewById(R.id.confirmBtn)
+        var confirm_text: TextView = view.findViewById(R.id.confirm_text)
         var mainRelative: RelativeLayout = view.findViewById(R.id.mainRelative)
     }
     @NonNull
@@ -33,11 +35,13 @@ class StudentInfoRecyclerAdapter (private var familyContactArrayList: ArrayList<
         if (familyContactArrayList.get(position).isConfirmed)
         {
             holder.confirmBtn.visibility= View.GONE
+            holder.confirm_text.visibility= View.GONE
             holder.mainRelative.setBackgroundResource(R.drawable.rect_background_grey)
 
         }
         else{
             holder.confirmBtn.visibility= View.VISIBLE
+            holder.confirm_text.visibility= View.VISIBLE
             holder.mainRelative.setBackgroundResource(R.drawable.rect_data_collection_red)
         }
 
