@@ -101,6 +101,8 @@
     <string name="emirates_id_new">Emirates ID Number<font fgcolor="red">*</font></string>
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="new_version_available">New Version Available</string>
+    <string name="force_update">There is a newer version available for download! Please update the app by visiting the Google Play Store</string>
 
 
 </resources>

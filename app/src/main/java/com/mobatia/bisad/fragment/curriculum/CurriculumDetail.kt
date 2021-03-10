@@ -29,7 +29,6 @@ class CurriculumDetail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_webview_load)
 
-
         mContext=this
         webview = findViewById(R.id.webview)
         btn_left = findViewById(R.id.btn_left)
