@@ -100,4 +100,7 @@
     <string name="passport_expiry_new">Passport Expiry<font fgcolor="red">*</font></string>
     <string name="emirates_id_new">Emirates ID Number<font fgcolor="red">*</font></string>
 
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+
+
 </resources>

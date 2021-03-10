@@ -48,7 +48,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
 
 
-            if (remoteMessage!!.notification != null) {
+            if (remoteMessage.notification != null) {
                 sendNotification(remoteMessage.notification.body)
                 println("Message Notification Body:"+remoteMessage.notification.body)
 
@@ -115,6 +115,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             mChannel.vibrationPattern = longArrayOf(100, 200, 300, 400, 500)
             notificationManager.createNotificationChannel(mChannel)
         }
+
+//        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            notificationBuilder.setSmallIcon(R.drawable.notify_small);
+//            notificationBuilder.color = getResources().getColor(R.color.split_bg);
+//        } else {
+//            notificationBuilder.setSmallIcon(R.drawable.notify_small);
+//        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             notificationBuilder.setSmallIcon(R.drawable.notify_small)
             notificationBuilder.color = resources.getColor(R.color.split_bg)
