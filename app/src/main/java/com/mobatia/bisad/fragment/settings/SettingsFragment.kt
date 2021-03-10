@@ -497,7 +497,7 @@ class SettingsFragment : Fragment(){
                 ).show()
             } else {
                 progressDialog.visibility=View.VISIBLE
-                //callDataTriggerApi(valueTrigger,dialog,progressDialog)
+               callDataTriggerApi(valueTrigger,dialog,progressDialog)
             }
 
             // dialog.dismiss()
@@ -670,7 +670,7 @@ class SettingsFragment : Fragment(){
 
         })
     }
-fun callDataTriggerApi(value:String,triggerDialog:Dialog,progress:RelativeLayout)
+fun callDataTriggerApi(value:String,triggerDialog:Dialog,progress:ProgressBar)
 {
     val token = sharedprefs.getaccesstoken(mContext)
     val requestLeaveBody= TriggerUSer(value)
