@@ -156,6 +156,7 @@ class RequestabsenceActivity : AppCompatActivity(){
                             val aniRotate: Animation =
                                 AnimationUtils.loadAnimation(com.mobatia.bisad.fragment.home.mContext, R.anim.linear_interpolator)
                             progressDialog.startAnimation(aniRotate)
+                            progressDialog.visibility=View.VISIBLE
                                 reasonAPI=enterMessage.text.toString().trim()
                                Log.e("Pass Value",fromDate+"  "+toDate+"   "+reasonAPI)
                             var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
@@ -402,6 +403,7 @@ class RequestabsenceActivity : AppCompatActivity(){
     //Signup API Call
     fun callAbsenceSubmitApi(from:String,toDate:String,reason:String)
     {
+        progressDialog.visibility = View.VISIBLE
         val token = sharedprefs.getaccesstoken(mContext)
         val requestLeaveBody= RequestAbsenceApiModel(sharedprefs.getStudentID(mContext)!!,from,toDate,reason)
         val call: Call<ResponseBody> = ApiClient.getClient.leaveRequest(requestLeaveBody,"Bearer "+token)

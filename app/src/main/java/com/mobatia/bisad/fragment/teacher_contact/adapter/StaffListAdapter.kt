@@ -20,6 +20,7 @@ internal class StaffListAdapter (private var studentList: List<StaffInfoDetail>)
     RecyclerView.Adapter<StaffListAdapter.MyViewHolder>() {
     internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var listTxtTitle: TextView = view.findViewById(R.id.listTxtTitle)
+        var jobTxtTitle: TextView = view.findViewById(R.id.jobTxtTitle)
         var imagicon: ImageView = view.findViewById(R.id.imagicon)
     }
     @NonNull
@@ -31,6 +32,7 @@ internal class StaffListAdapter (private var studentList: List<StaffInfoDetail>)
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val movie = studentList[position]
         holder.listTxtTitle.text = movie.name
+        holder.jobTxtTitle.text = movie.role
         if(!movie.staff_photo.equals(""))
         {
             Glide.with(mContext) //1
