@@ -1514,7 +1514,8 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                                                 activity?.startActivity(intent)
                                             }
 
-                                        } else {
+                                        } else
+                                        {
                                             callDataCollectionAPI()
                                         }
                                     }

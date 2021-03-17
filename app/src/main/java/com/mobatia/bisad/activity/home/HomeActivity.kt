@@ -335,11 +335,11 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                     {
                         sharedprefs.setSuspendTrigger(context,"2")
                         callSettingsUserDetail()
-                        replaceFragmentsSelected(position)
+
                     }
                     else{
                         showTriggerDataCollection(context,"Confirm?", "Select one or more areas to update", R.drawable.questionmark_icon, R.drawable.round)
-                        replaceFragmentsSelected(position)
+
                     }
                 } else if (position == 14) {
                     if (ActivityCompat.checkSelfPermission(
