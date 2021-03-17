@@ -118,8 +118,7 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/newRequest"
             android:layout_below="@+id/viewDivider"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+           />
 
         <com.mobatia.bisad.manager.CustomFontSansProTextNoColorSemiBold
             android:id="@+id/newRequest"
@@ -134,7 +133,18 @@
             android:textColor="@color/white"
             android:textSize="18dp"
             android:visibility="visible" />
-
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:alpha="0.1"
+            android:contextClickable="false"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="left|center_vertical"
+            android:clickable="true"/>
         <com.mobatia.bisad.manager.CustomFontSansProTextBlack
             android:id="@+id/requestHint"
             android:layout_width="match_parent"

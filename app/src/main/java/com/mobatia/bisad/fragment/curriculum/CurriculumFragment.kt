@@ -231,8 +231,12 @@ class CurriculumFragment : Fragment() {
         val llm = LinearLayoutManager(mContext)
         llm.orientation = LinearLayoutManager.VERTICAL
         studentListRecycler.layoutManager = llm
-        val studentAdapter = StudentListAdapter(mContext,mStudentList)
-        studentListRecycler.adapter = studentAdapter
+        if (mStudentList.size>0)
+        {
+            val studentAdapter = StudentListAdapter(mContext,mStudentList)
+            studentListRecycler.adapter = studentAdapter
+        }
+
         btn_dismiss.setOnClickListener()
         {
             dialog.dismiss()

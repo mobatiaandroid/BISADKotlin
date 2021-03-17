@@ -33,6 +33,7 @@
         <item>Timetable</item>
         <item>Term Dates</item>
         <item>Curriculum</item>
+        <item>Update Account Details</item>
         <item>Contact Us</item>
         <item>Apps</item>
 
@@ -52,6 +53,7 @@
         <item>@drawable/time_table_side</item>
         <item>@drawable/termdates</item>
         <item>@drawable/ccas</item>
+        <item>@drawable/updateaccount</item>
         <item>@drawable/contacts</item>
         <item>@drawable/app</item>
 

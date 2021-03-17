@@ -183,10 +183,14 @@ class StudentInformationFragment : Fragment(){
                     var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
                     if (internetCheck)
                     {
-                        callStudentInfoApi()
+                        if(studentListArrayList.size>0)
+                        {
+                            callStudentInfoApi()
+                        }
+
                     }
                     else{
-                        InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
+                        InternetCheckClass.showSuccessInternetAlert(mContext)
                     }
                 }
                 else if(response.body()!!.status==116)
@@ -276,8 +280,12 @@ class StudentInformationFragment : Fragment(){
         val llm = LinearLayoutManager(mContext)
         llm.orientation = LinearLayoutManager.VERTICAL
         studentListRecycler.setLayoutManager(llm)
-        val studentAdapter = StudentListAdapter(mContext,mStudentList)
-        studentListRecycler.setAdapter(studentAdapter)
+        if(mStudentList.size>0)
+        {
+            val studentAdapter = StudentListAdapter(mContext,mStudentList)
+            studentListRecycler.setAdapter(studentAdapter)
+        }
+
         btn_dismiss?.setOnClickListener()
         {
             dialog.dismiss()

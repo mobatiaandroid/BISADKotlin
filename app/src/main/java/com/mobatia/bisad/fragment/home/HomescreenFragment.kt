@@ -18,6 +18,9 @@ import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.mobatia.bisad.BuildConfig
 import com.mobatia.bisad.R
@@ -40,6 +43,9 @@ import com.mobatia.bisad.fragment.home.model.datacollection.*
 import com.mobatia.bisad.fragment.messages.MessageFragment
 import com.mobatia.bisad.fragment.report_absence.ReportAbsenceFragment
 import com.mobatia.bisad.fragment.reports.ReportsFragment
+import com.mobatia.bisad.fragment.settings.adapter.TriggerAdapter
+import com.mobatia.bisad.fragment.settings.model.TriggerDataModel
+import com.mobatia.bisad.fragment.settings.model.TriggerUSer
 import com.mobatia.bisad.fragment.socialmedia.SocialMediaFragment
 import com.mobatia.bisad.fragment.student_information.StudentInformationFragment
 import com.mobatia.bisad.fragment.student_information.model.StudentList
@@ -49,6 +55,8 @@ import com.mobatia.bisad.fragment.termdates.TermDatesFragment
 import com.mobatia.bisad.fragment.time_table.TimeTableFragment
 import com.mobatia.bisad.manager.AppController
 import com.mobatia.bisad.manager.PreferenceData
+import com.mobatia.bisad.recyclermanager.OnItemClickListener
+import com.mobatia.bisad.recyclermanager.addOnItemClickListener
 import com.mobatia.bisad.rest.AccessTokenClass
 import com.mobatia.bisad.rest.ApiClient
 import okhttp3.ResponseBody
@@ -884,6 +892,9 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                 textdata.equals(classNameConstants.CURRICULUM, ignoreCase = true) -> {
                     TAB_ID = naisTabConstants.TAB_CURRICULUM
 
+                } textdata.equals(classNameConstants.UPDATE_ACCOUNT_DETAILS, ignoreCase = true) -> {
+                    TAB_ID = naisTabConstants.TAB_UPDATE
+
                 }
 
             }
@@ -1144,6 +1155,13 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                         "Alert"
                     )
                 }
+                naisTabConstants.TAB_UPDATE -> {
+                    showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )
+                }
                 naisTabConstants.TAB_CONTACT_US -> {
                     if (ActivityCompat.checkSelfPermission(
                             mContext,
@@ -1256,6 +1274,19 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     sharedprefs.setStudentClass(mContext, "")
                     mFragment = CurriculumFragment()
                     fragmentIntent(mFragment)
+                }
+                naisTabConstants.TAB_UPDATE -> {
+                    if (sharedprefs.getDataCollection(mContext)==1)
+                    {
+                        sharedprefs.setSuspendTrigger(mContext,"2")
+                        callSettingsUserDetail()
+                    }
+                    else{
+                        showTriggerDataCollection(mContext,"Confirm?", "Select one or more areas to update", R.drawable.questionmark_icon, R.drawable.round)
+
+                    }
+//                    mFragment = CurriculumFragment()
+//                    fragmentIntent(mFragment)
                 }
                 naisTabConstants.TAB_CONTACT_US -> {
                     if (ActivityCompat.checkSelfPermission(
@@ -1464,31 +1495,30 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                                 sharedprefs.setAlreadyTriggered(mContext, already_triggered)
 
                                 if (sharedprefs.getDataCollection(mContext) == 1) {
-                                    Handler().postDelayed({
 
-                                        if (sharedprefs.getAlreadyTriggered(mContext) == 0) {
-                                            callDataCollectionAPI()
+                                    if (sharedprefs.getAlreadyTriggered(mContext) == 0) {
+                                        callDataCollectionAPI()
+
+                                    } else {
+                                        if (previousTriggerType == sharedprefs.getTriggerType(
+                                                mContext
+                                            )
+                                        ) {
+                                            if (!sharedprefs.getSuspendTrigger(mContext)
+                                                    .equals("1")
+                                            ) {
+                                                val intent = Intent(
+                                                    activity,
+                                                    DataCollectionActivity::class.java
+                                                )
+                                                activity?.startActivity(intent)
+                                            }
 
                                         } else {
-                                            if (previousTriggerType == sharedprefs.getTriggerType(
-                                                    mContext
-                                                )
-                                            ) {
-                                                if (!sharedprefs.getSuspendTrigger(mContext)
-                                                        .equals("1")
-                                                ) {
-                                                    val intent = Intent(
-                                                        activity,
-                                                        DataCollectionActivity::class.java
-                                                    )
-                                                    activity?.startActivity(intent)
-                                                }
-
-                                            } else {
-                                                callDataCollectionAPI()
-                                            }
+                                            callDataCollectionAPI()
                                         }
-                                    }, 3000)
+                                    }
+
                                 }
 
                             } else {
@@ -1957,7 +1987,152 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
             )
         }
     }
+    fun showTriggerDataCollection(context: Context,msgHead:String,msg:String,ico:Int,bgIcon:Int)
+    {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_trigger_data_collection)
+        var iconImageView = dialog.findViewById(R.id.iconImageView) as ImageView
+        var checkRecycler = dialog.findViewById(R.id.checkRecycler) as RecyclerView
+        var linearLayoutManagerM : LinearLayoutManager = LinearLayoutManager(mContext)
+        checkRecycler.layoutManager = linearLayoutManagerM
+        checkRecycler.itemAnimator = DefaultItemAnimator()
+        iconImageView.setBackgroundResource(bgIcon)
+        iconImageView.setImageResource(ico)
+        var alertHead = dialog.findViewById(R.id.alertHead) as TextView
+        var text_dialog = dialog.findViewById(R.id.text_dialog) as TextView
+        var btn_Ok = dialog.findViewById(R.id.btn_Ok) as Button
+        var btn_Cancel = dialog.findViewById(R.id.btn_Cancel) as Button
+        var progressDialog = dialog.findViewById(R.id.progress) as ProgressBar
 
+        text_dialog.text = msg
+        alertHead.text = msgHead
+        var categoryList= ArrayList<String>()
+        categoryList.add("All")
+        categoryList.add("Student - Contact Details")
+        categoryList.add("Student - Passport & Emirates ID")
+
+        val mTriggerModelArrayList=ArrayList<TriggerDataModel>()
+        for (i in 0..categoryList.size-1)
+        {
+            var model= TriggerDataModel()
+            model.categoryName=categoryList.get(i)
+            model.checkedCategory=false
+            mTriggerModelArrayList.add(model)
+
+        }
+        var triggerAdapter= TriggerAdapter(mTriggerModelArrayList)
+        checkRecycler.adapter = triggerAdapter
+        checkRecycler.addOnItemClickListener(object: OnItemClickListener {
+            override fun onItemClicked(position: Int, view: View) {
+                if (position==0)
+                {
+                    mTriggerModelArrayList.get(0).checkedCategory=true
+                    mTriggerModelArrayList.get(1).checkedCategory=false
+                    mTriggerModelArrayList.get(2).checkedCategory=false
+                }
+                else if (position==1)
+                {
+                    mTriggerModelArrayList.get(0).checkedCategory=false
+                    mTriggerModelArrayList.get(1).checkedCategory=true
+                    mTriggerModelArrayList.get(2).checkedCategory=false
+                }
+                else{
+                    mTriggerModelArrayList.get(0).checkedCategory=false
+                    mTriggerModelArrayList.get(1).checkedCategory=false
+                    mTriggerModelArrayList.get(2).checkedCategory=true
+                }
+
+                var triggerAdapter= TriggerAdapter(mTriggerModelArrayList)
+                checkRecycler.adapter = triggerAdapter
+            }
+        })
+        btn_Ok.setOnClickListener()
+        {
+            var valueTrigger:String="0"
+            if (mTriggerModelArrayList.get(0).checkedCategory) {
+                valueTrigger="1"
+            } else if (mTriggerModelArrayList.get(1).checkedCategory) {
+                valueTrigger="2"
+            } else if (mTriggerModelArrayList.get(2).checkedCategory) {
+                valueTrigger="3"
+            }
+
+            if (valueTrigger.equals("0")) {
+                Toast.makeText(
+                    mContext,
+                    "Please select any trigger type before confiming",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                progressDialog.visibility=View.VISIBLE
+                callDataTriggerApi(valueTrigger,dialog,progressDialog)
+            }
+
+            // dialog.dismiss()
+        }
+        btn_Cancel.setOnClickListener()
+        {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    fun callDataTriggerApi(value:String,triggerDialog:Dialog,progress:ProgressBar)
+    {
+        val token = sharedprefs.getaccesstoken(mContext)
+        val requestLeaveBody= TriggerUSer(value)
+        val call: Call<ResponseBody> = ApiClient.getClient.triggerUser(requestLeaveBody,"Bearer "+token)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("Failed", t.localizedMessage)
+                progress.visibility=View.GONE
+
+            }
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val responsedata = response.body()
+                Log.e("Response Signup", responsedata.toString())
+                progress.visibility=View.GONE
+                if (responsedata != null) {
+                    try {
+
+                        val jsonObject = JSONObject(responsedata.string())
+                        if(jsonObject.has(jsonConstans.STATUS)) {
+                            val status: Int = jsonObject.optInt(jsonConstans.STATUS)
+                            Log.e("STATUS LOGIN", status.toString())
+                            if (status == 100) {
+                                progress.visibility=View.GONE
+                                triggerDialog.dismiss()
+                                callSettingsUserDetail()
+                                // showSuccessDataAlert(mContext,"Alert","\"Update Account Details\" will start next time the Parent App is opened.", R.drawable.questionmark_icon, R.drawable.round)
+
+                            } else {
+                                if (status == 116) {
+                                    //call Token Expired
+                                    AccessTokenClass.getAccessToken(mContext)
+                                    callDataTriggerApi(value,triggerDialog,progress)
+                                } else {
+                                    if (status == 103) {
+                                        //validation check error
+                                    } else {
+                                        //check status code checks
+                                        InternetCheckClass.checkApiStatusError(status, mContext)
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                    catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+
+        })
+    }
 }
 
 

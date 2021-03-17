@@ -14,8 +14,9 @@ class NaisTabConstants {
     var TAB_TIME_TABLE = "10"
     var TAB_TERM_DATES = "11"
     var TAB_CURRICULUM = "12"
-    var TAB_CONTACT_US = "13"
-    var TAB_APPS = "14"
+    var TAB_UPDATE = "13"
+    var TAB_CONTACT_US = "14"
+    var TAB_APPS = "15"
 
 
 

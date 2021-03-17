@@ -17,5 +17,6 @@ class NaisClassNameConstants {
     var REPORTS = "Reports"
     var ATTENDANCE = "Attendance"
     var CURRICULUM = "Curriculum"
+    var UPDATE_ACCOUNT_DETAILS = "Update Account Details"
     var STUDENT = "STUDENT INFORMATION"
 }

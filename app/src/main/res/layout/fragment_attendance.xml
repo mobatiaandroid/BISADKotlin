@@ -144,7 +144,8 @@
         android:layout_marginTop="70dp"
         android:background="@null"
         android:alpha="0.1"
-        android:id="@+id/calendar_relative"
         android:contextClickable="false"
-        android:clickable="true" />
+        android:clickable="true"
+        android:id="@+id/calendar_relative"
+        />
 </RelativeLayout>

@@ -30,12 +30,13 @@
             android:gravity="center_vertical"
             android:layout_toRightOf="@+id/imagicon"
             android:singleLine="true" />
-        <com.mobatia.bisad.manager.CustomFontSansProTextBlack
+        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
             android:id="@+id/jobTxtTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
+            android:textColor="@color/grey"
             android:layout_toLeftOf="@+id/arrowImg"
             android:layout_below="@+id/listTxtTitle"
             android:gravity="center_vertical"

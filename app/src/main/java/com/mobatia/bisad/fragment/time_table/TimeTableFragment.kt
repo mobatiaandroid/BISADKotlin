@@ -587,8 +587,12 @@ class TimeTableFragment : Fragment(){
         val llm = LinearLayoutManager(mContext)
         llm.orientation = LinearLayoutManager.VERTICAL
         studentListRecycler.setLayoutManager(llm)
-        val studentAdapter = StudentListAdapter(mContext,mStudentList)
-        studentListRecycler.setAdapter(studentAdapter)
+        if (mStudentList.size>0)
+        {
+            val studentAdapter = StudentListAdapter(mContext,mStudentList)
+            studentListRecycler.setAdapter(studentAdapter)
+        }
+
         btn_dismiss?.setOnClickListener()
         {
             dialog.dismiss()
