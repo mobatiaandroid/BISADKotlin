@@ -40,6 +40,7 @@ class SocialMediaDetailActivity : AppCompatActivity() {
         mContext=this
         url=intent.getStringExtra("url")
         title=intent.getStringExtra("title")
+        System.out.println("CLICKEDDATA:"+"URL:"+url+"TITLE:"+title)
         initializeUI()
         getWebViewSettings()
 
@@ -55,9 +56,10 @@ class SocialMediaDetailActivity : AppCompatActivity() {
         backRelative = findViewById(R.id.backRelative)
         heading = findViewById(R.id.heading)
         btn_left = findViewById(R.id.btn_left)
+
         logoClickImgView = findViewById(R.id.logoClickImgView)
-        progressDialog = findViewById(R.id.progressDialog) as RelativeLayout
-        heading.setText(title)
+        progressDialog = findViewById<RelativeLayout>(R.id.progressDialog)
+        heading.text = title
         btn_left.setOnClickListener(View.OnClickListener {
             finish()
         })
@@ -72,9 +74,11 @@ class SocialMediaDetailActivity : AppCompatActivity() {
         val aniRotate: Animation =
             AnimationUtils.loadAnimation(com.mobatia.bisad.fragment.home.mContext, R.anim.linear_interpolator)
         progressDialog.startAnimation(aniRotate)
-        webView.settings.setJavaScriptEnabled(true)
+        webView.settings.javaScriptEnabled = true
         webView.webViewClient = MyWebViewClient(this)
+
         webView.loadUrl(url)
+
         progressDialog.visibility = View.GONE
     }
 
@@ -84,8 +88,8 @@ class SocialMediaDetailActivity : AppCompatActivity() {
 
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-            val url: String = request?.url.toString();
-           progressDialog.visibility = View.GONE
+            val url: String = request?.url.toString()
+            progressDialog.visibility = View.GONE
             view?.loadUrl(url)
             return true
         }

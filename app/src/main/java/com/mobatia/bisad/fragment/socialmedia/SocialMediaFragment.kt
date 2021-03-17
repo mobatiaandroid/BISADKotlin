@@ -1,10 +1,11 @@
 package com.mobatia.bisad.fragment.socialmedia
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,30 +14,19 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.mobatia.bisad.R
-import com.mobatia.bisad.activity.absence.AbsenceDetailActivity
-import com.mobatia.bisad.activity.apps.AppsDetailActivity
 import com.mobatia.bisad.activity.social_media.SocialMediaDetailActivity
 import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
-import com.mobatia.bisad.fragment.home.mContext
-import com.mobatia.bisad.fragment.home.pager
-import com.mobatia.bisad.fragment.messages.adapter.MessageListRecyclerAdapter
-import com.mobatia.bisad.fragment.messages.model.MessageListApiModel
-import com.mobatia.bisad.fragment.messages.model.MessageListModel
 import com.mobatia.bisad.fragment.socialmedia.adapter.SocialMediaRecyclerAdapter
 import com.mobatia.bisad.fragment.socialmedia.model.SocialMediaDetailModel
 import com.mobatia.bisad.fragment.socialmedia.model.SocialMediaListModel
-import com.mobatia.bisad.fragment.student_information.adapter.StudentInfoAdapter
-import com.mobatia.bisad.fragment.student_information.model.StudentInfoDetail
 import com.mobatia.bisad.manager.PreferenceData
 import com.mobatia.bisad.recyclermanager.OnItemClickListener
 import com.mobatia.bisad.recyclermanager.addOnItemClickListener
@@ -45,8 +35,6 @@ import com.mobatia.bisad.rest.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
-import kotlin.collections.ArrayList
 
 class SocialMediaFragment : Fragment(){
     lateinit var jsonConstans: JsonConstants
@@ -98,11 +86,56 @@ class SocialMediaFragment : Fragment(){
         socialMediaRecycler.addOnItemClickListener(object: OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
 
-                val url = socialMediaArrayList.get(position).url
-                val intent =Intent(activity,SocialMediaDetailActivity::class.java)
-                intent.putExtra("url",url)
-                intent.putExtra("title",socialMediaArrayList.get(position).tab_type)
-                activity?.startActivity(intent)
+                var mPackage: String =""
+                when(socialMediaArrayList.get(position).tab_type){
+
+                    "Youtube" -> mPackage = "com.google.android.youtube"
+                    "Instagram" -> mPackage = "com.instagram.android"
+                    "Twitter" -> mPackage = "com.twitter.android"
+                    "Facebook" -> mPackage = "fb"
+
+                }
+
+
+                if (mPackage == "fb"){
+
+                    Log.d("ASD",socialMediaArrayList[position].page_id)
+
+                    val facebookAppIntent: Intent
+                    try {
+                        facebookAppIntent = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("fb://page/${socialMediaArrayList[position].page_id}")
+                        )
+                        startActivity(facebookAppIntent)
+                    } catch (e: ActivityNotFoundException) {
+
+                        val url = socialMediaArrayList.get(position).url
+                        val intent = Intent(activity, SocialMediaDetailActivity::class.java)
+                        intent.putExtra("url", url)
+                        intent.putExtra("title", socialMediaArrayList.get(position).tab_type)
+                        activity?.startActivity(intent)
+
+                    }
+
+                }else {
+
+                    val uri = Uri.parse(socialMediaArrayList.get(position).url)
+                    val likeIng = Intent(Intent.ACTION_VIEW, uri)
+                    likeIng.setPackage(mPackage)
+                    try {
+                        startActivity(likeIng)
+                    } catch (e: ActivityNotFoundException) {
+                        val url = socialMediaArrayList.get(position).url
+                        val intent = Intent(activity, SocialMediaDetailActivity::class.java)
+                        intent.putExtra("url", url)
+                        intent.putExtra("title", socialMediaArrayList.get(position).tab_type)
+                        activity?.startActivity(intent)
+
+                    }
+                }
+
+
             }
         })
 
@@ -121,12 +154,13 @@ class SocialMediaFragment : Fragment(){
                 Log.e("Error", t.localizedMessage)
             }
             override fun onResponse(call: Call<SocialMediaListModel>, response: Response<SocialMediaListModel>) {
+                Log.d("REEEEE",response.body().toString())
                 progressDialog.visibility = View.GONE
                 if (response.body()!!.status==100)
                 {
                     socialMediaArrayList.addAll(response.body()!!.responseArray.dataList)
                     val socialMediaRecyclerAdapter = SocialMediaRecyclerAdapter(socialMediaArrayList)
-                    socialMediaRecycler.setAdapter(socialMediaRecyclerAdapter)
+                    socialMediaRecycler.adapter = socialMediaRecyclerAdapter
                     if (response.body()!!.responseArray.bannerList.size>0)
                     {
                         bannerarray.addAll(response.body()!!.responseArray.bannerList)
@@ -159,6 +193,32 @@ class SocialMediaFragment : Fragment(){
             }
 
         })
+    }
+
+    private fun openFacebookPage(pageId: String) {
+        val facebookUrl = "www.facebook.com/$pageId"
+        val facebookID = pageId
+
+        try {
+            val versionCode = activity!!.applicationContext.packageManager.getPackageInfo("com.facebook.katana", 0).versionCode
+            if (!facebookID.isEmpty()) {
+                // open the Facebook app using facebookID (fb://profile/facebookID or fb://page/facebookID)
+                val uri = Uri.parse("fb://page/$facebookID")
+                startActivity(Intent(Intent.ACTION_VIEW, uri))
+            } else if (versionCode >= 3002850 && !facebookUrl.isEmpty()) {
+                // open Facebook app using facebook url
+                val uri = Uri.parse("fb://facewebmodal/f?href=$facebookUrl")
+                startActivity(Intent(Intent.ACTION_VIEW, uri))
+            } else {
+                // Facebook is not installed. Open the browser
+                val uri = Uri.parse(facebookUrl)
+                startActivity(Intent(Intent.ACTION_VIEW, uri))
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            // Facebook is not installed. Open the browser
+            val uri = Uri.parse(facebookUrl)
+            startActivity(Intent(Intent.ACTION_VIEW, uri))
+        }
     }
 
 }
