@@ -51,9 +51,9 @@ class FirstScreenNewData:Fragment() {
     lateinit var contactTypeOwnDetailTxt: TextView
     lateinit var helpView: TextView
     lateinit var ownDetailViewRelative: RelativeLayout
+    lateinit var confirmBtn:Button
     lateinit var NoDataLinearLayout: LinearLayout
     lateinit var RecyclerLinearLayout: LinearLayout
-    lateinit var confirmBtn: Button
     lateinit var mContext: Context
     lateinit var ownContactDetailArrayList:ArrayList<OwnContactModel>
     lateinit var kinDetailArrayList:ArrayList<KinDetailApiModel>
@@ -101,21 +101,21 @@ class FirstScreenNewData:Fragment() {
             if(ownContactDetailArrayList.get(0).name.equals(""))
             {
                 nameValue=""
-                nameOwnDetailTxt.setText(nameValue)
+                nameOwnDetailTxt.text = nameValue
             }
             else
             {
                 nameValue=ownContactDetailArrayList.get(0).name
-                nameOwnDetailTxt.setText(nameValue)
+                nameOwnDetailTxt.text = nameValue
             }
             if (ownContactDetailArrayList.get(0).relationship.equals(""))
             {
                 relationshipValue=""
-                contactTypeOwnDetailTxt.setText(relationshipValue)
+                contactTypeOwnDetailTxt.text = relationshipValue
             }
             else{
                 relationshipValue=ownContactDetailArrayList.get(0).relationship
-                contactTypeOwnDetailTxt.setText(relationshipValue)
+                contactTypeOwnDetailTxt.text = relationshipValue
             }
         }
 
@@ -140,7 +140,7 @@ class FirstScreenNewData:Fragment() {
             RecyclerLinearLayout.visibility=View.VISIBLE
             NoDataLinearLayout.visibility=View.GONE
             familyKinRecyclerAdapter= FamilyContactRecyclerAdapter(sharedprefs.getKinDetailArrayList(mContext)!!)
-            familyContactRecycler.setAdapter(familyKinRecyclerAdapter)
+            familyContactRecycler.adapter = familyKinRecyclerAdapter
         }
         else{
             RecyclerLinearLayout.visibility=View.GONE
@@ -175,9 +175,9 @@ class FirstScreenNewData:Fragment() {
             var btn_Ok = dialog.findViewById(R.id.btn_Ok) as Button
             text_dialog.text = "Please update this information next time"
             alertHead.text = "Alert"
-            btn_Ok.setText("Continue")
+            btn_Ok.text = "Continue"
             iconImageView.setImageResource(R.drawable.exclamationicon)
-            btn_Ok?.setOnClickListener()
+            btn_Ok.setOnClickListener()
             {
                 sharedprefs.setSuspendTrigger(mContext,"1")
                 dialog.dismiss()
@@ -205,6 +205,10 @@ class FirstScreenNewData:Fragment() {
             showOwnContactDetail(mContext,sharedprefs.getOwnContactDetailArrayList(mContext)!!)
 
         })
+        confirmBtn.setOnClickListener {
+            showOwnContactDetail(mContext,sharedprefs.getOwnContactDetailArrayList(mContext)!!)
+
+        }
     }
 
 
@@ -242,16 +246,16 @@ class FirstScreenNewData:Fragment() {
         var userID=sharedprefs.getOwnContactDetailArrayList(context)!!.get(0).user_id
         var createdAt=sharedprefs.getOwnContactDetailArrayList(context)!!.get(0).created_at
         var updatedAt=sharedprefs.getOwnContactDetailArrayList(context)!!.get(0).updated_at
-        firstNameTxt.setImeOptions(EditorInfo.IME_ACTION_DONE)
-        lastNameTxt.setImeOptions(EditorInfo.IME_ACTION_DONE)
-        emailTxt.setImeOptions(EditorInfo.IME_ACTION_DONE)
-        dataCollect_Phone.setImeOptions(EditorInfo.IME_ACTION_DONE)
-        dataCollect_Code.setImeOptions(EditorInfo.IME_ACTION_DONE)
-        addressLine1.setImeOptions(EditorInfo.IME_ACTION_DONE)
-        addressLine2.setImeOptions(EditorInfo.IME_ACTION_DONE)
-        addressLine3.setImeOptions(EditorInfo.IME_ACTION_DONE)
-        townTxt.setImeOptions(EditorInfo.IME_ACTION_DONE)
-        pinTxt.setImeOptions(EditorInfo.IME_ACTION_DONE)
+        firstNameTxt.imeOptions = EditorInfo.IME_ACTION_DONE
+        lastNameTxt.imeOptions = EditorInfo.IME_ACTION_DONE
+        emailTxt.imeOptions = EditorInfo.IME_ACTION_DONE
+        dataCollect_Phone.imeOptions = EditorInfo.IME_ACTION_DONE
+        dataCollect_Code.imeOptions = EditorInfo.IME_ACTION_DONE
+        addressLine1.imeOptions = EditorInfo.IME_ACTION_DONE
+        addressLine2.imeOptions = EditorInfo.IME_ACTION_DONE
+        addressLine3.imeOptions = EditorInfo.IME_ACTION_DONE
+        townTxt.imeOptions = EditorInfo.IME_ACTION_DONE
+        pinTxt.imeOptions = EditorInfo.IME_ACTION_DONE
 
         firstNameTxt.isFocusable=true
         lastNameTxt.isFocusable=true
@@ -293,9 +297,9 @@ class FirstScreenNewData:Fragment() {
                 arrayOf("mobileapp@bisad.ae")
             val emailIntent = Intent(Intent.ACTION_SEND)
             emailIntent.putExtra(Intent.EXTRA_EMAIL, deliveryAddress)
-            emailIntent.setType("text/plain")
+            emailIntent.type = "text/plain"
             emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            val pm: PackageManager = communicationPreferenceInfoTxt.getContext().getPackageManager()
+            val pm: PackageManager = communicationPreferenceInfoTxt.context.packageManager
             val activityList = pm.queryIntentActivities(
                 emailIntent, 0
             )
@@ -311,7 +315,7 @@ class FirstScreenNewData:Fragment() {
                     emailIntent.flags = (Intent.FLAG_ACTIVITY_NEW_TASK
                             or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
                     emailIntent.component = name
-                    communicationPreferenceInfoTxt.getContext().startActivity(emailIntent)
+                    communicationPreferenceInfoTxt.context.startActivity(emailIntent)
                     break
                 }
             }
@@ -327,7 +331,7 @@ class FirstScreenNewData:Fragment() {
         spinnerDialog.setShowKeyboard(false)
         spinnerDialog.bindOnSpinerListener(object : OnSpinerItemClick {
             override fun onClick(item: String, position: Int) {
-                countryTxt.setText(item)
+                countryTxt.text = item
                 isChanged=true
             }
         })
@@ -342,7 +346,7 @@ class FirstScreenNewData:Fragment() {
         spinnerRelationShipDialog.setShowKeyboard(false)
         spinnerRelationShipDialog.bindOnSpinerListener(object : OnSpinerItemClick {
             override fun onClick(item: String, position: Int) {
-                relationshipTxt.setText(item)
+                relationshipTxt.text = item
 
                 isChanged=true
             }
@@ -381,21 +385,21 @@ class FirstScreenNewData:Fragment() {
         }
         if (ownconatctArrayList.get(0).name.equals(""))
         {
-            firstNameTxt.setHint("First name")
+            firstNameTxt.hint = "First name"
         }
         else{
             firstNameTxt.setText(ownconatctArrayList.get(0).name)
         }
         if (ownconatctArrayList.get(0).last_name.equals(""))
         {
-            lastNameTxt.setHint("Last name")
+            lastNameTxt.hint = "Last name"
         }
         else{
             lastNameTxt.setText(ownconatctArrayList.get(0).last_name)
         }
         if (ownconatctArrayList.get(0).email.equals(""))
         {
-            emailTxt.setHint("Email ID")
+            emailTxt.hint = "Email ID"
         }
         else{
             emailTxt.setText(ownconatctArrayList.get(0).email)
@@ -444,10 +448,10 @@ class FirstScreenNewData:Fragment() {
         }
         if (ownconatctArrayList.get(0).country.equals(""))
         {
-            countryTxt.setText(countryArrayList.get(0).name)
+            countryTxt.text = countryArrayList.get(0).name
         }
         else{
-            countryTxt.setText(ownconatctArrayList.get(0).country)
+            countryTxt.text = ownconatctArrayList.get(0).country
         }
         if (ownconatctArrayList.get(0).state.equals(""))
         {
@@ -475,11 +479,11 @@ class FirstScreenNewData:Fragment() {
         }
         if (ownconatctArrayList.get(0).relationship.equals(""))
         {
-            relationshipTxt.setText(relationShipArrayList.get(0).name)
+            relationshipTxt.text = relationShipArrayList.get(0).name
         }
         else
         {
-            relationshipTxt.setText(ownconatctArrayList.get(0).relationship)
+            relationshipTxt.text = ownconatctArrayList.get(0).relationship
         }
 
 
@@ -717,8 +721,8 @@ class FirstScreenNewData:Fragment() {
                 sharedprefs.setOwnContactDetailArrayList(context,mDataArrayList)
                 ownDetailViewRelative.setBackgroundResource(R.drawable.rect_data_collection_red)
                 confirmBtn.visibility=View.VISIBLE
-                nameOwnDetailTxt.setText(firstNameTxt.text.toString().trim())
-                contactTypeOwnDetailTxt.setText(relationshipTxt.text.toString().trim())
+                nameOwnDetailTxt.text = firstNameTxt.text.toString().trim()
+                contactTypeOwnDetailTxt.text = relationshipTxt.text.toString().trim()
                 familyKinRecyclerAdapter.notifyDataSetChanged()
                 dialog.dismiss()
 
@@ -814,8 +818,10 @@ class FirstScreenNewData:Fragment() {
                                                 sharedprefs.setOwnContactDetailArrayList(context,mDataArrayList)
                                                 sharedprefs.getOwnContactDetailArrayList(context)!!.get(0).isConfirmed=true
                                                 ownDetailViewRelative.setBackgroundResource(R.drawable.rect_background_grey)
-                                                nameOwnDetailTxt.setText(firstNameTxt.text.toString().trim())
-                                                contactTypeOwnDetailTxt.setText(relationshipTxt.text.toString().trim())
+                                                nameOwnDetailTxt.text =
+                                                    firstNameTxt.text.toString().trim()
+                                                contactTypeOwnDetailTxt.text =
+                                                    relationshipTxt.text.toString().trim()
                                                 confirmBtn.visibility=View.GONE
                                                 dialog.dismiss()
 
@@ -847,7 +853,7 @@ class FirstScreenNewData:Fragment() {
         text_dialog.text = message
         alertHead.text = msgHead
         iconImageView.setImageResource(R.drawable.exclamationicon)
-        btn_Ok?.setOnClickListener()
+        btn_Ok.setOnClickListener()
         {
             dialog.dismiss()
 
@@ -897,11 +903,11 @@ class FirstScreenNewData:Fragment() {
         var communicationPreferenceInfoTxt=dialog.findViewById(R.id.communicationPreferenceInfoTxt)as TextView
         var ContactDetails_Submit=dialog.findViewById(R.id.ContactDetails_Submit)as Button
         var spinnerRelationShipDialog:SpinnerDialog
-        ContactDetails_Lastname.setImeOptions(EditorInfo.IME_ACTION_DONE)
-        ContactDetails_Email.setImeOptions(EditorInfo.IME_ACTION_DONE)
-        ContactDetails_Phone.setImeOptions(EditorInfo.IME_ACTION_DONE)
-        spinnerCode.setImeOptions(EditorInfo.IME_ACTION_DONE)
-        contactDetails_fname.setImeOptions(EditorInfo.IME_ACTION_DONE)
+        ContactDetails_Lastname.imeOptions = EditorInfo.IME_ACTION_DONE
+        ContactDetails_Email.imeOptions = EditorInfo.IME_ACTION_DONE
+        ContactDetails_Phone.imeOptions = EditorInfo.IME_ACTION_DONE
+        spinnerCode.imeOptions = EditorInfo.IME_ACTION_DONE
+        contactDetails_fname.imeOptions = EditorInfo.IME_ACTION_DONE
         contactDetails_fname.isFocusable=true
         contactDetails_fname.isFocusableInTouchMode=true
 
@@ -944,9 +950,9 @@ class FirstScreenNewData:Fragment() {
                 arrayOf("mobileapp@bisad.ae")
             val emailIntent = Intent(Intent.ACTION_SEND)
             emailIntent.putExtra(Intent.EXTRA_EMAIL, deliveryAddress)
-            emailIntent.setType("text/plain")
+            emailIntent.type = "text/plain"
             emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            val pm: PackageManager = communicationPreferenceInfoTxt.getContext().getPackageManager()
+            val pm: PackageManager = communicationPreferenceInfoTxt.context.packageManager
             val activityList = pm.queryIntentActivities(
                 emailIntent, 0
             )
@@ -962,7 +968,7 @@ class FirstScreenNewData:Fragment() {
                     emailIntent.flags = (Intent.FLAG_ACTIVITY_NEW_TASK
                             or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
                     emailIntent.component = name
-                    communicationPreferenceInfoTxt.getContext().startActivity(emailIntent)
+                    communicationPreferenceInfoTxt.context.startActivity(emailIntent)
                     break
                 }
             }
@@ -1043,7 +1049,7 @@ class FirstScreenNewData:Fragment() {
         spinnerRelationShipDialog.setShowKeyboard(false)
         spinnerRelationShipDialog.bindOnSpinerListener(object : OnSpinerItemClick {
             override fun onClick(item: String, position: Int) {
-                relationshipTxt.setText(item)
+                relationshipTxt.text = item
                 isKinChanged=true
                 var dataArrayList=ArrayList<KinDetailApiModel>()
                 var model=KinDetailApiModel()
@@ -1108,11 +1114,11 @@ class FirstScreenNewData:Fragment() {
 
         if (kinDetailArrayList.get(0).relationship.equals(""))
         {
-            relationshipTxt.setText(relationShipArrayList.get(0).name)
+            relationshipTxt.text = relationShipArrayList.get(0).name
         }
         else
         {
-            relationshipTxt.setText(kinDetailArrayList.get(positionClicked).relationship)
+            relationshipTxt.text = kinDetailArrayList.get(positionClicked).relationship
         }
         if (kinDetailArrayList.get(positionClicked).name.equals(""))
         {
@@ -1605,7 +1611,7 @@ class FirstScreenNewData:Fragment() {
                                 sharedprefs.getKinDetailArrayList(mContext)!!.clear()
                                 sharedprefs.setKinDetailArrayList(mContext,kinDetailArrayList)
                                 familyKinRecyclerAdapter= FamilyContactRecyclerAdapter(sharedprefs.getKinDetailArrayList(mContext)!!)
-                                familyContactRecycler.setAdapter(familyKinRecyclerAdapter)
+                                familyContactRecycler.adapter = familyKinRecyclerAdapter
                                 dialog.dismiss()
 
                             }
@@ -1638,21 +1644,18 @@ class FirstScreenNewData:Fragment() {
              text_dialog.text = "Are you sure you want to delete this Contact?"
              alertHead.text = "Confirm?"
              iconImageView.setImageResource(R.drawable.exclamationicon)
-             btn_Cancel?.setOnClickListener()
+             btn_Cancel.setOnClickListener()
              {
                  deleteDialog.dismiss()
 
              }
-             btn_Ok?.setOnClickListener()
+             btn_Ok.setOnClickListener()
              {
                  var kinPos:Int=-1
 
-                 if(kinDetailArrayList.get(positionClicked).NewData)
-                 {
-                     for (i in 0..kinDetailPassArrayList.size-1)
-                     {
-                         if(kinDetailArrayList.get(positionClicked).kin_id==kinDetailPassArrayList.get(i).kin_id)
-                         {
+                 if(kinDetailArrayList.get(positionClicked).NewData) {
+                     for (i in 0..kinDetailPassArrayList.size-1) {
+                         if(kinDetailArrayList.get(positionClicked).kin_id==kinDetailPassArrayList.get(i).kin_id) {
                              kinPos=i
                          }
                      }
@@ -1665,13 +1668,9 @@ class FirstScreenNewData:Fragment() {
                      sharedprefs.setKinDetailPassArrayList(mContext,kinDetailPassArrayList)
                      deleteDialog.dismiss()
                      dialog.dismiss()
-                 }
-                 else
-                 {
-                     for (i in 0..kinDetailPassArrayList.size-1)
-                     {
-                         if(kinDetailArrayList.get(positionClicked).kin_id==kinDetailPassArrayList.get(i).kin_id)
-                         {
+                 } else {
+                     for (i in 0..kinDetailPassArrayList.size-1) {
+                         if(kinDetailArrayList.get(positionClicked).kin_id==kinDetailPassArrayList.get(i).kin_id) {
                              kinPos=i
                          }
                      }
@@ -1706,7 +1705,7 @@ class FirstScreenNewData:Fragment() {
                      sharedprefs.setKinDetailArrayList(mContext,kinDetailArrayList)
                      sharedprefs.setKinDetailPassArrayList(mContext,kinDetailPassArrayList)
                      familyKinRecyclerAdapter= FamilyContactRecyclerAdapter(sharedprefs.getKinDetailArrayList(mContext)!!)
-                     familyContactRecycler.setAdapter(familyKinRecyclerAdapter)
+                     familyContactRecycler.adapter = familyKinRecyclerAdapter
                      deleteDialog.dismiss()
                      dialog.dismiss()
 
@@ -1771,7 +1770,7 @@ class FirstScreenNewData:Fragment() {
                sharedprefs.setKinDetailArrayList(mContext,kinDetailArrayList)
                sharedprefs.setKinDetailPassArrayList(mContext,kinDetailPassArrayList)
                familyKinRecyclerAdapter= FamilyContactRecyclerAdapter(sharedprefs.getKinDetailArrayList(mContext)!!)
-               familyContactRecycler.setAdapter(familyKinRecyclerAdapter)
+               familyContactRecycler.adapter = familyKinRecyclerAdapter
 
            }
             dialog.dismiss()
@@ -1817,19 +1816,19 @@ class FirstScreenNewData:Fragment() {
         var communicationPreferenceLinear=dialog.findViewById(R.id.communicationPreferenceLinear)as LinearLayout
         communicationPreferenceLinear.visibility=View.INVISIBLE
         var spinnerCode=dialog.findViewById(R.id.spinnerCode)as EditText
-        contactDetails_fname.setImeOptions(EditorInfo.IME_ACTION_DONE)
+        contactDetails_fname.imeOptions = EditorInfo.IME_ACTION_DONE
         contactDetails_fname.isFocusable=true
         contactDetails_fname.isFocusableInTouchMode=true
-        ContactDetails_Lastname.setImeOptions(EditorInfo.IME_ACTION_DONE)
+        ContactDetails_Lastname.imeOptions = EditorInfo.IME_ACTION_DONE
         ContactDetails_Lastname.isFocusable=true
         ContactDetails_Lastname.isFocusableInTouchMode=true
-        ContactDetails_Email.setImeOptions(EditorInfo.IME_ACTION_DONE)
+        ContactDetails_Email.imeOptions = EditorInfo.IME_ACTION_DONE
         ContactDetails_Email.isFocusable=true
         ContactDetails_Email.isFocusableInTouchMode=true
-        ContactDetails_Phone.setImeOptions(EditorInfo.IME_ACTION_DONE)
+        ContactDetails_Phone.imeOptions = EditorInfo.IME_ACTION_DONE
         ContactDetails_Phone.isFocusable=true
         ContactDetails_Phone.isFocusableInTouchMode=true
-        spinnerCode.setImeOptions(EditorInfo.IME_ACTION_DONE)
+        spinnerCode.imeOptions = EditorInfo.IME_ACTION_DONE
         spinnerCode.isFocusable=true
         spinnerCode.isFocusableInTouchMode=true
         spinnerCode.setText("+971")
@@ -1849,14 +1848,14 @@ class FirstScreenNewData:Fragment() {
 
         }
         var relationshipTxt=dialog.findViewById(R.id.relationshipTxt)as TextView
-        relationshipTxt.setText(relationShipArrayList.get(0).name)
+        relationshipTxt.text = relationShipArrayList.get(0).name
         spinnerRelationShipDialog = SpinnerDialog(activity, relationshipData, "Select RelationShip", "Close") // With No Animation
         spinnerRelationShipDialog = SpinnerDialog(activity, relationshipData, "Select RelationShip", R.style.DialogAnimations_SmileWindow, "Close") // With 	Animation
         spinnerRelationShipDialog.setCancellable(true)
         spinnerRelationShipDialog.setShowKeyboard(false)
         spinnerRelationShipDialog.bindOnSpinerListener(object : OnSpinerItemClick {
             override fun onClick(item: String, position: Int) {
-                relationshipTxt.setText(item)
+                relationshipTxt.text = item
                 isKinChanged=true
 
 
@@ -1930,7 +1929,7 @@ class FirstScreenNewData:Fragment() {
                                 sharedprefs.setKinDetailPassArrayList(mContext,kinDetailPassArrayList)
                                 Log.e("PASS ARRAY SIZE",sharedprefs.getKinDetailPassArrayList(mContext)!!.size.toString())
                                 familyKinRecyclerAdapter= FamilyContactRecyclerAdapter(sharedprefs.getKinDetailArrayList(mContext)!!)
-                                familyContactRecycler.setAdapter(familyKinRecyclerAdapter)
+                                familyContactRecycler.adapter = familyKinRecyclerAdapter
                                 dialog.dismiss()
 
                             }
@@ -1957,12 +1956,12 @@ class FirstScreenNewData:Fragment() {
             text_dialog.text = "Do you want to Discard changes?"
             alertHead.text = "Confirm?"
             iconImageView.setImageResource(R.drawable.exclamationicon)
-            btn_Cancel?.setOnClickListener()
+            btn_Cancel.setOnClickListener()
             {
                 deleteDialog.show()
 
             }
-            btn_Ok?.setOnClickListener()
+            btn_Ok.setOnClickListener()
             {
 
                 deleteDialog.dismiss()

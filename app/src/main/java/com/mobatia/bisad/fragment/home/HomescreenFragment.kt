@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -18,7 +19,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
-import androidx.viewpager.widget.ViewPager.PageTransformer
+import com.mobatia.bisad.BuildConfig
 import com.mobatia.bisad.R
 import com.mobatia.bisad.activity.home.DataCollectionActivity
 import com.mobatia.bisad.activity.home.HomeActivity
@@ -30,7 +31,6 @@ import com.mobatia.bisad.constants.NaisClassNameConstants
 import com.mobatia.bisad.constants.NaisTabConstants
 import com.mobatia.bisad.fragment.apps.AppsFragment
 import com.mobatia.bisad.fragment.attendance.AttendanceFragment
-import com.mobatia.bisad.fragment.calendar.CalendarFragment
 import com.mobatia.bisad.fragment.calendar_new.CalendarFragmentNew
 import com.mobatia.bisad.fragment.communication.CommunicationFragment
 import com.mobatia.bisad.fragment.contact_us.ContactUsFragment
@@ -56,10 +56,8 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.Duration
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.abs
 
 
 lateinit var relone: RelativeLayout
@@ -91,6 +89,9 @@ lateinit var relImgsix: ImageView
 lateinit var relImgseven: ImageView
 lateinit var relImgeight: ImageView
 lateinit var relImgnine: ImageView
+var versionfromapi: String = ""
+var currentversion: String = ""
+
 
 lateinit var mSectionText: Array<String?>
 lateinit var homeActivity: HomeActivity
@@ -131,7 +132,8 @@ var isDraggable: Boolean = false
 lateinit var mContext: Context
 
 
-@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "CAST_NEVER_SUCCEEDS",
+@Suppress(
+    "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "CAST_NEVER_SUCCEEDS",
     "ControlFlowWithEmptyBody"
 )
 class HomescreenFragment : Fragment(), View.OnClickListener {
@@ -164,32 +166,26 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
         classNameConstants = NaisClassNameConstants()
         listitems = resources.getStringArray(R.array.navigation_items_guest)
         mListImgArrays = context!!.resources.obtainTypedArray(R.array.navigation_icons_guest)
-        previousTriggerType= sharedprefs.getTriggerType(mContext)
-
+        previousTriggerType = sharedprefs.getTriggerType(mContext)
+        currentversion = BuildConfig.VERSION_NAME
         initializeUI()
         var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
-        if(internetCheck)
-        {
+        if (internetCheck) {
             getbannerimages()
-        }
-       else{
+
+        } else {
             InternetCheckClass.showSuccessInternetAlert(mContext)
         }
-        if (sharedprefs.getUserCode(mContext).equals(""))
-        {
+        if (sharedprefs.getUserCode(mContext).equals("")) {
 
-        }
-        else{
-            if(internetCheck)
-            {
+        } else {
+            if (internetCheck) {
                 callStudentListApi()
                 callTilesListApi()
                 callCountryListApi()
                 callRelationshipApi()
                 callSettingsUserDetail()
-            }
-            else
-            {
+            } else {
                 InternetCheckClass.showSuccessInternetAlert(mContext)
             }
 
@@ -267,8 +263,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
 
         if (sharedprefs
                 .getbuttononetextimage(mContext)!!.toInt() != 0
-        )
-        {
+        ) {
             relImgone.setImageDrawable(
                 mListImgArrays.getDrawable(
                     sharedprefs
@@ -278,27 +273,23 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
             var relTwoStr: String? = ""
             relTwoStr =
                 if (listitems[sharedprefs
-                    .getbuttononetextimage(mContext)!!.toInt()].equals(
-                    classNameConstants.CCAS,
-                    ignoreCase = true
-                )
-            )
-            {
-                classNameConstants.CCAS
-            }
-            else  if (listitems[sharedprefs
+                        .getbuttononetextimage(mContext)!!.toInt()].equals(
+                        classNameConstants.CCAS,
+                        ignoreCase = true
+                    )
+                ) {
+                    classNameConstants.CCAS
+                } else if (listitems[sharedprefs
                         .getbuttononetextimage(mContext)!!.toInt()].equals(
                         classNameConstants.STUDENT_INFORMATION,
                         ignoreCase = true
                     )
-                )
-                {
+                ) {
                     classNameConstants.STUDENT
+                } else {
+                    listitems[sharedprefs
+                        .getbuttononetextimage(mContext)!!.toInt()].toUpperCase()
                 }
-            else {
-                listitems[sharedprefs
-                    .getbuttononetextimage(mContext)!!.toInt()].toUpperCase()
-            }
             relTxtone.text = relTwoStr
             relTxtone.setTextColor(ContextCompat.getColor(mContext, R.color.white))
             relone.setBackgroundColor(
@@ -317,26 +308,23 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
             var relTwoStr: String? = ""
             relTwoStr =
                 if (listitems[sharedprefs
-                    .getbuttontwotextimage(mContext)!!.toInt()].equals(
-                    classNameConstants.CCAS,
-                    ignoreCase = true
-                )
-            ) {
-                classNameConstants.CCAS
-            }
-                else   if (listitems[sharedprefs
+                        .getbuttontwotextimage(mContext)!!.toInt()].equals(
+                        classNameConstants.CCAS,
+                        ignoreCase = true
+                    )
+                ) {
+                    classNameConstants.CCAS
+                } else if (listitems[sharedprefs
                         .getbuttontwotextimage(mContext)!!.toInt()].equals(
                         classNameConstants.STUDENT_INFORMATION,
                         ignoreCase = true
                     )
                 ) {
                     classNameConstants.STUDENT
+                } else {
+                    listitems[sharedprefs
+                        .getbuttontwotextimage(mContext)!!.toInt()].toUpperCase()
                 }
-
-                else {
-                listitems[sharedprefs
-                    .getbuttontwotextimage(mContext)!!.toInt()].toUpperCase()
-            }
             relTxttwo.text = relTwoStr
             relTxttwo.setTextColor(ContextCompat.getColor(mContext, R.color.white))
             reltwo.setBackgroundColor(
@@ -361,16 +349,14 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                 )
             ) {
                 classNameConstants.CCAS
-            }
-            else if (listitems[sharedprefs
+            } else if (listitems[sharedprefs
                     .getbuttonthreetextimage(mContext)!!.toInt()].equals(
                     classNameConstants.STUDENT_INFORMATION,
                     ignoreCase = true
                 )
             ) {
                 classNameConstants.STUDENT
-            }
-            else {
+            } else {
                 listitems[sharedprefs
                     .getbuttonthreetextimage(mContext)!!.toInt()].toUpperCase()
             }
@@ -400,16 +386,14 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                 )
             ) {
                 classNameConstants.CCAS
-            }
-            else if (listitems[sharedprefs
+            } else if (listitems[sharedprefs
                     .getbuttonfourtextimage(mContext)!!.toInt()].equals(
                     classNameConstants.STUDENT_INFORMATION,
                     ignoreCase = true
                 )
             ) {
                 classNameConstants.STUDENT
-            }
-            else {
+            } else {
                 listitems[sharedprefs
                     .getbuttonfourtextimage(mContext)!!.toInt()].toUpperCase()
             }
@@ -439,16 +423,14 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                 )
             ) {
                 classNameConstants.CCAS
-            }
-            else if (listitems[sharedprefs
+            } else if (listitems[sharedprefs
                     .getbuttonfivetextimage(mContext)!!.toInt()].equals(
                     classNameConstants.STUDENT_INFORMATION,
                     ignoreCase = true
                 )
             ) {
                 classNameConstants.STUDENT
-            }
-            else {
+            } else {
                 listitems[sharedprefs
                     .getbuttonfivetextimage(mContext)!!.toInt()].toUpperCase()
             }
@@ -459,9 +441,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     .getButtonfiveGuestBg(mContext)
             )
         }
-        if(sharedprefs.getbuttonsixtextimage(mContext)!!.toInt() != 0)
-
-        {
+        if (sharedprefs.getbuttonsixtextimage(mContext)!!.toInt() != 0) {
             relImgsix.setImageDrawable(
                 mListImgArrays.getDrawable(
                     sharedprefs
@@ -476,18 +456,16 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                 )
             ) {
                 classNameConstants.CCAS
-            }
-            else if (listitems[sharedprefs
+            } else if (listitems[sharedprefs
                     .getbuttonsixtextimage(mContext)!!.toInt()].equals(
                     classNameConstants.STUDENT_INFORMATION,
                     ignoreCase = true
                 )
             ) {
                 classNameConstants.STUDENT
-            }
-            else {
+            } else {
                 listitems[sharedprefs
-                    .getbuttonsixtextimage(mContext)!!.toInt()].toUpperCase()
+                    .getbuttonsixtextimage(mContext)!!.toInt()].toUpperCase(Locale.ROOT)
             }
             relTxtsix.text = relTwoStr
             relTxtsix.setTextColor(ContextCompat.getColor(mContext, R.color.white))
@@ -659,12 +637,9 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     val relstring: String
                     if (listitems[sPosition] == "CCAs") {
                         relstring = "CCAS"
-                    }
-                    else if(listitems[sPosition] == "Student Information")
-                    {
-                        relstring ="STUDENT INFORMATION"
-                    }
-                    else {
+                    } else if (listitems[sPosition] == "Student Information") {
+                        relstring = "STUDENT INFORMATION"
+                    } else {
                         relstring = listitems[sPosition].toUpperCase(Locale.getDefault())
                     }
                     relTxtone.text = relstring
@@ -678,12 +653,9 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     val relstring: String
                     if (listitems[sPosition] == "CCAs") {
                         relstring = "CCAS"
-                    }
-                    else if(listitems[sPosition] == "Student Information")
-                    {
-                        relstring ="STUDENT INFORMATION"
-                    }
-                    else {
+                    } else if (listitems[sPosition] == "Student Information") {
+                        relstring = "STUDENT INFORMATION"
+                    } else {
                         relstring = listitems[sPosition].toUpperCase(Locale.getDefault())
                     }
                     relTxttwo.text = relstring
@@ -696,12 +668,9 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     val relstring: String
                     if (listitems[sPosition] == "CCAs") {
                         relstring = "CCAS"
-                    }
-                    else if(listitems[sPosition] == "Student Information")
-                    {
-                        relstring ="STUDENT INFORMATION"
-                    }
-                    else {
+                    } else if (listitems[sPosition] == "Student Information") {
+                        relstring = "STUDENT INFORMATION"
+                    } else {
                         relstring = listitems[sPosition].toUpperCase(Locale.getDefault())
                     }
                     relTxtthree.text = relstring
@@ -714,11 +683,9 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     val relstring: String
                     if (listitems[sPosition] == "CCAs") {
                         relstring = "CCAS"
-                    } else if(listitems[sPosition] == "Student Information")
-                    {
-                        relstring ="STUDENT INFORMATION"
-                    }
-                    else {
+                    } else if (listitems[sPosition] == "Student Information") {
+                        relstring = "STUDENT INFORMATION"
+                    } else {
                         relstring = listitems[sPosition].toUpperCase(Locale.getDefault())
                     }
                     relTxtfour.text = relstring
@@ -731,12 +698,9 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     val relstring: String
                     if (listitems[sPosition] == "CCAs") {
                         relstring = "CCAS"
-                    }
-                    else if(listitems[sPosition] == "Student Information")
-                    {
-                        relstring ="STUDENT INFORMATION"
-                    }
-                    else {
+                    } else if (listitems[sPosition] == "Student Information") {
+                        relstring = "STUDENT INFORMATION"
+                    } else {
                         relstring = listitems[sPosition].toUpperCase(Locale.getDefault())
                     }
                     relTxtfive.text = relstring
@@ -749,12 +713,9 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     val relstring: String
                     if (listitems[sPosition] == "CCAs") {
                         relstring = "CCAS"
-                    }
-                    else if(listitems[sPosition] == "Student Information")
-                    {
-                        relstring ="STUDENT INFORMATION"
-                    }
-                    else {
+                    } else if (listitems[sPosition] == "Student Information") {
+                        relstring = "STUDENT INFORMATION"
+                    } else {
                         relstring = listitems[sPosition].toUpperCase(Locale.getDefault())
                     }
                     relTxtsix.text = relstring
@@ -767,12 +728,9 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     val relstring: String
                     if (listitems[sPosition] == "CCAs") {
                         relstring = "CCAS"
-                    }
-                    else if(listitems[sPosition] == "Student Information")
-                    {
-                        relstring ="STUDENT INFORMATION"
-                    }
-                    else {
+                    } else if (listitems[sPosition] == "Student Information") {
+                        relstring = "STUDENT INFORMATION"
+                    } else {
                         relstring = listitems[sPosition].toUpperCase(Locale.getDefault())
                     }
                     relTxtseven.text = relstring
@@ -785,12 +743,9 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     val relstring: String
                     if (listitems[sPosition] == "CCAs") {
                         relstring = "CCAS"
-                    }
-                    else if(listitems[sPosition] == "Student Information")
-                    {
-                        relstring ="STUDENT INFORMATION"
-                    }
-                    else {
+                    } else if (listitems[sPosition] == "Student Information") {
+                        relstring = "STUDENT INFORMATION"
+                    } else {
                         relstring = listitems[sPosition].toUpperCase(Locale.getDefault())
                     }
                     relTxteight.text = relstring
@@ -803,12 +758,9 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     val relstring: String
                     if (listitems[sPosition] == "CCAs") {
                         relstring = "CCAS"
-                    }
-                    else if(listitems[sPosition] == "Student Information")
-                    {
-                        relstring ="STUDENT INFORMATION"
-                    }
-                    else {
+                    } else if (listitems[sPosition] == "Student Information") {
+                        relstring = "STUDENT INFORMATION"
+                    } else {
                         relstring = listitems[sPosition].toUpperCase(Locale.getDefault())
                     }
                     reltxtnine.text = relstring
@@ -881,7 +833,8 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                 textdata.equals(classNameConstants.STUDENT_INFORMATION) -> {
                     TAB_ID = naisTabConstants.TAB_STUDENT_INFORMATION
 
-                } textdata.equals("Student Information") -> {
+                }
+                textdata.equals("Student Information") -> {
                     TAB_ID = naisTabConstants.TAB_STUDENT_INFORMATION
 
                 }
@@ -927,7 +880,8 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                 textdata.equals(classNameConstants.ATTENDANCE, ignoreCase = true) -> {
                     TAB_ID = naisTabConstants.TAB_ATTENDANCE
 
-                }  textdata.equals(classNameConstants.CURRICULUM, ignoreCase = true) -> {
+                }
+                textdata.equals(classNameConstants.CURRICULUM, ignoreCase = true) -> {
                     TAB_ID = naisTabConstants.TAB_CURRICULUM
 
                 }
@@ -1026,7 +980,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
 
     @SuppressLint("UseRequireInsteadOfGet")
     private fun initializeUI() {
-         pager = view!!.findViewById<ViewPager>(R.id.bannerImagePager)
+        pager = view!!.findViewById<ViewPager>(R.id.bannerImagePager)
         relone = view!!.findViewById(R.id.relOne) as RelativeLayout
         reltwo = view!!.findViewById(R.id.relTwo) as RelativeLayout
         relthree = view!!.findViewById(R.id.relThree) as RelativeLayout
@@ -1108,53 +1062,100 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
 
     private fun CHECKINTENTVALUE(intentTabId: String) {
         TAB_ID = intentTabId
-        var mFragment : Fragment? =null
-        if(sharedprefs.getUserCode(mContext).equals("")) {
-            when (intentTabId)
-            {
+        var mFragment: Fragment? = null
+        if (sharedprefs.getUserCode(mContext).equals("")) {
+            when (intentTabId) {
                 naisTabConstants.TAB_STUDENT_INFORMATION -> {
-                    showSuccessAlert(mContext,"This feature is only available for registered users.","Alert")
+                    showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )
                 }
                 naisTabConstants.TAB_CALENDAR -> {
-                    showSuccessAlert(mContext,"This feature is only available for registered users.","Alert")
+                    showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )
                 }
 
                 naisTabConstants.TAB_MESSAGES -> {
-                    showSuccessAlert(mContext,"This feature is only available for registered users.","Alert")
+                    showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )
                 }
                 naisTabConstants.TAB_COMMUNICATION -> {
                     mFragment = CommunicationFragment()
                     fragmentIntent(mFragment)
                 }
                 naisTabConstants.TAB_REPORT_ABSENCE -> {
-                    showSuccessAlert(mContext,"This feature is only available for registered users.","Alert")
+                    showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )
                 }
                 naisTabConstants.TAB_TEACHER_CONTACT -> {
-                    showSuccessAlert(mContext,"This feature is only available for registered users.","Alert")
+                    showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )
                 }
                 naisTabConstants.TAB_SOCIAL_MEDIA -> {
                     mFragment = SocialMediaFragment()
                     fragmentIntent(mFragment)
                 }
                 naisTabConstants.TAB_TIME_TABLE -> {
-                    showSuccessAlert(mContext,"This feature is only available for registered users.","Alert")
+                    showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )
                 }
                 naisTabConstants.TAB_REPORTS -> {
-                    showSuccessAlert(mContext,"This feature is only available for registered users.","Alert")
+                    showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )
                 }
                 naisTabConstants.TAB_ATTENDANCE -> {
-                    showSuccessAlert(mContext,"This feature is only available for registered users.","Alert")
+                    showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )
                 }
                 naisTabConstants.TAB_CURRICULUM -> {
-                    showSuccessAlert(mContext,"This feature is only available for registered users.","Alert")
+                    showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )
                 }
                 naisTabConstants.TAB_TERM_DATES -> {
-                    showSuccessAlert(mContext,"This feature is only available for registered users.","Alert")
+                    showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )
                 }
                 naisTabConstants.TAB_CONTACT_US -> {
-                    if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED&& ActivityCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
-
-                    {
+                    if (ActivityCompat.checkSelfPermission(
+                            mContext,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                            mContext,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                            mContext,
+                            Manifest.permission.CALL_PHONE
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
                         checkpermission()
 
 
@@ -1163,17 +1164,16 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                         fragmentIntent(mFragment)
                     }
                 }
-                naisTabConstants.TAB_APPS ->
-                {
-                    showSuccessAlert(mContext,"This feature is only available for registered users.","Alert")
+                naisTabConstants.TAB_APPS -> {
+                    showSuccessAlert(
+                        mContext,
+                        "This feature is only available for registered users.",
+                        "Alert"
+                    )
                 }
             }
-        }
-        else
-        {
-            when (intentTabId)
-            {
-
+        } else {
+            when (intentTabId) {
 
 
                 naisTabConstants.TAB_STUDENT_INFORMATION -> {
@@ -1194,7 +1194,7 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                 }
 
                 naisTabConstants.TAB_MESSAGES -> {
-                    mFragment= MessageFragment()
+                    mFragment = MessageFragment()
                     fragmentIntent(mFragment)
                 }
                 naisTabConstants.TAB_COMMUNICATION -> {
@@ -1258,9 +1258,17 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     fragmentIntent(mFragment)
                 }
                 naisTabConstants.TAB_CONTACT_US -> {
-                    if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED&& ActivityCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
-
-                    {
+                    if (ActivityCompat.checkSelfPermission(
+                            mContext,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                            mContext,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                            mContext,
+                            Manifest.permission.CALL_PHONE
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
                         checkpermission()
 
 
@@ -1285,11 +1293,12 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
 
     }
 
-    fun getbannerimages()
-    {
-        val bannerModel=BannerModel("1.0.0",2)
+    fun getbannerimages() {
+        val version = BuildConfig.VERSION_NAME
+        val bannerModel = BannerModel(version, 2)
         val token = sharedprefs.getaccesstoken(mContext)
-        val call: Call<ResponseBody> = ApiClient.getClient.bannerimages(bannerModel,"Bearer "+token)
+        val call: Call<ResponseBody> =
+            ApiClient.getClient.bannerimages(bannerModel, "Bearer " + token)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.e("Error", t.localizedMessage)
@@ -1302,43 +1311,48 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     try {
 
                         val jsonObject = JSONObject(bannerresponse.string())
-                        if(jsonObject.has(jsonConstans.STATUS))
-                        {
-                            val status : Int=jsonObject.optInt(jsonConstans.STATUS)
-                            if (status==100)
-                            {
-                                val responseObj =jsonObject.getJSONObject("responseArray")
+                        if (jsonObject.has(jsonConstans.STATUS)) {
+                            val status: Int = jsonObject.optInt(jsonConstans.STATUS)
+                            if (status == 100) {
+                                val responseObj = jsonObject.getJSONObject("responseArray")
                                 val dataArray = responseObj.getJSONArray("banner_images")
+                                val appVersion = responseObj.optString("android_app_version")
+                                sharedprefs.setAppVersion(mContext, appVersion)
+                                versionfromapi =
+                                    sharedprefs.getAppVersion(mContext)!!.replace(".", "")
+                                currentversion = currentversion.replace(".", "")
+
+                                Log.e("APPVERSIONAPI:", versionfromapi)
+                                Log.e("CURRENTVERSION:", currentversion)
+
+                                if (!sharedprefs.getAppVersion(mContext).equals("", true)) {
+                                    if (versionfromapi > currentversion) {
+                                        showforceupdate(mContext)
+
+                                    }
+                                }
+
                                 if (dataArray.length() > 0) {
                                     for (i in 0..dataArray.length()) {
                                         bannerarray.add(dataArray.optString(i))
                                     }
                                     pager.adapter = activity?.let { PageView(it, bannerarray) }
-                                }
-                                else {
+                                } else {
                                     pager.setBackgroundResource(R.drawable.aboutbanner)
                                 }
-                            }
-
-                            else{
-                                if (status==116)
-                                {
+                            } else {
+                                if (status == 116) {
                                     //call Token Expired
                                     AccessTokenClass.getAccessToken(mContext)
                                     getbannerimages()
 
-                                }
-                                else
-                                {
-                                    if (status==103)
-                                    {
+                                } else {
+                                    if (status == 103) {
                                         //validation check error
 
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         //check status code checks
-                                        InternetCheckClass.checkApiStatusError(status,mContext)
+                                        InternetCheckClass.checkApiStatusError(status, mContext)
                                     }
                                 }
 
@@ -1353,6 +1367,39 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
         })
     }
 
+     fun showforceupdate(mContext: Context) {
+        val dialog = Dialog(mContext)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_updateversion)
+        val btnUpdate =
+            dialog.findViewById<View>(R.id.btnUpdate) as Button
+
+        btnUpdate.setOnClickListener {
+            dialog.dismiss()
+            val appPackageName =
+                mContext.packageName
+            try {
+                mContext.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=$appPackageName")
+                    )
+                )
+
+            } catch (e: android.content.ActivityNotFoundException) {
+                mContext.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                    )
+                )
+            }
+
+        }
+        dialog.show()
+    }
 
 
     fun fragmentIntent(mFragment: Fragment?) {
@@ -1361,13 +1408,12 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
             fragmentManager.beginTransaction()
                 .add(R.id.fragment_holder, mFragment, appController.mTitles)
                 .addToBackStack(appController.mTitles).commitAllowingStateLoss() //commit
-                //.commit()
+            //.commit()
         }
     }
 
 
-    fun showSuccessAlert(context: Context,message : String,msgHead : String)
-    {
+    fun showSuccessAlert(context: Context, message: String, msgHead: String) {
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -1389,11 +1435,11 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
         dialog.show()
     }
 
-    fun callSettingsUserDetail()
-    {
-        val bannerModel=BannerModel("1.0.0",2)
+    fun callSettingsUserDetail() {
+        val bannerModel = BannerModel("1.0.0", 2)
         val token = sharedprefs.getaccesstoken(mContext)
-        val call: Call<ResponseBody> = ApiClient.getClient.settingsUserDetail(bannerModel,"Bearer "+token)
+        val call: Call<ResponseBody> =
+            ApiClient.getClient.settingsUserDetail(bannerModel, "Bearer " + token)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.e("Error", t.localizedMessage)
@@ -1404,69 +1450,60 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                 if (bannerresponse != null) {
                     try {
                         val jsonObject = JSONObject(bannerresponse.string())
-                        if(jsonObject.has(jsonConstans.STATUS))
-                        {
-                            val status : Int=jsonObject.optInt(jsonConstans.STATUS)
-                            if (status==100)
-                            {
-                                val responseObj =jsonObject.getJSONObject("responseArray")
-                                val appVersion=responseObj.optString("android_app_version")
-                                val data_collection=responseObj.optInt("data_collection")
-                                val trigger_type=responseObj.optInt("trigger_type")
-                                val already_triggered=responseObj.optInt("already_triggered")
-                                sharedprefs.setAppVersion(mContext,appVersion)
-                                sharedprefs.setDataCollection(mContext,data_collection)
-                                sharedprefs.setTriggerType(mContext,trigger_type)
-                                sharedprefs.setAlreadyTriggered(mContext,already_triggered)
+                        if (jsonObject.has(jsonConstans.STATUS)) {
+                            val status: Int = jsonObject.optInt(jsonConstans.STATUS)
+                            if (status == 100) {
+                                val responseObj = jsonObject.getJSONObject("responseArray")
+                                val appVersion = responseObj.optString("android_app_version")
+                                val data_collection = responseObj.optInt("data_collection")
+                                val trigger_type = responseObj.optInt("trigger_type")
+                                val already_triggered = responseObj.optInt("already_triggered")
+                                sharedprefs.setAppVersion(mContext, appVersion)
+                                sharedprefs.setDataCollection(mContext, data_collection)
+                                sharedprefs.setTriggerType(mContext, trigger_type)
+                                sharedprefs.setAlreadyTriggered(mContext, already_triggered)
 
-                                if (sharedprefs.getDataCollection(mContext)==1)
-                                {
+                                if (sharedprefs.getDataCollection(mContext) == 1) {
                                     Handler().postDelayed({
 
-                                        if (sharedprefs.getAlreadyTriggered(mContext)==0)
-                                        {
+                                        if (sharedprefs.getAlreadyTriggered(mContext) == 0) {
                                             callDataCollectionAPI()
 
-                                        }
-                                        else
-                                        {
-                                            if (previousTriggerType== sharedprefs.getTriggerType(mContext))
-                                            {
-                                                if(!sharedprefs.getSuspendTrigger(mContext).equals("1"))
-                                                {
-                                                    val intent =Intent(activity, DataCollectionActivity::class.java)
+                                        } else {
+                                            if (previousTriggerType == sharedprefs.getTriggerType(
+                                                    mContext
+                                                )
+                                            ) {
+                                                if (!sharedprefs.getSuspendTrigger(mContext)
+                                                        .equals("1")
+                                                ) {
+                                                    val intent = Intent(
+                                                        activity,
+                                                        DataCollectionActivity::class.java
+                                                    )
                                                     activity?.startActivity(intent)
                                                 }
 
-                                            }
-                                            else{
+                                            } else {
                                                 callDataCollectionAPI()
                                             }
                                         }
                                     }, 3000)
                                 }
 
-                            }
-
-                            else{
-                                if (status==116)
-                                {
+                            } else {
+                                if (status == 116) {
                                     //call Token Expired
                                     AccessTokenClass.getAccessToken(mContext)
                                     callSettingsUserDetail()
 
-                                }
-                                else
-                                {
-                                    if (status==103)
-                                    {
+                                } else {
+                                    if (status == 103) {
                                         //validation check error
 
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         //check status code checks
-                                        InternetCheckClass.checkApiStatusError(status,mContext)
+                                        InternetCheckClass.checkApiStatusError(status, mContext)
                                     }
                                 }
 
@@ -1482,57 +1519,54 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
     }
 
 
-    fun callStudentListApi()
-    {
-        studentListArrayList= ArrayList()
-        var studentSaveArrayList=ArrayList<StudentListDataCollection>()
+    fun callStudentListApi() {
+        studentListArrayList = ArrayList()
+        var studentSaveArrayList = ArrayList<StudentListDataCollection>()
         val token = sharedprefs.getaccesstoken(mContext)
-        val call: Call<StudentListModel> = ApiClient.getClient.studentList("Bearer "+token)
-        call.enqueue(object : Callback<StudentListModel>{
+        val call: Call<StudentListModel> = ApiClient.getClient.studentList("Bearer " + token)
+        call.enqueue(object : Callback<StudentListModel> {
             override fun onFailure(call: Call<StudentListModel>, t: Throwable) {
                 Log.e("Error", t.localizedMessage)
             }
-            override fun onResponse(call: Call<StudentListModel>, response: Response<StudentListModel>) {
 
-                if (response.body()!!.status==100)
-                {
+            override fun onResponse(
+                call: Call<StudentListModel>,
+                response: Response<StudentListModel>
+            ) {
+
+                if (response.body()!!.status == 100) {
                     studentListArrayList.addAll(response.body()!!.responseArray.studentList)
-                    for (i in 0..studentListArrayList.size-1)
-                    {
-                        var model=StudentListDataCollection()
-                        model.id= studentListArrayList.get(i).id
-                        model.name= studentListArrayList.get(i).name
-                        model.unique_id= studentListArrayList.get(i).unique_id
-                        model.house= studentListArrayList.get(i).house
-                        model.photo= studentListArrayList.get(i).photo
-                        model.section= studentListArrayList.get(i).section
-                        model.studentListClass= studentListArrayList.get(i).studentClass
-                        model.isConfirmed=false
+                    for (i in 0..studentListArrayList.size - 1) {
+                        var model = StudentListDataCollection()
+                        model.id = studentListArrayList.get(i).id
+                        model.name = studentListArrayList.get(i).name
+                        model.unique_id = studentListArrayList.get(i).unique_id
+                        model.house = studentListArrayList.get(i).house
+                        model.photo = studentListArrayList.get(i).photo
+                        model.section = studentListArrayList.get(i).section
+                        model.studentListClass = studentListArrayList.get(i).studentClass
+                        model.isConfirmed = false
                         studentSaveArrayList.add(model)
                     }
                     sharedprefs.setStudentArrayList(mContext, studentSaveArrayList)
 
 
-                }
-                else{
-                    if (response.body()!!.status==116)
-                    {
+                } else {
+                    if (response.body()!!.status == 116) {
                         //call Token Expired
                         AccessTokenClass.getAccessToken(mContext)
                         callStudentListApi()
 
-                    }
-                    else
-                    {
-                        if (response.body()!!.status==103)
-                        {
+                    } else {
+                        if (response.body()!!.status == 103) {
                             //validation check error
 
-                        }
-                        else
-                        {
+                        } else {
                             //check status code checks
-                            InternetCheckClass.checkApiStatusError(response.body()!!.status,mContext)
+                            InternetCheckClass.checkApiStatusError(
+                                response.body()!!.status,
+                                mContext
+                            )
                         }
                     }
 
@@ -1544,42 +1578,40 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
         })
     }
 
-    fun callTilesListApi()
-    {
-        titlesListArrayList= ArrayList()
+    fun callTilesListApi() {
+        titlesListArrayList = ArrayList()
         val token = sharedprefs.getaccesstoken(mContext)
-        val call: Call<TilesListModel> = ApiClient.getClient.titlesList("Bearer "+token)
-        call.enqueue(object : Callback<TilesListModel>{
+        val call: Call<TilesListModel> = ApiClient.getClient.titlesList("Bearer " + token)
+        call.enqueue(object : Callback<TilesListModel> {
             override fun onFailure(call: Call<TilesListModel>, t: Throwable) {
                 Log.e("Error", t.localizedMessage)
             }
-            override fun onResponse(call: Call<TilesListModel>, response: Response<TilesListModel>) {
 
-                if (response.body()!!.status==100)
-                {
+            override fun onResponse(
+                call: Call<TilesListModel>,
+                response: Response<TilesListModel>
+            ) {
+
+                if (response.body()!!.status == 100) {
                     titlesListArrayList.addAll(response.body()!!.responseArray.titlesList)
                     sharedprefs.setTitleArrayList(mContext, titlesListArrayList)
 
-                }
-                else{
-                    if (response.body()!!.status==116)
-                    {
+                } else {
+                    if (response.body()!!.status == 116) {
                         //call Token Expired
                         AccessTokenClass.getAccessToken(mContext)
                         callTilesListApi()
 
-                    }
-                    else
-                    {
-                        if (response.body()!!.status==103)
-                        {
+                    } else {
+                        if (response.body()!!.status == 103) {
                             //validation check error
 
-                        }
-                        else
-                        {
+                        } else {
                             //check status code checks
-                            InternetCheckClass.checkApiStatusError(response.body()!!.status,mContext)
+                            InternetCheckClass.checkApiStatusError(
+                                response.body()!!.status,
+                                mContext
+                            )
                         }
                     }
 
@@ -1590,42 +1622,41 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
 
         })
     }
-    fun callCountryListApi()
-    {
-        countryistArrayList= ArrayList()
+
+    fun callCountryListApi() {
+        countryistArrayList = ArrayList()
         val token = sharedprefs.getaccesstoken(mContext)
-        val call: Call<CountryListModel> = ApiClient.getClient.countryList("Bearer "+token)
-        call.enqueue(object : Callback<CountryListModel>{
+        val call: Call<CountryListModel> = ApiClient.getClient.countryList("Bearer " + token)
+        call.enqueue(object : Callback<CountryListModel> {
             override fun onFailure(call: Call<CountryListModel>, t: Throwable) {
                 Log.e("Error", t.localizedMessage)
             }
-            override fun onResponse(call: Call<CountryListModel>, response: Response<CountryListModel>) {
-                if (response.body()!!.status==100)
-                {
+
+            override fun onResponse(
+                call: Call<CountryListModel>,
+                response: Response<CountryListModel>
+            ) {
+                if (response.body()!!.status == 100) {
                     countryistArrayList.addAll(response.body()!!.responseArray.countriesList)
                     sharedprefs.setCountryArrayList(mContext, countryistArrayList)
-                   // Log.e("Country List Size", sharedprefs.getCountryArrayList(mContext).size.toString() )
+                    // Log.e("Country List Size", sharedprefs.getCountryArrayList(mContext).size.toString() )
 
-                }
-                else{
-                    if (response.body()!!.status==116)
-                    {
+                } else {
+                    if (response.body()!!.status == 116) {
                         //call Token Expired
                         AccessTokenClass.getAccessToken(mContext)
                         callCountryListApi()
 
-                    }
-                    else
-                    {
-                        if (response.body()!!.status==103)
-                        {
+                    } else {
+                        if (response.body()!!.status == 103) {
                             //validation check error
 
-                        }
-                        else
-                        {
+                        } else {
                             //check status code checks
-                            InternetCheckClass.checkApiStatusError(response.body()!!.status,mContext)
+                            InternetCheckClass.checkApiStatusError(
+                                response.body()!!.status,
+                                mContext
+                            )
                         }
                     }
 
@@ -1637,41 +1668,43 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
         })
     }
 
-    fun callRelationshipApi()
-    {
-        relationshipArrayList= ArrayList()
+    fun callRelationshipApi() {
+        relationshipArrayList = ArrayList()
         val token = sharedprefs.getaccesstoken(mContext)
-        val call: Call<RelationShipListModel> = ApiClient.getClient.relationshipList("Bearer "+token)
-        call.enqueue(object : Callback<RelationShipListModel>{
+        val call: Call<RelationShipListModel> =
+            ApiClient.getClient.relationshipList("Bearer " + token)
+        call.enqueue(object : Callback<RelationShipListModel> {
             override fun onFailure(call: Call<RelationShipListModel>, t: Throwable) {
                 Log.e("Error", t.localizedMessage)
             }
-            override fun onResponse(call: Call<RelationShipListModel>, response: Response<RelationShipListModel>) {
-                if (response.body()!!.status==100)
-                {
+
+            override fun onResponse(
+                call: Call<RelationShipListModel>,
+                response: Response<RelationShipListModel>
+            ) {
+                if (response.body()!!.status == 100) {
                     relationshipArrayList.addAll(response.body()!!.responseArray.contactTypesList)
                     sharedprefs.setRelationShipArrayList(mContext, relationshipArrayList)
 
-                }
-                else{
-                    if (response.body()!!.status==116)
-                    {
+                } else {
+                    if (response.body()!!.status == 116) {
                         //call Token Expired
                         AccessTokenClass.getAccessToken(mContext)
                         callRelationshipApi()
 
-                    }
-                    else
-                    {
-                        if (response.body()!!.status==103)
-                        {
+                    } else {
+                        if (response.body()!!.status == 103) {
                             //validation check error
-                            InternetCheckClass.checkApiStatusError(response.body()!!.status,mContext)
-                        }
-                        else
-                        {
+                            InternetCheckClass.checkApiStatusError(
+                                response.body()!!.status,
+                                mContext
+                            )
+                        } else {
                             //check status code checks
-                            InternetCheckClass.checkApiStatusError(response.body()!!.status,mContext)
+                            InternetCheckClass.checkApiStatusError(
+                                response.body()!!.status,
+                                mContext
+                            )
                         }
                     }
 
@@ -1683,207 +1716,214 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
         })
     }
 
-    fun callDataCollectionAPI()
-    {
-        ownContactArrayList= ArrayList()
-        kinDetailArrayList= ArrayList()
-        passportArrayList= ArrayList()
-        healthDetailArrayList= ArrayList()
-        ownContactDetailSaveArrayList= ArrayList()
-        passportSaveArrayList= ArrayList()
-        healthSaveArrayList= ArrayList()
-        kinDetailSaveArrayList= ArrayList()
+    fun callDataCollectionAPI() {
+        ownContactArrayList = ArrayList()
+        kinDetailArrayList = ArrayList()
+        passportArrayList = ArrayList()
+        healthDetailArrayList = ArrayList()
+        ownContactDetailSaveArrayList = ArrayList()
+        passportSaveArrayList = ArrayList()
+        healthSaveArrayList = ArrayList()
+        kinDetailSaveArrayList = ArrayList()
         val token = sharedprefs.getaccesstoken(mContext)
-        val call: Call<DataCollectionModel> = ApiClient.getClient.dataCollectionDetail("Bearer "+token)
-        call.enqueue(object : Callback<DataCollectionModel>{
+        val call: Call<DataCollectionModel> =
+            ApiClient.getClient.dataCollectionDetail("Bearer " + token)
+        call.enqueue(object : Callback<DataCollectionModel> {
             override fun onFailure(call: Call<DataCollectionModel>, t: Throwable) {
                 Log.e("Error", t.localizedMessage)
             }
-            override fun onResponse(call: Call<DataCollectionModel>, response: Response<DataCollectionModel>) {
-                if (response.body()!!.status==100)
-                {
 
-                    sharedprefs.setDisplayMessage(mContext,response.body()!!.responseArray.display_message)
-                    ownContactArrayList=response.body()!!.responseArray.ownDetailsList
-                    kinDetailArrayList=response.body()!!.responseArray.kinDetailsList
-                    passportArrayList=response.body()!!.responseArray.passportDetailsList
-                    healthDetailArrayList=response.body()!!.responseArray.healthInsurenceList
-                    if (ownContactArrayList.size>0)
-                    {
-                        for (i in 0..ownContactArrayList.size-1)
-                        {
-                            var model=OwnContactModel()
-                            model.id= ownContactArrayList.get(i).id
-                            model.user_id= ownContactArrayList.get(i).user_id
-                            model.title= ownContactArrayList.get(i).title
-                            model.name= ownContactArrayList.get(i).name
-                            model.last_name= ownContactArrayList.get(i).last_name
-                            model.relationship= ownContactArrayList.get(i).relationship
-                            model.email= ownContactArrayList.get(i).email
-                            model.phone= ownContactArrayList.get(i).phone
-                            model.code= ownContactArrayList.get(i).code
-                            model.user_mobile= ownContactArrayList.get(i).user_mobile
-                            model.address1= ownContactArrayList.get(i).address1
-                            model.address2= ownContactArrayList.get(i).address2
-                            model.address3= ownContactArrayList.get(i).address3
-                            model.town= ownContactArrayList.get(i).town
-                            model.state= ownContactArrayList.get(i).state
-                            model.country= ownContactArrayList.get(i).country
-                            model.pincode= ownContactArrayList.get(i).pincode
-                            model.status= ownContactArrayList.get(i).status
-                            model.created_at= ownContactArrayList.get(i).created_at
-                            model.updated_at= ownContactArrayList.get(i).updated_at
-                            model.isUpdated= false
-                            model.isConfirmed= false
+            override fun onResponse(
+                call: Call<DataCollectionModel>,
+                response: Response<DataCollectionModel>
+            ) {
+                if (response.body()!!.status == 100) {
+
+                    sharedprefs.setDisplayMessage(
+                        mContext,
+                        response.body()!!.responseArray.display_message
+                    )
+                    ownContactArrayList = response.body()!!.responseArray.ownDetailsList
+                    kinDetailArrayList = response.body()!!.responseArray.kinDetailsList
+                    passportArrayList = response.body()!!.responseArray.passportDetailsList
+                    healthDetailArrayList = response.body()!!.responseArray.healthInsurenceList
+                    if (ownContactArrayList.size > 0) {
+                        for (i in 0..ownContactArrayList.size - 1) {
+                            var model = OwnContactModel()
+                            model.id = ownContactArrayList.get(i).id
+                            model.user_id = ownContactArrayList.get(i).user_id
+                            model.title = ownContactArrayList.get(i).title
+                            model.name = ownContactArrayList.get(i).name
+                            model.last_name = ownContactArrayList.get(i).last_name
+                            model.relationship = ownContactArrayList.get(i).relationship
+                            model.email = ownContactArrayList.get(i).email
+                            model.phone = ownContactArrayList.get(i).phone
+                            model.code = ownContactArrayList.get(i).code
+                            model.user_mobile = ownContactArrayList.get(i).user_mobile
+                            model.address1 = ownContactArrayList.get(i).address1
+                            model.address2 = ownContactArrayList.get(i).address2
+                            model.address3 = ownContactArrayList.get(i).address3
+                            model.town = ownContactArrayList.get(i).town
+                            model.state = ownContactArrayList.get(i).state
+                            model.country = ownContactArrayList.get(i).country
+                            model.pincode = ownContactArrayList.get(i).pincode
+                            model.status = ownContactArrayList.get(i).status
+                            model.created_at = ownContactArrayList.get(i).created_at
+                            model.updated_at = ownContactArrayList.get(i).updated_at
+                            model.isUpdated = false
+                            model.isConfirmed = false
                             ownContactDetailSaveArrayList.add(model)
 
                         }
 
-                       if( sharedprefs.getOwnContactDetailArrayList(mContext)==null|| sharedprefs.getOwnContactDetailArrayList(mContext)!!.size==0)
-                       {
-                           sharedprefs.setIsAlreadyEnteredOwn(mContext,true)
-                           sharedprefs.setOwnContactDetailArrayList(mContext, ownContactDetailSaveArrayList)
-                       }
-                        else{
-                           if (!sharedprefs.getIsAlreadyEnteredOwn(mContext))
-                           {
-                               sharedprefs.setIsAlreadyEnteredOwn(mContext,true)
-                               sharedprefs.setOwnContactDetailArrayList(mContext, ownContactDetailSaveArrayList)
-                           }
-                       }
+                        if (sharedprefs.getOwnContactDetailArrayList(mContext) == null || sharedprefs.getOwnContactDetailArrayList(
+                                mContext
+                            )!!.size == 0
+                        ) {
+                            sharedprefs.setIsAlreadyEnteredOwn(mContext, true)
+                            sharedprefs.setOwnContactDetailArrayList(
+                                mContext,
+                                ownContactDetailSaveArrayList
+                            )
+                        } else {
+                            if (!sharedprefs.getIsAlreadyEnteredOwn(mContext)) {
+                                sharedprefs.setIsAlreadyEnteredOwn(mContext, true)
+                                sharedprefs.setOwnContactDetailArrayList(
+                                    mContext,
+                                    ownContactDetailSaveArrayList
+                                )
+                            }
+                        }
                     }
 
-                    if(passportArrayList.size>0)
-                    {
-                        for (i in 0..passportArrayList.size-1)
-                        {
-                            var mModel=PassportApiModel()
-                            mModel.id= passportArrayList.get(i).id
-                            mModel.student_unique_id= passportArrayList.get(i).student_unique_id
-                            mModel.student_id= passportArrayList.get(i).student_id
-                            mModel.student_name= passportArrayList.get(i).student_name
-                            mModel.passport_number= passportArrayList.get(i).passport_number
-                            mModel.nationality= passportArrayList.get(i).nationality
-                            mModel.passport_image= passportArrayList.get(i).passport_image
-                            mModel.date_of_issue= passportArrayList.get(i).date_of_issue
-                            mModel.expiry_date= passportArrayList.get(i).expiry_date
-                            mModel.passport_expired= passportArrayList.get(i).passport_expired
-                            mModel.emirates_id_no= passportArrayList.get(i).emirates_id_no
-                            mModel.emirates_id_image= passportArrayList.get(i).emirates_id_image
-                            mModel.passport_image_name= ""
-                            mModel.emirates_id_image_path= ""
-                            mModel.emirates_id_image_name=""
-                            mModel.emirates_id_image_path=""
-                            mModel.status= passportArrayList.get(i).status
-                            mModel.request= passportArrayList.get(i).request
-                            mModel.created_at= passportArrayList.get(i).created_at
-                            mModel.updated_at= passportArrayList.get(i).updated_at
-                            mModel.is_date_changed= false
+                    if (passportArrayList.size > 0) {
+                        for (i in 0..passportArrayList.size - 1) {
+                            var mModel = PassportApiModel()
+                            mModel.id = passportArrayList.get(i).id
+                            mModel.student_unique_id = passportArrayList.get(i).student_unique_id
+                            mModel.student_id = passportArrayList.get(i).student_id
+                            mModel.student_name = passportArrayList.get(i).student_name
+                            mModel.passport_number = passportArrayList.get(i).passport_number
+                            mModel.nationality = passportArrayList.get(i).nationality
+                            mModel.passport_image = passportArrayList.get(i).passport_image
+                            mModel.date_of_issue = passportArrayList.get(i).date_of_issue
+                            mModel.expiry_date = passportArrayList.get(i).expiry_date
+                            mModel.passport_expired = passportArrayList.get(i).passport_expired
+                            mModel.emirates_id_no = passportArrayList.get(i).emirates_id_no
+                            mModel.emirates_id_image = passportArrayList.get(i).emirates_id_image
+                            mModel.passport_image_name = ""
+                            mModel.emirates_id_image_path = ""
+                            mModel.emirates_id_image_name = ""
+                            mModel.emirates_id_image_path = ""
+                            mModel.status = passportArrayList.get(i).status
+                            mModel.request = passportArrayList.get(i).request
+                            mModel.created_at = passportArrayList.get(i).created_at
+                            mModel.updated_at = passportArrayList.get(i).updated_at
+                            mModel.is_date_changed = false
                             passportSaveArrayList.add(mModel)
                         }
-                        if (sharedprefs.getPassportDetailArrayList(mContext)==null || sharedprefs.getPassportDetailArrayList(mContext)!!.size==0)
-                        {
+                        if (sharedprefs.getPassportDetailArrayList(mContext) == null || sharedprefs.getPassportDetailArrayList(
+                                mContext
+                            )!!.size == 0
+                        ) {
                             sharedprefs.setPassportDetailArrayList(mContext, passportSaveArrayList)
                         }
 
                     }
 
-                    if(healthDetailArrayList.size>0)
-                    {
-                        for (i in 0..healthDetailArrayList.size-1)
-                        {
-                           var hModel=HealthInsuranceDetailAPIModel()
-                            hModel.id= healthDetailArrayList.get(i).id
-                            hModel.student_unique_id= healthDetailArrayList.get(i).student_unique_id
-                            hModel.student_id= healthDetailArrayList.get(i).student_id
-                            hModel.student_name= healthDetailArrayList.get(i).student_name
-                            hModel.health_detail= healthDetailArrayList.get(i).health_detail
-                            hModel.health_form_link= healthDetailArrayList.get(i).health_form_link
-                            hModel.status= healthDetailArrayList.get(i).status
-                            hModel.request= healthDetailArrayList.get(i).request
-                            hModel.created_at= healthDetailArrayList.get(i).created_at
-                            hModel.updated_at= healthDetailArrayList.get(i).updated_at
+                    if (healthDetailArrayList.size > 0) {
+                        for (i in 0..healthDetailArrayList.size - 1) {
+                            var hModel = HealthInsuranceDetailAPIModel()
+                            hModel.id = healthDetailArrayList.get(i).id
+                            hModel.student_unique_id =
+                                healthDetailArrayList.get(i).student_unique_id
+                            hModel.student_id = healthDetailArrayList.get(i).student_id
+                            hModel.student_name = healthDetailArrayList.get(i).student_name
+                            hModel.health_detail = healthDetailArrayList.get(i).health_detail
+                            hModel.health_form_link = healthDetailArrayList.get(i).health_form_link
+                            hModel.status = healthDetailArrayList.get(i).status
+                            hModel.request = healthDetailArrayList.get(i).request
+                            hModel.created_at = healthDetailArrayList.get(i).created_at
+                            hModel.updated_at = healthDetailArrayList.get(i).updated_at
                             healthSaveArrayList.add(hModel)
 
                         }
-                        if (sharedprefs.getHealthDetailArrayList(mContext)==null || sharedprefs.getHealthDetailArrayList(mContext)!!.size==0)
-                        {
+                        if (sharedprefs.getHealthDetailArrayList(mContext) == null || sharedprefs.getHealthDetailArrayList(
+                                mContext
+                            )!!.size == 0
+                        ) {
                             sharedprefs.setHealthDetailArrayList(mContext, healthSaveArrayList)
                         }
                     }
-                    if (kinDetailArrayList.size>0)
-                    {
-                       for(i in 0..kinDetailArrayList.size-1)
-                       {
-                           var mModel=KinDetailApiModel()
-                           mModel.id=kinDetailArrayList.get(i).id
-                           mModel.user_id=kinDetailArrayList.get(i).user_id
-                           mModel.kin_id=kinDetailArrayList.get(i).kin_id
-                           mModel.title=kinDetailArrayList.get(i).title
-                           mModel.name=kinDetailArrayList.get(i).name
-                           mModel.last_name=kinDetailArrayList.get(i).last_name
-                           mModel.relationship=kinDetailArrayList.get(i).relationship
-                           mModel.email=kinDetailArrayList.get(i).email
-                           mModel.phone=kinDetailArrayList.get(i).phone
-                           mModel.code=kinDetailArrayList.get(i).code
-                           mModel.user_mobile=kinDetailArrayList.get(i).user_mobile
-                           mModel.status=kinDetailArrayList.get(i).status
-                           mModel.request=kinDetailArrayList.get(i).request
-                           mModel.created_at=kinDetailArrayList.get(i).created_at
-                           mModel.updated_at=kinDetailArrayList.get(i).updated_at
-                           mModel.NewData=false
-                           mModel.Newdata="NO"
-                           mModel.isConfirmed=false
-                           kinDetailSaveArrayList.add(mModel)
+                    if (kinDetailArrayList.size > 0) {
+                        for (i in 0..kinDetailArrayList.size - 1) {
+                            var mModel = KinDetailApiModel()
+                            mModel.id = kinDetailArrayList.get(i).id
+                            mModel.user_id = kinDetailArrayList.get(i).user_id
+                            mModel.kin_id = kinDetailArrayList.get(i).kin_id
+                            mModel.title = kinDetailArrayList.get(i).title
+                            mModel.name = kinDetailArrayList.get(i).name
+                            mModel.last_name = kinDetailArrayList.get(i).last_name
+                            mModel.relationship = kinDetailArrayList.get(i).relationship
+                            mModel.email = kinDetailArrayList.get(i).email
+                            mModel.phone = kinDetailArrayList.get(i).phone
+                            mModel.code = kinDetailArrayList.get(i).code
+                            mModel.user_mobile = kinDetailArrayList.get(i).user_mobile
+                            mModel.status = kinDetailArrayList.get(i).status
+                            mModel.request = kinDetailArrayList.get(i).request
+                            mModel.created_at = kinDetailArrayList.get(i).created_at
+                            mModel.updated_at = kinDetailArrayList.get(i).updated_at
+                            mModel.NewData = false
+                            mModel.Newdata = "NO"
+                            mModel.isConfirmed = false
+                            kinDetailSaveArrayList.add(mModel)
 
-                       }
-                        if( sharedprefs.getKinDetailArrayList(mContext)==null|| sharedprefs.getKinDetailArrayList(mContext)!!.size==0)
-                        {
-                            Log.e("DATA COLLECTION","ENTERS2")
-                            sharedprefs.setIsAlreadyEnteredKin(mContext,true)
+                        }
+                        if (sharedprefs.getKinDetailArrayList(mContext) == null || sharedprefs.getKinDetailArrayList(
+                                mContext
+                            )!!.size == 0
+                        ) {
+                            Log.e("DATA COLLECTION", "ENTERS2")
+                            sharedprefs.setIsAlreadyEnteredKin(mContext, true)
                             sharedprefs.setKinDetailArrayList(mContext, kinDetailSaveArrayList)
                             sharedprefs.setKinDetailPassArrayList(mContext, kinDetailSaveArrayList)
-                        }
-                        else{
-                            Log.e("DATA COLLECTION","ENTERS3")
-                            if (!sharedprefs.getIsAlreadyEnteredKin(mContext))
-                            {
-                                Log.e("DATA COLLECTION","ENTERS4")
-                                sharedprefs.setIsAlreadyEnteredKin(mContext,true)
+                        } else {
+                            Log.e("DATA COLLECTION", "ENTERS3")
+                            if (!sharedprefs.getIsAlreadyEnteredKin(mContext)) {
+                                Log.e("DATA COLLECTION", "ENTERS4")
+                                sharedprefs.setIsAlreadyEnteredKin(mContext, true)
                                 sharedprefs.setKinDetailArrayList(mContext, kinDetailSaveArrayList)
-                                sharedprefs.setKinDetailPassArrayList(mContext, kinDetailSaveArrayList)
+                                sharedprefs.setKinDetailPassArrayList(
+                                    mContext,
+                                    kinDetailSaveArrayList
+                                )
                             }
                         }
                     }
 
-                       //Intent
-                    Log.e("DATA COLLECTION","ENTERS5")
-                    if(!sharedprefs.getSuspendTrigger(mContext).equals("1"))
-                    {
-                        val intent =Intent(mContext, DataCollectionActivity::class.java)
+                    //Intent
+                    Log.e("DATA COLLECTION", "ENTERS5")
+                    if (!sharedprefs.getSuspendTrigger(mContext).equals("1")) {
+                        val intent = Intent(mContext, DataCollectionActivity::class.java)
                         activity?.startActivity(intent)
                     }
 
-                }
-                else{
-                    if (response.body()!!.status==116)
-                    {
+                } else {
+                    if (response.body()!!.status == 116) {
                         //call Token Expired
                         AccessTokenClass.getAccessToken(mContext)
                         callDataCollectionAPI()
 
-                    }
-                    else
-                    {
-                        if (response.body()!!.status==103)
-                        {
+                    } else {
+                        if (response.body()!!.status == 103) {
                             //validation check error
 
-                        }
-                        else
-                        {
+                        } else {
                             //check status code checks
-                            InternetCheckClass.checkApiStatusError(response.body()!!.status,mContext)
+                            InternetCheckClass.checkApiStatusError(
+                                response.body()!!.status,
+                                mContext
+                            )
                         }
                     }
 

@@ -29,7 +29,6 @@ class CurriculumDetail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_webview_load)
 
-
         mContext=this
         webview = findViewById(R.id.webview)
         btn_left = findViewById(R.id.btn_left)
@@ -42,6 +41,7 @@ class CurriculumDetail : AppCompatActivity() {
         progressDialog.startAnimation(aniRotate)
         var passedintent = intent.getStringExtra("Url")
         webview.settings.javaScriptEnabled = true
+        webview.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         webview.settings.setSupportZoom(false)
         webview.settings.setAppCacheEnabled(false)
         webview.settings.javaScriptCanOpenWindowsAutomatically = true
@@ -52,7 +52,7 @@ class CurriculumDetail : AppCompatActivity() {
         webview.settings.cacheMode = WebSettings.LOAD_NO_CACHE
         webview.settings.allowFileAccess = true
         webview.setBackgroundColor(Color.TRANSPARENT)
-        webview.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null)
+        //webview.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null)
         webview.loadUrl("https://docs.google.com/gview?embedded=true&url="+passedintent)
 
     }

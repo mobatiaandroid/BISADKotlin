@@ -85,7 +85,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
-        );
+        )
         setContentView(R.layout.activity_main)
         Intent.FLAG_ACTIVITY_CLEAR_TASK
         initializeUI()
@@ -119,15 +119,15 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
 
         val width = (resources.displayMetrics.widthPixels / 2).toInt()
         val params = linear_layout
-            .getLayoutParams() as DrawerLayout.LayoutParams
+            .layoutParams as DrawerLayout.LayoutParams
         params.width = width
-        linear_layout.setLayoutParams(params)
+        linear_layout.layoutParams = params
         val myListAdapter = HomeListAdapter(this, mListItemArray, mListImgArray!!)
         homelist.adapter = myListAdapter
         homelist.onItemLongClickListener = this
 
 
-        homelist.setOnItemClickListener() { adapterView, view, position, id ->
+        homelist.setOnItemClickListener { adapterView, view, position, id ->
             val itemAtPos = adapterView.getItemAtPosition(position)
             val itemIdAtPos = adapterView.getItemIdAtPosition(position)
             if (sharedprefs.getUserCode(context).equals("")) {
@@ -354,8 +354,8 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                 visibleItemCount: Int,
                 totalItemCount: Int
             ) {
-                if (view.id == homelist.getId()) {
-                    val currentFirstVisibleItem: Int = homelist.getLastVisiblePosition()
+                if (view.id == homelist.id) {
+                    val currentFirstVisibleItem: Int = homelist.lastVisiblePosition
 
                     if (currentFirstVisibleItem == totalItemCount - 1) {
                         downarrow.visibility = View.INVISIBLE
@@ -401,7 +401,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                     .addToBackStack("Settings").commit()
 
                 supportActionBar!!.setTitle(R.string.null_value)
-                settings_icon.setVisibility(View.GONE)
+                settings_icon.visibility = View.INVISIBLE
 
             }
         }
@@ -428,6 +428,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
     }
 
     private fun replaceFragmentsSelected(position: Int) {
+        settings_icon.visibility = View.VISIBLE
         if (mFragment != null) {
             val fragmentManager = supportFragmentManager
             fragmentManager
@@ -457,7 +458,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
 
     fun fragmentIntent(mFragment: Fragment?) {
         if (mFragment != null) {
-            val fragmentManager = getSupportFragmentManager()
+            val fragmentManager = supportFragmentManager
             fragmentManager.beginTransaction()
                 .add(R.id.fragment_holder, mFragment, appController.mTitles)
                 .addToBackStack(appController.mTitles).commitAllowingStateLoss() //commit
@@ -502,7 +503,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
         text_dialog.text = message
         alertHead.text = msgHead
         iconImageView.setImageResource(R.drawable.exclamationicon)
-        btn_Ok?.setOnClickListener()
+        btn_Ok.setOnClickListener()
         {
             dialog.dismiss()
 
@@ -516,8 +517,4 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
 
     }
 
-    override fun onRestart() {
-        super.onRestart()
-
-    }
 }
