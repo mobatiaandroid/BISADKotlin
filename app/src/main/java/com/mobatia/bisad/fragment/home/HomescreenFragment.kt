@@ -1278,8 +1278,14 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                 naisTabConstants.TAB_UPDATE -> {
                     if (sharedprefs.getDataCollection(mContext)==1)
                     {
-                        sharedprefs.setSuspendTrigger(mContext,"2")
-                        callSettingsUserDetail()
+                        if(sharedprefs.getDataCollectionShown(mContext)==0)
+                        {
+                            sharedprefs.setSuspendTrigger(mContext,"2")
+                            sharedprefs.setDataCollectionShown(mContext,1)
+                            callSettingsUserDetail()
+
+                        }
+
                     }
                     else{
                         showTriggerDataCollection(mContext,"Confirm?", "Select one or more areas to update", R.drawable.questionmark_icon, R.drawable.round)
@@ -1494,7 +1500,8 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                                 sharedprefs.setTriggerType(mContext, trigger_type)
                                 sharedprefs.setAlreadyTriggered(mContext, already_triggered)
 
-                                if (sharedprefs.getDataCollection(mContext) == 1) {
+                                if (sharedprefs.getDataCollection(mContext) == 1)
+                                {
 
                                     if (sharedprefs.getAlreadyTriggered(mContext) == 0) {
                                         callDataCollectionAPI()

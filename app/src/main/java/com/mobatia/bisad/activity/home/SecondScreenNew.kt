@@ -91,6 +91,7 @@ class SecondScreenNew :Fragment() {
             btn_Ok?.setOnClickListener()
             {
                 sharedprefs.setSuspendTrigger(mContext,"1")
+                sharedprefs.setDataCollectionShown(mContext,0)
                 dialog.dismiss()
                 activity?.finish()
             }

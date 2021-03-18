@@ -331,10 +331,16 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                     replaceFragmentsSelected(position)
                 }
                 else if (position == 13) {
+
                     if (sharedprefs.getDataCollection(context)==1)
                     {
-                        sharedprefs.setSuspendTrigger(context,"2")
-                        callSettingsUserDetail()
+                        if(sharedprefs.getDataCollectionShown(context)==0)
+                        {
+                            sharedprefs.setSuspendTrigger(context,"2")
+                            sharedprefs.setDataCollectionShown(context,1)
+                            callSettingsUserDetail()
+                        }
+
 
                     }
                     else{

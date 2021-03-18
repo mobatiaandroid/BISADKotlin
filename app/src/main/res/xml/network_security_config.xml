@@ -5,6 +5,7 @@
         <domain includeSubdomains="true">192.168.0.166</domain>
         <domain includeSubdomains="true">bisad.mobatia.in</domain>
         <domain includeSubdomains="true">stagingcms.bisad.ae</domain>
+        <domain includeSubdomains="true">mobile.bisad.ae</domain>
         <domain includeSubdomains="true">twitter.com</domain>
     </domain-config>
 </network-security-config>

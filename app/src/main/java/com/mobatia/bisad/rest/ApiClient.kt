@@ -8,13 +8,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
 //    var BASE_URL = "http://bisad.mobatia.in:8081/"
-    var BASE_URL = "https://stagingcms.bisad.ae/"
+//    var BASE_URL = "https://stagingcms.bisad.ae/"
+    var BASE_URL = "https://mobile.bisad.ae/"
    // var BASE_URL ="http://192.168.0.166/bisadv8/"
 
 
     val getClient: ApiInterface
         get() {
-
             val gson = GsonBuilder()
                 .setLenient()
                 .create()

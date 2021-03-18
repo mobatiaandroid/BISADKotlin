@@ -806,6 +806,25 @@ class PreferenceData {
         return prefs.getInt("data_collection", 0)
     }
 
+    /*SET DATA COLLECTION*/
+    fun setDataCollectionShown(context: Context, dataCollection: Int) {
+        val prefs = context.getSharedPreferences(
+            PREFSNAME, Context.MODE_PRIVATE
+        )
+        val editor = prefs.edit()
+        editor.putInt("data_collection_shown", dataCollection)
+        editor.apply()
+    }
+
+    /*GET DATA COLLECTION*/
+    fun getDataCollectionShown(context: Context): Int {
+        val prefs = context.getSharedPreferences(
+            PREFSNAME,
+            Context.MODE_PRIVATE
+        )
+        return prefs.getInt("data_collection_shown", 0)
+    }
+
     /*SET TRIGGER TYPE*/
     fun setTriggerType(context: Context, triggerType: Int) {
         val prefs = context.getSharedPreferences(

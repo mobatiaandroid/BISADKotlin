@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:id="@+id/relSub"
         android:layout_width="match_parent"
-        android:layout_height="59dp"
+        android:layout_height="wrap_content"
         android:padding="5dp" >
         <com.github.siyamed.shapeimageview.CircularImageView
             android:layout_width="50dp"
@@ -18,7 +18,7 @@
             android:layout_centerHorizontal="true"
             android:layout_alignParentLeft="true"
             app:siBorderColor="#A0DAE5"/>
-        <com.mobatia.bisad.manager.CustomFontSansProTextBlack
+        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
             android:id="@+id/listTxtTitle"
             style="@style/textstyleblack"
             android:layout_width="match_parent"
@@ -30,15 +30,19 @@
             android:gravity="center_vertical"
             android:layout_toRightOf="@+id/imagicon"
             android:singleLine="true" />
-        <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
+
+
+        <com.mobatia.bisad.manager.CustomFontSansProTextGrey
             android:id="@+id/jobTxtTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/listTxtTitle"
+            style="@style/textstyleblack"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
-            android:textColor="@color/grey"
             android:layout_toLeftOf="@+id/arrowImg"
-            android:layout_below="@+id/listTxtTitle"
+            android:text="NAS DUBAI"
+            android:textColor="@color/grey"
             android:gravity="center_vertical"
             android:layout_toRightOf="@+id/imagicon"
             android:singleLine="true" />
@@ -51,9 +55,13 @@
             android:layout_centerVertical="true"
             android:background="@drawable/arrow" />
     </RelativeLayout>
-<View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:layout_below="@+id/relSub"
-    android:background="@color/split_bg"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/split_bg"
+        android:layout_below="@+id/relSub"/>
 </RelativeLayout>
+
+
+
+<!--jobTxtTitle   listTxtTitle-->

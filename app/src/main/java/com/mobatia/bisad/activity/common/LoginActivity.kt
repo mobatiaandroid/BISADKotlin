@@ -429,7 +429,7 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
                                     val token : String = jsonObject.optString(jsonConstans.TOKEN)
                                     sharedprefs.setaccesstoken(mContext,token)
                                 }
-                                showSuccessSignupAlert(mContext,"Successfully registered.Please check your Email for further details.","Alert",dialog)
+                                showSuccessSignupAlert(mContext,"Successfully registered.Please check your email for further details.","Alert",dialog)
 //                                startActivity(Intent(mContext,HomeActivity::class.java))
 //                                finish()
                             }

@@ -195,7 +195,7 @@ class MessageFragment : Fragment(){
                     }
                     else{
                         messageRecycler.visibility=View.GONE
-                        showSuccessAlert(mContext,"No data found.","Alert")
+                        showSuccessAlert(mContext,"No new messages.","Alert")
                     }
 
                 }

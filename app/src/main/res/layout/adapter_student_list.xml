@@ -34,12 +34,12 @@
 
         <com.mobatia.bisad.manager.CustomFontSansProTextGrey
             android:id="@+id/listTxtClass"
-            style="@style/textstyleblack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/listTxtTitle"
+            style="@style/textstyleblack"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
-            android:layout_below="@+id/listTxtTitle"
             android:layout_toLeftOf="@+id/arrowImg"
             android:text="NAS DUBAI"
             android:textColor="@color/grey"
