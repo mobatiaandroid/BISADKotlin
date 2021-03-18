@@ -50,6 +50,11 @@ internal class SocialMediaRecyclerAdapter (private var socialMediaArrayList: Lis
             holder.cellLinear.setBackgroundResource(R.drawable.curve_tw)
             holder.socialMediaIcon.setImageResource(R.mipmap.tw_new)
         }
+        else if (socialMediaArrayList.get(position).tab_type.equals("Linkedin"))
+        {
+            holder.cellLinear.setBackgroundResource(R.drawable.curve_linked)
+            holder.socialMediaIcon.setImageResource(R.mipmap.linkedin)
+        }
         else{
             holder.cellLinear.setBackgroundResource(R.drawable.curve_blo)
             holder.socialMediaIcon.setImageResource(R.mipmap.blo_new)

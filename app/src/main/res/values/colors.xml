@@ -30,5 +30,6 @@
     <color name="ttpop">#043255</color>
     <color name="grey_checked">#CFD1D1</color>
     <color name="grey_unchecked1">#80ACADAC</color>
+    <color name="linked_in">#0079A5</color>
 
 </resources>

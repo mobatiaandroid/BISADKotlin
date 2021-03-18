@@ -38,7 +38,7 @@
                 android:id="@+id/ownDetailsTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Parent Information"
+                android:text="User Information"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_margin="15dp"/>
@@ -95,7 +95,7 @@
                     android:id="@+id/familyContact"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Emergency Contact"
+                    android:text="Other Contacts Information"
                     android:textColor="@color/black"
                     android:layout_marginTop="15dp"
                     android:textSize="16sp"

@@ -93,6 +93,7 @@ class SocialMediaFragment : Fragment(){
                     "Instagram" -> mPackage = "com.instagram.android"
                     "Twitter" -> mPackage = "com.twitter.android"
                     "Facebook" -> mPackage = "fb"
+                    "Linkedin" -> mPackage = "com.linkedin.android"
 
                 }
 

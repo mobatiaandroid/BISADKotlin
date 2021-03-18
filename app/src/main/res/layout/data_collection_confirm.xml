@@ -33,7 +33,7 @@
                 android:id="@+id/ownContactDetailTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Parent Contact Details"
+                android:text="User Contact Details"
                 android:textSize="16sp"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
