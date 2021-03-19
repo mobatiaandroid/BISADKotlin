@@ -1,15 +1,14 @@
 package com.mobatia.bisad.activity.absence
 
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -28,8 +27,6 @@ import com.mobatia.bisad.activity.absence.model.RequestAbsenceApiModel
 import com.mobatia.bisad.activity.home.HomeActivity
 import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
-import com.mobatia.bisad.fragment.messages.model.MessageListApiModel
-import com.mobatia.bisad.fragment.report_absence.model.AbsenceLeaveApiModel
 import com.mobatia.bisad.fragment.student_information.adapter.StudentListAdapter
 import com.mobatia.bisad.fragment.student_information.model.StudentList
 import com.mobatia.bisad.fragment.student_information.model.StudentListModel
@@ -407,8 +404,13 @@ class RequestabsenceActivity : AppCompatActivity(){
     fun callAbsenceSubmitApi(from:String,toDate:String,reason:String)
     {
         progressDialog.visibility = View.VISIBLE
+        var devicename:String= (Build.MANUFACTURER
+                + " " + Build.MODEL + " " + Build.VERSION.RELEASE
+                + " " + VERSION_CODES::class.java.fields[Build.VERSION.SDK_INT]
+            .name)
+        Log.e("DEVICE NAME",devicename)
         val token = sharedprefs.getaccesstoken(mContext)
-        val requestLeaveBody= RequestAbsenceApiModel(sharedprefs.getStudentID(mContext)!!,from,toDate,reason)
+        val requestLeaveBody= RequestAbsenceApiModel(sharedprefs.getStudentID(mContext)!!,from,toDate,reason,"2",devicename,"1.0")
         val call: Call<ResponseBody> = ApiClient.getClient.leaveRequest(requestLeaveBody,"Bearer "+token)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

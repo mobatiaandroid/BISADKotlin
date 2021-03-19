@@ -199,6 +199,11 @@ class MessageFragment : Fragment(){
                     }
 
                 }
+                else if(response.body()!!.status==132)
+                {
+                    messageRecycler.visibility=View.GONE
+                    showSuccessAlert(mContext,"No new messages.","Alert")
+                }
                 else if(response.body()!!.status==116)
                 {
                     var internetCheck = InternetCheckClass.isInternetAvailable(mContext)

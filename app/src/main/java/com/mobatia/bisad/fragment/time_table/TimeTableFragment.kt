@@ -130,7 +130,7 @@ class TimeTableFragment : Fragment(){
         mThursdayModelArraylist=ArrayList()
         mFieldModel=ArrayList()
         //API ARRAYLIST
-        feildAPIArrayList= ArrayList()
+
         linearLayoutManager = LinearLayoutManager(mContext)
         linearLayoutManagerVertical = LinearLayoutManager(mContext)
         linearLayoutManagerVertical1 = LinearLayoutManager(mContext)
@@ -290,6 +290,7 @@ class TimeTableFragment : Fragment(){
 
 
     fun callTimeTableApi() {
+        feildAPIArrayList= ArrayList()
         progressDialog.visibility = View.VISIBLE
         val token = sharedprefs.getaccesstoken(mContext)
         val calendarBody = TimeTableApiModel(studentId)

@@ -730,7 +730,11 @@ class DataCollectionActivity : FragmentActivity(), OnPageChangeListener,
     fun callSubmitionAPI(triggertype:Int,overallStatus:Int,JSONSTRING:String)
     {
         val token = sharedprefs.getaccesstoken(context)
-        val requestLeaveBody= DataCollectionSubmissionModel(overallStatus,JSONSTRING,triggertype)
+        var devicename:String= (Build.MANUFACTURER
+                + " " + Build.MODEL + " " + Build.VERSION.RELEASE
+                + " " + Build.VERSION_CODES::class.java.fields[Build.VERSION.SDK_INT]
+            .name)
+        val requestLeaveBody= DataCollectionSubmissionModel(overallStatus,JSONSTRING,triggertype,"2",devicename,"1.0")
         val call: Call<ResponseBody> = ApiClient.getClient.dataCollectionSubmittion(requestLeaveBody,"Bearer "+token)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
