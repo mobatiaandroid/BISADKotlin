@@ -198,7 +198,15 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                         "This feature is only available for registered users.",
                         "Alert"
                     )
-                } else if (position == 9) {
+                }
+//                else if (position == 9) {
+//                    showSuccessAlert(
+//                        context,
+//                        "This feature is only available for registered users.",
+//                        "Alert"
+//                    )
+//                }
+                else if (position == 9) {
                     showSuccessAlert(
                         context,
                         "This feature is only available for registered users.",
@@ -216,20 +224,14 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                         "This feature is only available for registered users.",
                         "Alert"
                     )
-                } else if (position == 12) {
-                    showSuccessAlert(
-                        context,
-                        "This feature is only available for registered users.",
-                        "Alert"
-                    )
                 }
-                else if (position == 13) {
+                else if (position == 12) {
                     showSuccessAlert(
                         context,
                         "This feature is only available for registered users.",
                         "Alert"
                     )
-                } else if (position == 14) {
+                } else if (position == 13) {
                     if (ActivityCompat.checkSelfPermission(
                             context,
                             Manifest.permission.ACCESS_FINE_LOCATION
@@ -249,7 +251,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                         replaceFragmentsSelected(position)
                     }
 
-                } else if (position == 15) {
+                } else if (position == 14) {
                     showSuccessAlert(
                         context,
                         "This feature is only available for registered users.",
@@ -304,25 +306,28 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                     sharedprefs.setStudentClass(context, "")
                     mFragment = ReportsFragment()
                     replaceFragmentsSelected(position)
-                } else if (position == 9) {
-                    sharedprefs.setStudentID(context, "")
-                    sharedprefs.setStudentName(context, "")
-                    sharedprefs.setStudentPhoto(context, "")
-                    sharedprefs.setStudentClass(context, "")
-                    mFragment = AttendanceFragment()
-                    replaceFragmentsSelected(position)
-                } else if (position == 10) {
+                }
+
+//              else if (position == 9) {
+//                    sharedprefs.setStudentID(context, "")
+//                    sharedprefs.setStudentName(context, "")
+//                    sharedprefs.setStudentPhoto(context, "")
+//                    sharedprefs.setStudentClass(context, "")
+//                    mFragment = AttendanceFragment()
+//                    replaceFragmentsSelected(position)
+//                }
+                else if (position == 9) {
                     sharedprefs.setStudentID(context, "")
                     sharedprefs.setStudentName(context, "")
                     sharedprefs.setStudentPhoto(context, "")
                     sharedprefs.setStudentClass(context, "")
                     mFragment = TimeTableFragment()
                     replaceFragmentsSelected(position)
-                } else if (position == 11) {
+                } else if (position == 10) {
                     mFragment = TermDatesFragment()
                     replaceFragmentsSelected(position)
                 }
-                else if (position == 12) {
+                else if (position == 11) {
                     sharedprefs.setStudentID(context, "")
                     sharedprefs.setStudentName(context, "")
                     sharedprefs.setStudentPhoto(context, "")
@@ -330,7 +335,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                     mFragment = CurriculumFragment()
                     replaceFragmentsSelected(position)
                 }
-                else if (position == 13) {
+                else if (position == 12) {
 
                     if (sharedprefs.getDataCollection(context)==1)
                     {
@@ -347,7 +352,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                         showTriggerDataCollection(context,"Confirm?", "Select one or more areas to update", R.drawable.questionmark_icon, R.drawable.round)
 
                     }
-                } else if (position == 14) {
+                } else if (position == 13) {
                     if (ActivityCompat.checkSelfPermission(
                             context,
                             Manifest.permission.ACCESS_FINE_LOCATION
@@ -367,7 +372,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                         replaceFragmentsSelected(position)
                     }
 
-                } else if (position == 15) {
+                } else if (position == 14) {
                     sharedprefs.setStudentID(context, "")
                     sharedprefs.setStudentName(context, "")
                     sharedprefs.setStudentPhoto(context, "")

@@ -29,7 +29,7 @@
         <item>Teacher Contact</item>
         <item>Social Media</item>
         <item>Reports</item>
-        <item>Attendance</item>
+       <!-- <item>Attendance</item>-->
         <item>Timetable</item>
         <item>Term Dates</item>
         <item>Curriculum</item>
@@ -49,7 +49,7 @@
         <item>@drawable/parentevening</item>
         <item>@drawable/social</item>
         <item>@drawable/report_side</item>
-        <item>@drawable/attendance_side</item>
+       <!-- <item>@drawable/attendance_side</item>-->
         <item>@drawable/time_table_side</item>
         <item>@drawable/termdates</item>
         <item>@drawable/ccas</item>

@@ -885,10 +885,10 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     TAB_ID = naisTabConstants.TAB_REPORTS
 
                 }
-                textdata.equals(classNameConstants.ATTENDANCE, ignoreCase = true) -> {
-                    TAB_ID = naisTabConstants.TAB_ATTENDANCE
-
-                }
+//                textdata.equals(classNameConstants.ATTENDANCE, ignoreCase = true) -> {
+//                    TAB_ID = naisTabConstants.TAB_ATTENDANCE
+//
+//                }
                 textdata.equals(classNameConstants.CURRICULUM, ignoreCase = true) -> {
                     TAB_ID = naisTabConstants.TAB_CURRICULUM
 
@@ -1134,13 +1134,13 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                         "Alert"
                     )
                 }
-                naisTabConstants.TAB_ATTENDANCE -> {
-                    showSuccessAlert(
-                        mContext,
-                        "This feature is only available for registered users.",
-                        "Alert"
-                    )
-                }
+//                naisTabConstants.TAB_ATTENDANCE -> {
+//                    showSuccessAlert(
+//                        mContext,
+//                        "This feature is only available for registered users.",
+//                        "Alert"
+//                    )
+//                }
                 naisTabConstants.TAB_CURRICULUM -> {
                     showSuccessAlert(
                         mContext,
@@ -1251,14 +1251,14 @@ class HomescreenFragment : Fragment(), View.OnClickListener {
                     mFragment = TermDatesFragment()
                     fragmentIntent(mFragment)
                 }
-                naisTabConstants.TAB_ATTENDANCE -> {
-                    sharedprefs.setStudentID(mContext, "")
-                    sharedprefs.setStudentName(mContext, "")
-                    sharedprefs.setStudentPhoto(mContext, "")
-                    sharedprefs.setStudentClass(mContext, "")
-                    mFragment = AttendanceFragment()
-                    fragmentIntent(mFragment)
-                }
+//                naisTabConstants.TAB_ATTENDANCE -> {
+//                    sharedprefs.setStudentID(mContext, "")
+//                    sharedprefs.setStudentName(mContext, "")
+//                    sharedprefs.setStudentPhoto(mContext, "")
+//                    sharedprefs.setStudentClass(mContext, "")
+//                    mFragment = AttendanceFragment()
+//                    fragmentIntent(mFragment)
+//                }
                 naisTabConstants.TAB_REPORTS -> {
                     sharedprefs.setStudentID(mContext, "")
                     sharedprefs.setStudentName(mContext, "")
