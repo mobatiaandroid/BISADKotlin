@@ -66,6 +66,17 @@
                 app:siBorderWidth="1dp"
                 app:siBorderColor="#FBB425"
                 android:src="@drawable/addiconinparentsevng"/>
+
+            <include
+                android:id="@+id/loader"
+                layout="@layout/custom_progress_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:layout_centerInParent="true"/>
+
+
+
             <com.mobatia.bisad.manager.CustomFontSansProTextWhiteWithoutColor
                 android:id="@+id/studentNameTV"
                 style="@style/textstyleblack"
