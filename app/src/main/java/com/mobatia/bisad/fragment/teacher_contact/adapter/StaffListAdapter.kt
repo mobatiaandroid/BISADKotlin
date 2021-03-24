@@ -1,5 +1,6 @@
 package com.mobatia.bisad.fragment.teacher_contact.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +17,7 @@ import com.mobatia.bisad.fragment.student_information.adapter.StudentListAdapter
 import com.mobatia.bisad.fragment.student_information.model.StudentList
 import com.mobatia.bisad.fragment.teacher_contact.model.StaffInfoDetail
 
-internal class StaffListAdapter (private var studentList: List<StaffInfoDetail>) :
+internal class StaffListAdapter (private var studentList: List<StaffInfoDetail>,private var mContext:Context) :
     RecyclerView.Adapter<StaffListAdapter.MyViewHolder>() {
     internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var listTxtTitle: TextView = view.findViewById(R.id.listTxtTitle)
@@ -35,6 +36,7 @@ internal class StaffListAdapter (private var studentList: List<StaffInfoDetail>)
         holder.jobTxtTitle.text = movie.role
         if(!movie.staff_photo.equals(""))
         {
+
             Glide.with(mContext) //1
                 .load(movie.staff_photo)
                 .placeholder(R.drawable.staff)

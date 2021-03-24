@@ -111,7 +111,7 @@ class TeacherContactFragment : Fragment(){
                 }
             else
             {
-                Toast.makeText(activity,"No Student Found", Toast.LENGTH_SHORT).show()
+                callStudentListApi()
 
             }
         })
@@ -123,7 +123,8 @@ class TeacherContactFragment : Fragment(){
            //  callStaffListApi(studentId)
          }
             else{
-             Toast.makeText(activity,"No staff details available for the student", Toast.LENGTH_SHORT).show()
+             callStaffListApi(studentId)
+            // Toast.makeText(activity,"No Staff Found", Toast.LENGTH_SHORT).show()
          }
         })
       contactStaffBtn.setOnClickListener(View.OnClickListener {
@@ -158,37 +159,29 @@ class TeacherContactFragment : Fragment(){
               }
           }
 
-          cancelButton?.setOnClickListener()
+          cancelButton.setOnClickListener()
           {
               dialog.dismiss()
           }
-          submitButton?.setOnClickListener()
+          submitButton.setOnClickListener()
           {
-              if(text_dialog.text.toString().trim().equals(""))
-              {
+              if(text_dialog.text.toString().trim().equals("")) {
                   InternetCheckClass. showErrorAlert(mContext,"Please enter your subject","Alert")
 
-              }
-              else
-              {
-                  if(text_content.text.toString().trim().equals(""))
-                  {
+              } else {
+                  if(text_content.text.toString().trim().equals("")) {
                       InternetCheckClass. showErrorAlert(mContext,"Please enter your content","Alert")
 
-                  }
-                  else
-                  {
+                  } else {
                       progressDialog.visibility=View.VISIBLE
                       val aniRotate: Animation =
                           AnimationUtils.loadAnimation(mContext, R.anim.linear_interpolator)
                       progressDialog.startAnimation(aniRotate)
                       var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
-                      if (internetCheck)
-                      {
+                      if (internetCheck) {
                           callSendEmailToStaffApi(text_dialog.text.toString().trim(),text_content.text.toString().trim(),studentId,staffEmail,dialog,progressDialog)
 
-                      }
-                      else{
+                      } else{
                           InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
                       }
                   }
@@ -208,14 +201,14 @@ class TeacherContactFragment : Fragment(){
                 Log.e("Error", t.localizedMessage)
             }
             override fun onResponse(call: Call<StudentListModel>, response: Response<StudentListModel>) {
-                val arraySize :Int =response.body()!!.responseArray!!.studentList.size
+                val arraySize :Int = response.body()!!.responseArray.studentList.size
                 if (response.body()!!.status==100)
                 {
 
                         Log.e("Empty Img","Empty")
-                    if (response.body()!!.responseArray!!.studentList.size>0)
+                    if (response.body()!!.responseArray.studentList.size>0)
                     {
-                        studentListArrayList.addAll(response.body()!!.responseArray!!.studentList)
+                        studentListArrayList.addAll(response.body()!!.responseArray.studentList)
                     }
                 }
                 else if (response.body()!!.status==116)
@@ -255,18 +248,18 @@ class TeacherContactFragment : Fragment(){
                 Log.e("Error", t.localizedMessage)
             }
             override fun onResponse(call: Call<StaffListModel>, response: Response<StaffListModel>) {
-                val arraySize :Int =response.body()!!.responseArray!!.staff_info.size
+                val arraySize :Int = response.body()!!.responseArray.staff_info.size
                 if (response.body()!!.status==100)
                 {
-                    if (response.body()!!.responseArray!!.staff_info.size>0)
+                    if (response.body()!!.responseArray.staff_info.size>0)
                     {
-                        staffListArray.addAll(response.body()!!.responseArray!!.staff_info)
+                        staffListArray.addAll(response.body()!!.responseArray.staff_info)
 
 
                     }
                     else
                     {
-                        Toast.makeText(activity,"No staff details available for the student", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity,"No Staffs Found", Toast.LENGTH_SHORT).show()
                     }
                 }
                 else if (response.body()!!.status==116)
@@ -281,10 +274,6 @@ class TeacherContactFragment : Fragment(){
 
                         showSuccessAlertnew(mContext,"Something went wrong.Please try again later","Alert")
                     }
-                }
-                else if(response.body()!!.status==132)
-                {
-                    Toast.makeText(activity,"No staff details available for the student", Toast.LENGTH_SHORT).show()
                 }
                 else {
                     if (response.body()!!.status == 103) {
@@ -318,19 +307,16 @@ class TeacherContactFragment : Fragment(){
                 mContext.resources.getDrawable(R.drawable.button_new)
             )
         } else {
-            btn_dismiss.setBackground(mContext.resources.getDrawable(R.drawable.button_new))
+            btn_dismiss.background = mContext.resources.getDrawable(R.drawable.button_new)
         }
 
         studentListRecycler.setHasFixedSize(true)
         val llm = LinearLayoutManager(mContext)
         llm.orientation = LinearLayoutManager.VERTICAL
-        studentListRecycler.setLayoutManager(llm)
-        if (mStudentList.size>0)
-        {
-            val studentAdapter = StudentListAdapter(mContext,mStudentList)
-            studentListRecycler.setAdapter(studentAdapter)
-        }
-        btn_dismiss?.setOnClickListener()
+        studentListRecycler.layoutManager = llm
+        val studentAdapter = StudentListAdapter(mContext,mStudentList)
+        studentListRecycler.adapter = studentAdapter
+        btn_dismiss.setOnClickListener()
         {
             dialog.dismiss()
         }
@@ -390,20 +376,16 @@ class TeacherContactFragment : Fragment(){
                 mContext.resources.getDrawable(R.drawable.button_new)
             )
         } else {
-            btn_dismiss.setBackground(mContext.resources.getDrawable(R.drawable.button_new))
+            btn_dismiss.background = mContext.resources.getDrawable(R.drawable.button_new)
         }
 
         studentListRecycler.setHasFixedSize(true)
         val llm = LinearLayoutManager(mContext)
         llm.orientation = LinearLayoutManager.VERTICAL
-        studentListRecycler.setLayoutManager(llm)
-        if(mStaffList.size>0)
-        {
-            val staffAdapter = StaffListAdapter(mStaffList)
-            studentListRecycler.setAdapter(staffAdapter)
-        }
-
-        btn_dismiss?.setOnClickListener()
+        studentListRecycler.layoutManager = llm
+        val staffAdapter = StaffListAdapter(mStaffList,mContext)
+        studentListRecycler.adapter = staffAdapter
+        btn_dismiss.setOnClickListener()
         {
             dialog.dismiss()
         }
@@ -505,7 +487,7 @@ class TeacherContactFragment : Fragment(){
         text_dialog.text = message
         alertHead.text = msgHead
         iconImageView.setImageResource(R.drawable.exclamationicon)
-        btn_Ok?.setOnClickListener()
+        btn_Ok.setOnClickListener()
         {
             dialog.dismiss()
             mdialog.dismiss()
@@ -526,7 +508,7 @@ class TeacherContactFragment : Fragment(){
         text_dialog.text = message
         alertHead.text = msgHead
         iconImageView.setImageResource(R.drawable.exclamationicon)
-        btn_Ok?.setOnClickListener()
+        btn_Ok.setOnClickListener()
         {
             dialog.dismiss()
         }

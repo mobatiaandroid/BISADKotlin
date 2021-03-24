@@ -89,6 +89,7 @@ class SocialMediaFragment : Fragment(){
                 var mPackage: String =""
                 when(socialMediaArrayList.get(position).tab_type){
 
+                    "Linkedin" -> mPackage = "com.linkedin.android"
                     "Youtube" -> mPackage = "com.google.android.youtube"
                     "Instagram" -> mPackage = "com.instagram.android"
                     "Twitter" -> mPackage = "com.twitter.android"
@@ -111,7 +112,7 @@ class SocialMediaFragment : Fragment(){
                         startActivity(facebookAppIntent)
                     } catch (e: ActivityNotFoundException) {
 
-                        val url = socialMediaArrayList.get(position).url
+                        val url = socialMediaArrayList[position].url
                         val intent = Intent(activity, SocialMediaDetailActivity::class.java)
                         intent.putExtra("url", url)
                         intent.putExtra("title", socialMediaArrayList.get(position).tab_type)
