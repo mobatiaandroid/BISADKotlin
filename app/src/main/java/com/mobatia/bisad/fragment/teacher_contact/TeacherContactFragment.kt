@@ -123,7 +123,7 @@ class TeacherContactFragment : Fragment(){
            //  callStaffListApi(studentId)
          }
             else{
-             Toast.makeText(activity,"No Staff Found", Toast.LENGTH_SHORT).show()
+             Toast.makeText(activity,"No staff details available for the student", Toast.LENGTH_SHORT).show()
          }
         })
       contactStaffBtn.setOnClickListener(View.OnClickListener {
@@ -266,7 +266,7 @@ class TeacherContactFragment : Fragment(){
                     }
                     else
                     {
-                        Toast.makeText(activity,"No Staffs Found", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity,"No staff details available for the student", Toast.LENGTH_SHORT).show()
                     }
                 }
                 else if (response.body()!!.status==116)
@@ -281,6 +281,10 @@ class TeacherContactFragment : Fragment(){
 
                         showSuccessAlertnew(mContext,"Something went wrong.Please try again later","Alert")
                     }
+                }
+                else if(response.body()!!.status==132)
+                {
+                    Toast.makeText(activity,"No staff details available for the student", Toast.LENGTH_SHORT).show()
                 }
                 else {
                     if (response.body()!!.status == 103) {

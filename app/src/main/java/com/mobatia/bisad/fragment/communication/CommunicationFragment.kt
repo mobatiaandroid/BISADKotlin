@@ -149,9 +149,13 @@ class CommunicationFragment : Fragment(){
                     else
                     {
                         newsLetterRecycler.visibility=View.GONE
-                        showSuccessAlert(mContext,"No data found.","Alert")
+                        showSuccessAlert(mContext,"Newsletters is not available.","Alert")
 
                     }
+                }
+                else if (response.body()!!.status == 132)
+                {
+                    showSuccessAlert(mContext,"Newsletters is not available.","Alert")
                 }
                 else if (response.body()!!.status == 116) {
                     apiCall=apiCall+1

@@ -244,11 +244,19 @@ class StudentInformationFragment : Fragment(){
                     else
                     {
                         studentInfoRecycler.visibility=View.GONE
-                        showSuccessAlert(mContext,"No data found.","Alert")
+                        showSuccessAlert(mContext,"Student Information is not available.","Alert")
                     }
 
                 }
+                else if (response.body()!!.status==132)
+                {
+                    showSuccessAlert(mContext,"Student Information is not available.","Alert")
+                }
+                else
+                {
+                    InternetCheckClass.checkApiStatusError(response.body()!!.status, mContext)
 
+                }
 
 
             }

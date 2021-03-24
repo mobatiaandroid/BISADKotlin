@@ -304,9 +304,13 @@ class CurriculumFragment : Fragment() {
                         else
                         {
                             curriculumRecycler.visibility=View.GONE
-                            showSuccessAlert(mContext,"No data found.","Alert")
+                            showSuccessAlert(mContext,"Curriculum details is not available.","Alert")
                         }
 
+                    }
+                    132->
+                    {
+                        showSuccessAlert(mContext,"Curriculum details is not available.","Alert")
                     }
                     116 -> {
                         if (apiCallDetail!=4)

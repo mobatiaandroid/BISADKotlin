@@ -313,9 +313,12 @@ class ReportsFragment : Fragment() {
                          }
                         else{
                              reportsRecycler.visibility=View.GONE
-                             showSuccessAlert(mContext,"No data found.","Alert")
+                             showSuccessAlert(mContext,"No reports available.","Alert")
                          }
 
+                    }
+                    132->{
+                        showSuccessAlert(mContext,"No reports available.","Alert")
                     }
                     116 -> {
                         if (apiCallDetail!=4)

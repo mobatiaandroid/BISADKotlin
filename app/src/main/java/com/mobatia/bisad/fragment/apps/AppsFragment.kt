@@ -382,11 +382,16 @@ class AppsFragment  : Fragment() {
                     else
                     {
                         calendarRecycler.visibility=View.GONE
-                        showSuccessAlert(mContext,"No data found.","Alert")
+                        showSuccessAlert(mContext,"No app is available.","Alert")
 
                     }
 
-                } else if (response.body()!!.status == 116)
+                }
+                else if (response.body()!!.status==132)
+                {
+                    showSuccessAlert(mContext,"No app is available.","Alert")
+                }
+                else if (response.body()!!.status == 116)
                 {
                     if (apiCallDetail!=4)
                     {
