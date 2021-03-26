@@ -1,39 +1,36 @@
 {
   "project_info": {
-    "project_number": "980283042249",
-    "firebase_url": "https://bisad-d0bf7.firebaseio.com",
-    "project_id": "bisad-d0bf7",
-    "storage_bucket": "bisad-d0bf7.appspot.com"
+    "project_number": "709223141744",
+    "project_id": "bisad-cb48a",
+    "storage_bucket": "bisad-cb48a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:980283042249:android:d0b6bb59b99b7201",
+        "mobilesdk_app_id": "1:709223141744:android:e760e8ff4bba808f55ffb5",
         "android_client_info": {
           "package_name": "com.mobatia.bisad"
         }
       },
       "oauth_client": [
         {
-          "client_id": "980283042249-3egp788p6dhmigmet31ifqk1ct2v54sq.apps.googleusercontent.com",
+          "client_id": "709223141744-cl4cqq2cb9op29s2kd2vmbpkqtopv4vn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDuDW8CpcCfKxeik2pFx8HgwNqXtRySSQA"
+          "current_key": "AIzaSyCinINs9yoLJlQ4cFFCv4ofnh0pRbkF1F0"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "709223141744-cl4cqq2cb9op29s2kd2vmbpkqtopv4vn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

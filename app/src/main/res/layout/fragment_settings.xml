@@ -35,4 +35,12 @@
         android:text="CANT 2.0"
         android:textColor="@color/grey"/>
 
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:indeterminateDrawable="@anim/customspinner"
+        android:visibility="gone" />
+
 </RelativeLayout>

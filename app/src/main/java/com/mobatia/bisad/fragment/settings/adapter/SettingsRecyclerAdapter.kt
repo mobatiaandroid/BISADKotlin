@@ -39,41 +39,26 @@ internal class SettingsRecyclerAdapter (private var mContext:Context,private var
             {
 
                 holder.txtUser.visibility=View.VISIBLE
-                holder.txtUser.setText("(Guest)")
+                holder.txtUser.text = "(Guest)"
             }
             else{
 
                 holder.txtUser.visibility=View.GONE
             }
         }
-        else{
-            if (sharedprefs.getDataCollection(mContext)==1)
-            {
-
+        else
+        {
                 if (position==5)
                 {
 
                     holder.txtUser.visibility=View.VISIBLE
-                    holder.txtUser.setText("("+sharedprefs.getUserEmail(mContext)+")")
+                    holder.txtUser.text = "("+sharedprefs.getUserEmail(mContext)+")"
                 }
                 else{
 
                     holder.txtUser.visibility=View.GONE
                 }
-            }
-            else{
 
-                if (position==6)
-                {
-
-                    holder.txtUser.visibility=View.VISIBLE
-                    holder.txtUser.setText("("+sharedprefs.getUserEmail(mContext)+")")
-                }
-                else{
-
-                    holder.txtUser.visibility=View.GONE
-                }
-            }
         }
 
 

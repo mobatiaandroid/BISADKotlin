@@ -24,7 +24,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     var intent: Intent? = null
 
 
-    override fun onMessageReceived(remoteMessage: RemoteMessage?) {
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
 //        if (remoteMessage!!.data.isNotEmpty()){
 //            try {
 //                val json = JSONObject(remoteMessage.data.toString())
@@ -36,7 +36,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.e("onMessageReceived:", remoteMessage.toString())
 
 
-            if (remoteMessage!!.data.isNotEmpty()) {
+            if (remoteMessage.data.isNotEmpty()) {
                 try {
                     val json = JSONObject(remoteMessage.data.toString())
                     handleDataMessage(json)
@@ -49,8 +49,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
 
             if (remoteMessage.notification != null) {
-                sendNotification(remoteMessage.notification.body)
-                println("Message Notification Body:"+remoteMessage.notification.body)
+                sendNotification(remoteMessage.notification!!.body)
+                println("Message Notification Body:"+ remoteMessage.notification!!.body)
 
                 //Log.e("FIREBASERECEIVED:", remoteMessage.notification.body)
 

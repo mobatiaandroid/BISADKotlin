@@ -48,7 +48,7 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
     var TAG :String="FIREBASE"
     var deviceId : String=""
     lateinit var dialog : Dialog
-    private lateinit var progressDialog: RelativeLayout
+    private lateinit var progressDialog: ProgressBar
     lateinit var jsonConstans: JsonConstants
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -64,18 +64,18 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
     fun initUI()
     {
         progressDialog = findViewById(R.id.progressDialog)
-        var userEditText = findViewById(R.id.userEditText) as EditText
-        var passwordEditText = findViewById(R.id.passwordEditText) as EditText
-        var loginBtn = findViewById(R.id.loginBtn) as Button
-        var helpButton = findViewById(R.id.helpButton) as Button
-        var guestButton = findViewById(R.id.guestButton) as Button
-        var signUpButton = findViewById(R.id.signUpButton) as Button
-        var forgotPasswordButton = findViewById(R.id.forgotPasswordButton) as Button
+
+        var userEditText = findViewById<EditText>(R.id.userEditText)
+        var passwordEditText = findViewById<EditText>(R.id.passwordEditText)
+        var loginBtn = findViewById<Button>(R.id.loginBtn)
+        var helpButton = findViewById<Button>(R.id.helpButton)
+        var guestButton = findViewById<Button>(R.id.guestButton)
+        var signUpButton = findViewById<Button>(R.id.signUpButton)
+        var forgotPasswordButton = findViewById<Button>(R.id.forgotPasswordButton)
         userEditText.setOnTouchListener(this)
         passwordEditText.setOnTouchListener(this)
 
-        deviceId = FirebaseInstanceId.getInstance().token.toString()
-        sharedprefs.setFcmID(mContext,deviceId)
+
         //Keyboard done button click username
         userEditText.setOnEditorActionListener { v, actionId, event ->
 			if(actionId == EditorInfo.IME_ACTION_DONE){
@@ -92,8 +92,8 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
         //Keyboard done button click password
         passwordEditText.setOnEditorActionListener { v, actionId, event ->
 			if(actionId == EditorInfo.IME_ACTION_DONE){
-                passwordEditText?.isFocusable=false
-                passwordEditText?.isFocusableInTouchMode=false
+                passwordEditText.isFocusable =false
+                passwordEditText.isFocusableInTouchMode =false
 				false
 			} else {
                 userEditText?.isFocusable=false
@@ -103,7 +103,7 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
 		}
 
         //Signup Button Click
-        signUpButton?.setOnClickListener()
+        signUpButton.setOnClickListener()
         {
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(userEditText.windowToken, 0)
@@ -111,22 +111,21 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
             immq?.hideSoftInputFromWindow(passwordEditText.windowToken, 0)
             showSignupDialogue(mContext)
         }
-        guestButton?.setOnClickListener()
+        guestButton.setOnClickListener()
         {
             startActivity(Intent(mContext,HomeActivity::class.java))
         }
-        helpButton?.setOnClickListener()
+        helpButton.setOnClickListener()
         {
             var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
-            if (internetCheck)
-            {
+            if (internetCheck) {
                 val deliveryAddress =
                     arrayOf("communications@bisaddubai.com")
                 val emailIntent = Intent(Intent.ACTION_SEND)
                 emailIntent.putExtra(Intent.EXTRA_EMAIL, deliveryAddress)
-                emailIntent.setType("text/plain")
+                emailIntent.type = "text/plain"
                 emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                val pm: PackageManager = helpButton.getContext().getPackageManager()
+                val pm: PackageManager = helpButton.context.packageManager
                 val activityList = pm.queryIntentActivities(
                     emailIntent, 0
                 )
@@ -140,13 +139,11 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
                         emailIntent.flags = (Intent.FLAG_ACTIVITY_NEW_TASK
                                 or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
                         emailIntent.component = name
-                        helpButton.getContext().startActivity(emailIntent)
+                        helpButton.context.startActivity(emailIntent)
                         break
                     }
                 }
-            }
-            else
-            {
+            } else {
                 InternetCheckClass.showSuccessInternetAlert(mContext)
             }
 
@@ -154,7 +151,7 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
         }
 
         //Forget Password Button Click
-        forgotPasswordButton?.setOnClickListener()
+        forgotPasswordButton.setOnClickListener()
         {
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(userEditText.windowToken, 0)
@@ -165,29 +162,20 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
 
 
         //Login Button Click
-        loginBtn?.setOnClickListener()
+        loginBtn.setOnClickListener()
         {
-            if(userEditText.text.toString().trim().equals(""))
-            {
+            if(userEditText.text.toString().trim().equals("")) {
                 InternetCheckClass.showSuccessAlert(mContext,"Please enter Email.","Alert")
-            }
-            else
-            {
+            } else {
                 var emailPattern = InternetCheckClass.isEmailValid(userEditText.text.toString().trim())
-                if (!emailPattern)
-                {
+                if (!emailPattern) {
                     InternetCheckClass.showSuccessAlert(mContext,"Please enter a vaild Email.","Alert")
-                }
-                else
-                {
-                    if(passwordEditText.text.toString().trim().equals(""))
-                    {
+                } else {
+                    if(passwordEditText.text.toString().trim().equals("")) {
                         InternetCheckClass.showSuccessAlert(mContext,"Please enter Password.","Alert")
-                    }
-                    else{
+                    } else{
                         var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
-                        if (internetCheck)
-                        {
+                        if (internetCheck) {
                             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
                             imm?.hideSoftInputFromWindow(userEditText.windowToken, 0)
                             val immq = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
@@ -195,26 +183,25 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
                             var emailTxt = userEditText.text.toString().trim()
                             var passwordTxt = passwordEditText.text.toString().trim()
                             callLoginApi(emailTxt,passwordTxt,deviceId)
-                        }
-                        else
-                        {
+                        } else {
                             InternetCheckClass.showSuccessInternetAlert(mContext)
                         }
                     }
                 }
             }
-    }
+        }
 }
 
     //Signup API Call
-    fun callLoginApi(email: String,password : String,deviceID : String)
+    @SuppressLint("HardwareIds")
+    fun callLoginApi(email: String, password : String, deviceID : String)
     {
         progressDialog.visibility=View.VISIBLE
         var androidID = Settings.Secure.getString(this.contentResolver,
             Settings.Secure.ANDROID_ID)
-        System.out.println("LOGINRESPONSE:"+"email:"+email+"pass:"+password+"devid:  "+androidID+"  "+sharedprefs.getFcmID(mContext))
+        System.out.println("LOGINRESPONSE:"+"email:"+email+"pass:"+password+"devid:  "+androidID+" FCM ID : "+FirebaseInstanceId.getInstance().token.toString())
         val call: Call<ResponseBody> = ApiClient.getClient.login(
-            email,password,2,androidID, sharedprefs.getFcmID(mContext)
+            email,password,2,androidID, FirebaseInstanceId.getInstance().token.toString()
         )
 
         call.enqueue(object : Callback<ResponseBody> {
@@ -335,12 +322,12 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
         progressDialog.startAnimation(aniRotate)
         text_dialog.setOnEditorActionListener { v, actionId, event ->
             if(actionId == EditorInfo.IME_ACTION_DONE){
-                text_dialog?.isFocusable=false
-                text_dialog?.isFocusableInTouchMode=false
+                text_dialog.isFocusable =false
+                text_dialog.isFocusableInTouchMode =false
                 false
             } else {
-                text_dialog?.isFocusable=false
-                text_dialog?.isFocusableInTouchMode=false
+                text_dialog.isFocusable =false
+                text_dialog.isFocusableInTouchMode =false
                 false
             }
         }
@@ -348,42 +335,33 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
         text_dialog.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View, m: MotionEvent): Boolean {
                 // Perform tasks here
-                text_dialog?.isFocusable=true
-                text_dialog?.isFocusableInTouchMode=true
+                text_dialog.isFocusable =true
+                text_dialog.isFocusableInTouchMode =true
                 return false
             }
         })
-        btn_signup?.setOnClickListener()
+        btn_signup.setOnClickListener()
         {
-            if (text_dialog.text.toString().trim().equals(""))
-            {
+            if (text_dialog.text.toString().trim().equals("")) {
                 InternetCheckClass.showSuccessAlert(mContext,"Please enter Email.","Alert")
-            }
-            else
-            {
+            } else {
                 var emailPattern = InternetCheckClass.isEmailValid(text_dialog.text.toString().trim())
-                if (!emailPattern)
-                {
+                if (!emailPattern) {
                     InternetCheckClass.showSuccessAlert(mContext,"Please enter a valid Email.","Alert")
-                }
-                else
-                {
+                } else {
                     val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
                     imm?.hideSoftInputFromWindow(text_dialog.windowToken, 0)
                     var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
-                    if (internetCheck)
-                    {
+                    if (internetCheck) {
                         callSignUpApi(text_dialog.text.toString().trim(),dialog,progressDialog)
-                    }
-                    else
-                    {
+                    } else {
                         InternetCheckClass.showSuccessInternetAlert(mContext)
                     }
 
                 }
             }
         }
-        btn_maybelater?.setOnClickListener()
+        btn_maybelater.setOnClickListener()
         {
             dialog.dismiss()
         }
@@ -504,40 +482,31 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
         var btn_signup = dialog.findViewById(R.id.btn_signup) as Button
         text_dialog.setOnEditorActionListener { v, actionId, event ->
             if(actionId == EditorInfo.IME_ACTION_DONE){
-                text_dialog?.isFocusable=false
-                text_dialog?.isFocusableInTouchMode=false
+                text_dialog.isFocusable =false
+                text_dialog.isFocusableInTouchMode =false
                 false
             } else {
-                text_dialog?.isFocusable=false
-                text_dialog?.isFocusableInTouchMode=false
+                text_dialog.isFocusable =false
+                text_dialog.isFocusableInTouchMode =false
                 false
             }
         }
 
-        btn_signup?.setOnClickListener()
+        btn_signup.setOnClickListener()
         {
-            if (text_dialog.text.toString().trim().equals(""))
-            {
+            if (text_dialog.text.toString().trim().equals("")) {
                 InternetCheckClass.showSuccessAlert(mContext,"Please enter Email.","Alert")
-            }
-            else
-            {
+            } else {
                 var emailPattern = InternetCheckClass.isEmailValid(text_dialog.text.toString().trim())
-                if (!emailPattern)
-                {
+                if (!emailPattern) {
                     InternetCheckClass.showSuccessAlert(mContext,"Please enter a valid Email.","Alert")
-                }
-                else
-                {
+                } else {
                     val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
                     imm?.hideSoftInputFromWindow(text_dialog.windowToken, 0)
                     var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
-                    if (internetCheck)
-                    {
+                    if (internetCheck) {
                         callForgetPassword(text_dialog.text.toString().trim(),dialog)
-                    }
-                    else
-                    {
+                    } else {
                         InternetCheckClass.showSuccessInternetAlert(mContext)
                     }
 
@@ -549,13 +518,13 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
         text_dialog.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View, m: MotionEvent): Boolean {
                 // Perform tasks here
-                text_dialog?.isFocusable=true
-                text_dialog?.isFocusableInTouchMode=true
+                text_dialog.isFocusable =true
+                text_dialog.isFocusableInTouchMode =true
                 return false
             }
         })
 
-        btn_maybelater?.setOnClickListener()
+        btn_maybelater.setOnClickListener()
         {
             dialog.dismiss()
         }
@@ -645,7 +614,7 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
         text_dialog.text = message
         alertHead.text = msgHead
         iconImageView.setImageResource(R.drawable.exclamationicon)
-        btn_Ok?.setOnClickListener()
+        btn_Ok.setOnClickListener()
         {
             startActivity(Intent(context,HomeActivity::class.java))
             dialog.dismiss()
@@ -669,11 +638,10 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
         text_dialog.text = message
         alertHead.text = msgHead
         iconImageView.setImageResource(R.drawable.exclamationicon)
-        btn_Ok?.setOnClickListener()
+        btn_Ok.setOnClickListener()
         {
             dialogPassword.dismiss()
             dialog.dismiss()
-
 
 
         }
@@ -694,7 +662,7 @@ class LoginActivity : AppCompatActivity(),View.OnTouchListener{
         text_dialog.text = message
         alertHead.text = msgHead
         iconImageView.setImageResource(R.drawable.exclamationicon)
-        btn_Ok?.setOnClickListener()
+        btn_Ok.setOnClickListener()
         {
             dialogSignup.dismiss()
             dialog.dismiss()

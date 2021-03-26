@@ -62,6 +62,7 @@ class SettingsFragment : Fragment(){
     lateinit var titleTextView: TextView
     lateinit var mSettingsArrayListRegistered : ArrayList<String>
     lateinit var mSettingsArrayListGuest: ArrayList<String>
+    lateinit var progress: ProgressBar
     var start:Int=0
     var limit:Int=15
     lateinit var ownContactArrayList: ArrayList<OwnDetailsModel>
@@ -124,6 +125,7 @@ class SettingsFragment : Fragment(){
 
         mSettingsListView = view!!.findViewById(R.id.mSettingsListView) as RecyclerView
         titleTextView = view!!.findViewById(R.id.titleTextView) as TextView
+        progress = view!!.findViewById(R.id.progress) as ProgressBar
         titleTextView.text = "Settings"
         linearLayoutManager = LinearLayoutManager(mContext)
         mSettingsListView.layoutManager = linearLayoutManager
@@ -414,6 +416,8 @@ class SettingsFragment : Fragment(){
 
     private fun callLogoutApi(dialog:Dialog)
     {
+        progress.visibility = View.VISIBLE
+
         val token = sharedprefs.getaccesstoken(mContext)
         val call: Call<ResponseBody> = ApiClient.getClient.logout("Bearer "+token)
         call.enqueue(object : Callback<ResponseBody> {
@@ -424,6 +428,8 @@ class SettingsFragment : Fragment(){
                 val responsedata = response.body()
                 Log.e("Response Signup", responsedata.toString())
                 if (responsedata != null) {
+                    progress.visibility = View.GONE
+
                     try {
 
                         val jsonObject = JSONObject(responsedata.string())
