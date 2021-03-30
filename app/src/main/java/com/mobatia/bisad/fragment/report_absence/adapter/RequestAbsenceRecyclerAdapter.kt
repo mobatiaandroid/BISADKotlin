@@ -33,13 +33,20 @@ internal class RequestAbsenceRecyclerAdapter (private var studentInfoList: List<
         val date: Date = inputFormat.parse(inputDateStr)
         val outputDateStr: String = outputFormat.format(date)
 
-        val toDate=movie.to_date
-        val inputFormat1: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-        val outputFormat1: DateFormat = SimpleDateFormat("dd MMM yyyy")
-        val inputDateStr1 = toDate
-        val date1: Date = inputFormat1.parse(inputDateStr1)
-        val outputDateStr1: String = outputFormat1.format(date1)
-        holder.listDate.text = outputDateStr+" - "+outputDateStr1
+        if (movie.to_date!=""){
+            val toDate=movie.to_date
+            val inputFormat1: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+            val outputFormat1: DateFormat = SimpleDateFormat("dd MMM yyyy")
+            val inputDateStr1 = toDate
+            val date1: Date = inputFormat1.parse(inputDateStr1)
+            val outputDateStr1: String = outputFormat1.format(date1)
+            holder.listDate.text = outputDateStr+" - "+outputDateStr1
+        }
+        else{
+            holder.listDate.text = outputDateStr
+        }
+
+
 
     }
     override fun getItemCount(): Int {

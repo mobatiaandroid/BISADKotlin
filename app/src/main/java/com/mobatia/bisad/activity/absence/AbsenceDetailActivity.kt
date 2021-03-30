@@ -67,7 +67,7 @@ class AbsenceDetailActivity : AppCompatActivity(){
         heading = findViewById(R.id.heading)
         btn_left = findViewById(R.id.btn_left)
         logoClickImgView = findViewById(R.id.logoClickImgView)
-        heading.setText("Absence")
+        heading.text = "Absence"
         btn_left.setOnClickListener(View.OnClickListener {
             finish()
         })
@@ -80,25 +80,41 @@ class AbsenceDetailActivity : AppCompatActivity(){
             startActivity(intent)
         })
 
-        stnameValue.setText(studentName)
-        studClassValue.setText(studentClass)
-
+        stnameValue.text = studentName
+        studClassValue.text = studentClass
         val fromdate=fromDate
+        val todate=toDate
         val inputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
         val outputFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
         val inputDateStr = fromdate
         val date: Date = inputFormat.parse(inputDateStr)
         val outputDateStr: String = outputFormat.format(date)
 
-        val todate=toDate
-        val inputFormat1: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-        val outputFormat1: DateFormat = SimpleDateFormat("dd MMMM yyyy")
-        val inputDateStr1 = todate
-        val date1: Date = inputFormat1.parse(inputDateStr1)
-        val outputDateStr1: String = outputFormat1.format(date1)
-        leaveDateFromValue.setText(outputDateStr)
-        leaveDateToValue.setText(outputDateStr1)
-        reasonValue.setText(reason)
+
+
+
+        if (todate!=""){
+            val inputFormat1: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+            val outputFormat1: DateFormat = SimpleDateFormat("dd MMMM yyyy")
+            val inputDateStr1 = todate
+            val date1: Date = inputFormat1.parse(inputDateStr1)
+            val outputDateStr1: String = outputFormat1.format(date1)
+            leaveDateToValue.text = outputDateStr1
+            leaveDateFromValue.text = outputDateStr
+            reasonValue.text = reason
+
+        }else{
+            leaveDateFromValue.text = outputDateStr
+            reasonValue.text = reason
+            leaveDateToValue.text = "-"
+
+        }
+
+
+
+
+
+
 
     }
 

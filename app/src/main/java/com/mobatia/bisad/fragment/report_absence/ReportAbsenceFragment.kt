@@ -143,10 +143,10 @@ class ReportAbsenceFragment : Fragment(){
                 Log.e("Error", t.localizedMessage)
             }
             override fun onResponse(call: Call<StudentListModel>, response: Response<StudentListModel>) {
-                val arraySize :Int =response.body()!!.responseArray!!.studentList.size
+                val arraySize :Int = response.body()!!.responseArray.studentList.size
                 if (response.body()!!.status==100)
                 {
-                    studentListArrayList.addAll(response.body()!!.responseArray!!.studentList)
+                    studentListArrayList.addAll(response.body()!!.responseArray.studentList)
                     if (sharedprefs.getStudentID(mContext).equals(""))
                     {
                         Log.e("Empty Img","Empty")
@@ -232,20 +232,20 @@ class ReportAbsenceFragment : Fragment(){
                 mContext.resources.getDrawable(R.drawable.button_new)
             )
         } else {
-            btn_dismiss.setBackground(mContext.resources.getDrawable(R.drawable.button_new))
+            btn_dismiss.background = mContext.resources.getDrawable(R.drawable.button_new)
         }
 
         studentListRecycler.setHasFixedSize(true)
         val llm = LinearLayoutManager(mContext)
         llm.orientation = LinearLayoutManager.VERTICAL
-        studentListRecycler.setLayoutManager(llm)
+        studentListRecycler.layoutManager = llm
         if(mStudentList.size>0)
         {
             val studentAdapter = StudentListAdapter(mContext,mStudentList)
-            studentListRecycler.setAdapter(studentAdapter)
+            studentListRecycler.adapter = studentAdapter
         }
 
-        btn_dismiss?.setOnClickListener()
+        btn_dismiss.setOnClickListener()
         {
             dialog.dismiss()
         }
@@ -305,7 +305,6 @@ class ReportAbsenceFragment : Fragment(){
             }
             override fun onResponse(call: Call<AbsenceListModel>, response: Response<AbsenceListModel>) {
                 progressDialog.visibility = View.GONE
-                //   val arraySize :Int =response.body()!!.responseArray!!.studentInfo.size
                 if (response.body()!!.status==100)
                 {
                     studentInfoCopy.addAll(response.body()!!.responseArray.requestList)
@@ -315,7 +314,7 @@ class ReportAbsenceFragment : Fragment(){
                         {
                             mAbsenceListView.visibility=View.VISIBLE
                             val studentInfoAdapter = RequestAbsenceRecyclerAdapter(studentInfoArrayList)
-                            mAbsenceListView.setAdapter(studentInfoAdapter)
+                            mAbsenceListView.adapter = studentInfoAdapter
                         }
                         else{
                             mAbsenceListView.visibility=View.GONE
@@ -333,7 +332,7 @@ class ReportAbsenceFragment : Fragment(){
 
     override fun onResume() {
         super.onResume()
-        studentNameTxt.setText(sharedprefs.getStudentName(mContext))
+        studentNameTxt.text = sharedprefs.getStudentName(mContext)
         studentId= sharedprefs.getStudentID(mContext).toString()
         studentImg= sharedprefs.getStudentPhoto(mContext)!!
         if(!studentImg.equals(""))

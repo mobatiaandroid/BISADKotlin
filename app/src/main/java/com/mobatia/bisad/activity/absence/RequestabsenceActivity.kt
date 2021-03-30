@@ -105,16 +105,16 @@ class RequestabsenceActivity : AppCompatActivity(){
         studImg = findViewById<ImageView>(R.id.studImg)
         enterMessage = findViewById<EditText>(R.id.enterMessage)
         relativeHeader = findViewById(R.id.relativeHeader)
-        studentSpinner = findViewById(R.id.studentSpinner) as LinearLayout
-        submitLayout = findViewById(R.id.submitLayout) as LinearLayout
-        submitBtn = findViewById(R.id.submitBtn) as Button
+        studentSpinner = findViewById<LinearLayout>(R.id.studentSpinner)
+        submitLayout = findViewById<LinearLayout>(R.id.submitLayout)
+        submitBtn = findViewById<Button>(R.id.submitBtn)
         relativeHeader = findViewById(R.id.relativeHeader)
         backRelative = findViewById(R.id.backRelative)
         heading = findViewById(R.id.heading)
         btn_left = findViewById(R.id.btn_left)
         logoClickImgView = findViewById(R.id.logoClickImgView)
-        progressDialog = findViewById(R.id.progressDialog) as RelativeLayout
-        heading.setText("Absence")
+        progressDialog = findViewById<RelativeLayout>(R.id.progressDialog)
+        heading.text = "Absence"
         btn_left.setOnClickListener(View.OnClickListener {
             finish()
         })
@@ -140,31 +140,23 @@ class RequestabsenceActivity : AppCompatActivity(){
                     InternetCheckClass. showErrorAlert(mContext,"Please select First day of absence","Alert")
                 }
                 else{
-                    if(enterEndDate.text.equals(""))
-                    {
-                        InternetCheckClass. showErrorAlert(mContext,"Please select Return to school","Alert")
+                    if (enterMessage.text.toString().trim().equals("")){
+                        InternetCheckClass. showErrorAlert(mContext,"Please enter reason for your absence","Alert")
                     }
                     else{
-                        if(enterMessage.text.toString().trim().equals(""))
+                        val aniRotate: Animation =
+                            AnimationUtils.loadAnimation(com.mobatia.bisad.fragment.home.mContext, R.anim.linear_interpolator)
+                        progressDialog.startAnimation(aniRotate)
+                        progressDialog.visibility=View.VISIBLE
+                        reasonAPI=enterMessage.text.toString().trim()
+                        Log.e("Pass Value",fromDate+"  "+toDate+"   "+reasonAPI)
+                        var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
+                        if (internetCheck)
                         {
-                            InternetCheckClass. showErrorAlert(mContext,"Please enter reason for your absence","Alert")
+                            callAbsenceSubmitApi(fromDate,toDate,reasonAPI)
                         }
                         else{
-                            val aniRotate: Animation =
-                                AnimationUtils.loadAnimation(com.mobatia.bisad.fragment.home.mContext, R.anim.linear_interpolator)
-                            progressDialog.startAnimation(aniRotate)
-                            progressDialog.visibility=View.VISIBLE
-                                reasonAPI=enterMessage.text.toString().trim()
-                               Log.e("Pass Value",fromDate+"  "+toDate+"   "+reasonAPI)
-                            var internetCheck = InternetCheckClass.isInternetAvailable(mContext)
-                            if (internetCheck)
-                            {
-                                callAbsenceSubmitApi(fromDate,toDate,reasonAPI)
-                            }
-                            else{
-                                InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
-                            }
-
+                            InternetCheckClass.showSuccessInternetAlert(com.mobatia.bisad.fragment.home.mContext)
                         }
                     }
                 }
@@ -256,13 +248,13 @@ class RequestabsenceActivity : AppCompatActivity(){
     {
         val myFormat = "dd MMMM yyyy" //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.US)
-        enterStratDate.setText(sdf.format(myCalendar.getTime()))
+        enterStratDate.text = sdf.format(myCalendar.time)
     }
     fun updateLabelEnd()
     {
         val myFormat = "dd MMMM yyyy" //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.US)
-        enterEndDate.setText(sdf.format(myCalendar.getTime()))
+        enterEndDate.text = sdf.format(myCalendar.time)
     }
     fun callStudentListApi()
     {
@@ -274,10 +266,10 @@ class RequestabsenceActivity : AppCompatActivity(){
                 Log.e("Error", t.localizedMessage)
             }
             override fun onResponse(call: Call<StudentListModel>, response: Response<StudentListModel>) {
-                val arraySize :Int =response.body()!!.responseArray!!.studentList.size
+                val arraySize :Int = response.body()!!.responseArray.studentList.size
                 if (response.body()!!.status==100)
                 {
-                    studentArrayList.addAll(response.body()!!.responseArray!!.studentList)
+                    studentArrayList.addAll(response.body()!!.responseArray.studentList)
 
                     if (sharedprefs.getStudentID(mContext).equals(""))
                     {
@@ -352,19 +344,19 @@ class RequestabsenceActivity : AppCompatActivity(){
                 mContext.resources.getDrawable(R.drawable.button_new)
             )
         } else {
-            btn_dismiss.setBackground(mContext.resources.getDrawable(R.drawable.button_new))
+            btn_dismiss.background = mContext.resources.getDrawable(R.drawable.button_new)
         }
 
         studentListRecycler.setHasFixedSize(true)
         val llm = LinearLayoutManager(mContext)
         llm.orientation = LinearLayoutManager.VERTICAL
-        studentListRecycler.setLayoutManager(llm)
+        studentListRecycler.layoutManager = llm
         if(mStudentList.size>0)
         {
             val studentAdapter = StudentListAdapter(mContext,mStudentList)
-            studentListRecycler.setAdapter(studentAdapter)
+            studentListRecycler.adapter = studentAdapter
         }
-        btn_dismiss?.setOnClickListener()
+        btn_dismiss.setOnClickListener()
         {
             dialog.dismiss()
         }
@@ -470,7 +462,7 @@ class RequestabsenceActivity : AppCompatActivity(){
         var btn_Ok = dialog.findViewById(R.id.btn_Ok) as Button
         text_dialog.text = message
         alertHead.text = msgHead
-        btn_Ok?.setOnClickListener()
+        btn_Ok.setOnClickListener()
         {
             dialog.dismiss()
             finish()
