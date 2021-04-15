@@ -29,7 +29,7 @@
             android:layout_toLeftOf="@+id/arrowImg"
             android:gravity="center_vertical"
             android:layout_toRightOf="@+id/imagicon"
-            android:singleLine="true" />
+            android:singleLine="false" />
 
 
         <com.mobatia.bisad.manager.CustomFontSansProTextGrey

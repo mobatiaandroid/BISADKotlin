@@ -32,7 +32,7 @@
         android:layout_margin="5dp"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:text="CANT 2.0"
+        android:text="V 2.1.0"
         android:textColor="@color/grey"/>
 
     <ProgressBar

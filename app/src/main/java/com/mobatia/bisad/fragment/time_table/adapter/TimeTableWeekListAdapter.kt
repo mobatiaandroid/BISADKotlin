@@ -1,8 +1,10 @@
 package com.mobatia.bisad.fragment.time_table.adapter
 
+import android.animation.ObjectAnimator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.BounceInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mobatia.bisad.R
 import com.mobatia.bisad.fragment.home.mContext
 import com.mobatia.bisad.fragment.time_table.model.usagemodel.WeekModel
+
 
 class TimeTableWeekListAdapter (private var weekArrayList: List<WeekModel>) :
     RecyclerView.Adapter<TimeTableWeekListAdapter.MyViewHolder>() {
@@ -32,6 +35,11 @@ class TimeTableWeekListAdapter (private var weekArrayList: List<WeekModel>) :
            holder.weekTxt.setTextColor(mContext.resources.getColor(R.color.timetableblue))
            holder.lineImage.visibility=View.VISIBLE
            holder.downArrowImage.visibility=View.VISIBLE
+//           val buttonAnimator =
+//               ObjectAnimator.ofFloat(holder.lineImage, "translationX", 0f, 400f)
+//           buttonAnimator.duration = 3000
+//           buttonAnimator.interpolator = BounceInterpolator()
+//           buttonAnimator.start()
        }
         else
        {

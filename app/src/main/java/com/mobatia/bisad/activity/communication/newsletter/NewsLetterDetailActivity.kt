@@ -75,7 +75,7 @@ class NewsLetterDetailActivity : AppCompatActivity(){
         logoClickImgView = findViewById(R.id.logoClickImgView)
         progressDialog = findViewById(R.id.progressDialog)
         webView = findViewById(R.id.webView)
-        heading.setText("NewsLetter")
+        heading.text = "NewsLetter"
         btn_left.setOnClickListener(View.OnClickListener {
             finish()
         })
@@ -134,7 +134,7 @@ class NewsLetterDetailActivity : AppCompatActivity(){
         webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
         webView.settings.allowFileAccess = true
         webView.setBackgroundColor(Color.TRANSPARENT)
-        webView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null)
+        webView.setLayerType(WebView.LAYER_TYPE_HARDWARE, null)
 
 
         webView.webChromeClient = object : WebChromeClient() {

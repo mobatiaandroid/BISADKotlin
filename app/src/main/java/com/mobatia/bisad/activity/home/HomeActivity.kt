@@ -12,21 +12,16 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.*
 import android.widget.AdapterView.OnItemLongClickListener
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -34,14 +29,11 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobatia.bisad.R
-import com.mobatia.bisad.activity.common.LoginActivity
 import com.mobatia.bisad.activity.home.adapter.HomeListAdapter
 import com.mobatia.bisad.activity.home.model.HealthInsuranceDetailAPIModel
 import com.mobatia.bisad.constants.InternetCheckClass
 import com.mobatia.bisad.constants.JsonConstants
 import com.mobatia.bisad.fragment.apps.AppsFragment
-import com.mobatia.bisad.fragment.attendance.AttendanceFragment
-import com.mobatia.bisad.fragment.calendar.CalendarFragment
 import com.mobatia.bisad.fragment.calendar_new.CalendarFragmentNew
 import com.mobatia.bisad.fragment.communication.CommunicationFragment
 import com.mobatia.bisad.fragment.contact_us.ContactUsFragment
@@ -68,7 +60,6 @@ import com.mobatia.bisad.manager.MyDragShadowBuilder
 import com.mobatia.bisad.manager.PreferenceData
 import com.mobatia.bisad.recyclermanager.OnItemClickListener
 import com.mobatia.bisad.recyclermanager.addOnItemClickListener
-import com.mobatia.bisad.rest.AccessModel
 import com.mobatia.bisad.rest.AccessTokenClass
 import com.mobatia.bisad.rest.ApiClient
 import okhttp3.ResponseBody
@@ -96,6 +87,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
     lateinit var toolbar: Toolbar
     lateinit var logoClickImgView: ImageView
     lateinit var homelist: ListView
+    lateinit var homeprogress:ProgressBar
     var mFragment: Fragment? = null
     var sPosition: Int = 0
     var previousTriggerTypeNew: Int = 0
@@ -120,7 +112,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
         transaction.commit()
     }
 
-    @SuppressLint("Recycle")
+    @SuppressLint("Recycle", "WrongViewCast")
     @RequiresApi(Build.VERSION_CODES.M)
     private fun initializeUI() {
 
@@ -131,6 +123,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
         homelist = findViewById<ListView>(R.id.homelistview)
         drawer_layout = findViewById(R.id.drawer_layout)
         linear_layout = findViewById(R.id.linear_layout)
+        homeprogress = findViewById(R.id.homeprogress)
         var downarrow = findViewById<ImageView>(R.id.downarrow)
 
         mListItemArray =
@@ -335,7 +328,23 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                     mFragment = CurriculumFragment()
                     replaceFragmentsSelected(position)
                 }
-                else if (position == 12) {
+                /*else if (position == 12) {
+                    if (drawer_layout.isDrawerOpen(linear_layout)) {
+                        drawer_layout.closeDrawer(linear_layout)
+                    }
+                    val li: LayoutInflater = layoutInflater
+                    val layout: View = li.inflate(
+                        R.layout.homecustom_progress,
+                        findViewById<View>(R.id.customlayout) as? ViewGroup
+                    )
+
+                    val toast = Toast(applicationContext)
+                    toast.duration = Toast.LENGTH_SHORT
+                    toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                    toast.view = layout
+
+                    toast.show()
+
 
                     if (sharedprefs.getDataCollection(context)==1)
                     {
@@ -352,7 +361,8 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                         showTriggerDataCollection(context,"Confirm?", "Select one or more areas to update", R.drawable.questionmark_icon, R.drawable.round)
 
                     }
-                } else if (position == 13) {
+                } */
+                else if (position == 12) {
                     if (ActivityCompat.checkSelfPermission(
                             context,
                             Manifest.permission.ACCESS_FINE_LOCATION
@@ -372,7 +382,7 @@ class HomeActivity : AppCompatActivity(), OnItemLongClickListener {
                         replaceFragmentsSelected(position)
                     }
 
-                } else if (position == 14) {
+                } else if (position == 13) {
                     sharedprefs.setStudentID(context, "")
                     sharedprefs.setStudentName(context, "")
                     sharedprefs.setStudentPhoto(context, "")

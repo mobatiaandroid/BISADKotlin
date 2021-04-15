@@ -93,7 +93,7 @@ class SettingsFragment : Fragment(){
         {
             mSettingsArrayListGuest.add("Change App Settings")
             mSettingsArrayListGuest.add("Terms of Service")
-            mSettingsArrayListGuest.add("Email Help")
+            mSettingsArrayListGuest.add("Feedback")
             mSettingsArrayListGuest.add("Tutorial")
             mSettingsArrayListGuest.add("Logout")
         }
@@ -102,7 +102,7 @@ class SettingsFragment : Fragment(){
             {
                 mSettingsArrayListRegistered.add("Change App Settings")
                 mSettingsArrayListRegistered.add("Terms of Service")
-                mSettingsArrayListRegistered.add("Email Help")
+                mSettingsArrayListRegistered.add("Feedback")
                 mSettingsArrayListRegistered.add("Tutorial")
                 mSettingsArrayListRegistered.add("Change Password")
                 mSettingsArrayListRegistered.add("Logout")
@@ -111,7 +111,7 @@ class SettingsFragment : Fragment(){
             {
                 mSettingsArrayListRegistered.add("Change App Settings")
                 mSettingsArrayListRegistered.add("Terms of Service")
-                mSettingsArrayListRegistered.add("Email Help")
+                mSettingsArrayListRegistered.add("Feedback")
                 mSettingsArrayListRegistered.add("Tutorial")
                 mSettingsArrayListRegistered.add("Change Password")
                 mSettingsArrayListRegistered.add("Logout")
@@ -150,7 +150,7 @@ class SettingsFragment : Fragment(){
                      else if (position==2)
                      {
                          val deliveryAddress =
-                             arrayOf("communications@bisaddubai.com")
+                             arrayOf("comms@bisad.ae")
                          val emailIntent = Intent(Intent.ACTION_SEND)
                          emailIntent.putExtra(Intent.EXTRA_EMAIL, deliveryAddress)
                          emailIntent.type = "text/plain"

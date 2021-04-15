@@ -7,6 +7,23 @@
     android:clickable="true"
     android:background="@color/white">
 
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/myCardView"-->
+<!--        android:layout_width="200dp"-->
+<!--        android:layout_height="200dp"-->
+<!--        app:cardCornerRadius="100dp"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        >-->
+<!--        <ImageView-->
+<!--            android:id="@+id/zoomedstud_img"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:visibility="invisible"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            />-->
+<!--    </androidx.cardview.widget.CardView>-->
+
   <com.mobatia.bisad.manager.CustomFontDJ5TextWhite
         android:id="@+id/titleTextView"
         android:layout_width="match_parent"
